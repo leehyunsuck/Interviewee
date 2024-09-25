@@ -36,9 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-# Ignore specific Java file
-/src/main/java/Shingu/Interviewer/tool/*
-
 # AdminTestPage
 /src/main/webapp/WEB-INF/admin/*
 
