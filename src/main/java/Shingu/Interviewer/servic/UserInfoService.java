@@ -30,8 +30,6 @@ public class UserInfoService {
         return userInfoRepository.findByEmail(email);
     }
 
-
-
     @Autowired
     private UserInfoRepository userInfoRepository;
 
