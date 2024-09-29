@@ -29,6 +29,6 @@ public class LoginService {
 
         session.setAttribute("loggedInEmail", email);
         model.addAttribute("loggedInEmail", email);
-        return "index";
+        return "main";
     }
 }

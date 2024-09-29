@@ -176,10 +176,10 @@
     </script>
 </head>
 <body>
-    <button type="button" class="title" onclick="location.href='main.html'">
-        <img src="img/login_logo.png" width="300">
+    <button type="button" class="title" onclick="location.href='main'">
+        <img src="/img/login_logo.png" width="300">
     </button>
-    <img class="gif" src="img/register.gif">
+    <img class="gif" src="/img/register.gif">
     <p class="comment1">회원가입</p>
     <form method="post" action="/register">
         <p class="comment4">Email</p>
@@ -190,7 +190,6 @@
 
         <!-- 인증번호 입력란 (처음에는 보이지 않음) -->
         <input id="verificationInput" class="verification-input" type="text" placeholder="인증번호 입력">
-
 
         <!-- 인증완료 버튼 (처음에는 보이지 않음) -->
         <button id="verifyBtn" type="button" class="verify-btn" onclick="verifyCode()">인증완료</button>

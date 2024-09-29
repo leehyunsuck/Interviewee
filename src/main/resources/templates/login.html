@@ -47,7 +47,6 @@
                 transform: translateY(-20%);
             }
             .comment2 {
-                color: #FFF;
                 width : 500px;
                 font-family: ABeeZee;
                 border-radius: 10px;
@@ -126,22 +125,35 @@
             }
         }
     </style>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.onload = function() {
+            var errorMsg = /*[[${errorMsg}]]*/ ''; // 서버에서 전달된 errorMsg
+            if (errorMsg.trim() !== '') {
+                alert(errorMsg);
+            }
+        };
+        /*]]>*/
+    </script>
 </head>
 <body>
-    <p th:if="${not #lists.isEmpty(errorMsg)}">
-        <span th:text="${errorMsg}"></span>
-    </p>
-    <button type="button" class="title" onclick="location.href='main.html'">
-        <img src="img/login_logo.png" width="300">
+    <button type="button" class="title" onclick="location.href='main'">
+        <img src="/img/login_logo.png" width="300">
     </button>
-    <img class="gif" src="img/login.gif">
+
+    <img class="gif" src="/img/login.gif">
+
     <p class="comment1">로그인</p>
+
     <form method="post" action="/login">
         <p class="comment4">Email</p>
-        <input class="comment2" type="text" name="email">
+        <input class="comment2" type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+
         <p class="comment5">Password</p>
         <input class="comment3" type="password" name="password">
-        <a href="find_pw.html">비밀번호 찾기</a>
+
+        <a href="find_pw">비밀번호 찾기</a>
+
         <input class="login" type="submit" value="Login">
     </form>
 </body>

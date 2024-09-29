@@ -77,4 +77,9 @@ public class MainController {
         sendMailService.sendMail("", "", "");
         return "register";
     }
+
+    @GetMapping("main")
+    public String main(Model model) {
+        return "main";
+    }
 }
