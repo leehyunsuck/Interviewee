@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <style>
+        @media screen {
+            body {
+                width:auto;
+                height: auto;
+                background-color: #3D5AED;
+            }
+            .title {
+                background-position: left top;
+                border: none;
+                background-color: transparent;
+                margin-top: 20px;
+                width: 365px;
+            }
+            .goToLogin {
+                background-color: transparent;
+                border: none;
+                position: absolute;
+                right: 20px;
+                bottom: 20%;
+                transform: translateY(-20%);
+            }
+            .gif {
+                border: none;
+                background-color: transparent;
+                width: 750px;
+                float: left;
+                margin-right: 800px;
+                transform:rotate(-0.284deg) ;
+            }
+            .comment1 {
+                color: #FFF;
+                font-family: "Alfa Slab One";
+                font-size: 65px;
+                font-style: normal;
+                font-weight: 5000;
+                text-align: right;
+                line-height: normal;
+                position: absolute;
+                right: 20px;
+                top: 20%;
+                transform: translateY(-20%);
+            }
+            .comment2 {
+                color: #FFF;
+                font-family: ABeeZee;
+                font-size: 40px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                position: absolute;
+                right: 20px;
+                top: 35%;
+                transform: translateY(-20%);
+            }
+            a:link {
+                color: #ffffff;
+                position: absolute;
+                right: 20px;
+                bottom: 18%;
+                margin-right: 20px;
+                transform: translateY(-20%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <button type="button" class="title" onclick="location.href='main.html'">
+        <img src="img/log.png" width="300">
+    </button>
+    <img class="gif" src="img/main.gif">
+    <span>
+        <p class="comment1">Ai와 함께하는 모의 면접</p>
+        <p class="comment2">with chat GPT</p>
+    </span>
+    <button type="button" class="goToLogin" onclick="location.href='login.html'">
+        <img src="img/main_button1.png" width="200">
+    </button>
+    <a href="index.html">비회원으로</a>
+</body>
+</html>

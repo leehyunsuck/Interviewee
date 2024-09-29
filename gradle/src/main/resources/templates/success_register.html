@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 성공</title>
+    <style>
+        .RegisterSuccess {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .gif {
+            width: 500px;
+            height: 500px;
+            position: absolute;
+            left: 710px;
+            top: 5%;
+        }
+        .btn {
+            width: 130px;
+            height: 55px;
+            border: none;
+            border-radius: 40px;
+            background: #3D5AED;
+            color: #FFF;
+            font-family: "Archivo Black";
+            font-size: 16px;
+            font-weight: 400;
+            line-height: normal;
+            position: absolute;
+            right: 100px;
+            bottom: 15%;
+            transform: translateY(-50%);
+        }
+        .comment1 {
+            color: black;
+            font-size: 40px;
+            font-family: Archivo Black ;
+            font-weight: 400;
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            right:44%;
+            bottom: 150%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="RegisterSuccess">
+    <img src="img/success.gif" class="gif">
+    <h1 class="comment1"><b>회원가입 성공</b></h1>
+    <button type="button" class="btn" onclick="location.href='login.html'">Go to Login</button>
+</div>
+
+</body>
+</html>

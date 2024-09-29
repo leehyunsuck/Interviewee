@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login 더미</title>
+    <style>
+        @media screen {
+            body {
+                width:auto;
+                height: auto;
+            }
+            .title {
+                background-position: left top;
+                border: none;
+                background-color: transparent;
+                margin-top: 20px;
+                width: 365px;
+            }
+
+            .goToLogin {
+                background-color: transparent;
+                border: none;
+                position: absolute; /* 변경 */
+                right: 20px; /* 오른쪽 정렬 */
+                bottom: 20%;
+                transform: translateY(-20%);
+            }
+            .gif {
+                border: none;
+                background-color: transparent;
+                width: 500px;
+                position: absolute; /* 변경 */
+                left: 200px; /* 오른쪽 정렬 */
+                top: 30%;
+                /*margin-top: 100px;*/
+                transform:rotate(-0.284deg) ;
+            }
+            .comment1 {
+                color: #000;
+                font-family: "Noto Serif Malayalam";
+                font-size: 70px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                position: absolute; /* 변경 */
+                right: 500px; /* 오른쪽 정렬 */
+                top: 15%; /* 중간보다 조금 위 */
+                transform: translateY(-20%); /* 수직 중앙 정렬 */
+            }
+            .comment2 {
+                color: #FFF;
+                width : 500px;
+                font-family: ABeeZee;
+                border-radius: 10px;
+                border: 2px solid #817A7A;
+                font-size: 26px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                position: absolute; /* 변경 */
+                right: 390px; /* 오른쪽 정렬 */
+                top: 43%; /* 중간보다 조금 위 */
+                transform: translateY(-20%); /* 수직 중앙 정렬 */
+            }
+            .comment3 {
+                width: 500px;
+                font-family: ABeeZee;
+                border-radius: 10px;
+                border: 2px solid #817A7A;
+                font-size: 26px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                position: absolute; /* 변경 */
+                right: 390px; /* 오른쪽 정렬 */
+                top: 57%; /* 중간보다 조금 위 */
+                transform: translateY(-20%); /* 수직 중앙 정렬 */
+            }
+            .comment4{
+                color: #423F3F;
+                font-family: "Azeret Mono";
+                font-size: 26px;
+                font-style: normal;
+                font-weight: 200;
+                line-height: normal;
+                position: absolute; /* 변경 */
+                right: 830px; /* 오른쪽 정렬 */
+                top: 35%; /* 중간보다 조금 위 */
+                transform: translateY(-20%); /* 수직 중앙 정렬 */
+            }
+            .comment5{
+                color: #423F3F;
+                font-family: "Azeret Mono";
+                font-size: 26px;
+                font-style: normal;
+                font-weight: 200;
+                line-height: normal;
+                position: absolute; /* 변경 */
+                right: 790px; /* 오른쪽 정렬 */
+                top: 49%; /* 중간보다 조금 위 */
+                transform: translateY(-20%); /* 수직 중앙 정렬 */
+            }
+            .login{
+                width: 180px;
+                height: 70px;
+                border: none;
+                border-radius: 46px;
+                background: #3D5AED;
+                color: #FFF;
+                font-family: "Archivo Black";
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                position: absolute; /* 변경 */
+                right: 380px; /* 오른쪽 정렬 */
+                top:71%; /* 중간보다 조금 위 */
+                transform: translateY(-20%); /* 수직 중앙 정렬 */
+            }
+            a:link {
+                color: #817979;
+                position: absolute; /* 변경 */
+                right: 380px; /* 오른쪽 정렬 */
+                top: 48%;
+                margin-right: 20px;
+                transform: translateY(-20%);
+            }
+            .verification-input {
+                color: #817979;
+                width : 150px;
+                font-family: ABeeZee;
+                border-radius: 7px;
+                border: 1px solid #817A7A;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                position: absolute;
+                right: 600px;
+                top: 48%;
+                display: none; /* 처음에는 감춰둠 */
+                transform: translateY(-20%);
+            }
+            .verify-btn {
+                color: #FFF;
+                background-color: #3D5AED;
+                border: none;
+                padding: 6px 20px;
+                border-radius: 155px;
+                font-family: "Archivo Black";
+                font-size: 12px;
+                position: absolute;
+                right: 500px;
+                top: 48%;
+                display: none;
+                transform: translateY(-20%);
+            }
+        }
+    </style>
+    <script>
+        function showVerificationInput() {
+            document.getElementById("verificationInput").style.display = "block"; // 인증번호 입력란 표시
+            document.getElementById("verifyBtn").style.display = "block"; // 인증완료 버튼 표시
+        }
+
+
+        function verifyCode() {
+            let code = document.getElementById("verificationInput").value;
+            if (code === "") {
+                alert("인증번호를 입력해주세요.");
+            } else {
+                alert("인증이 완료되었습니다.");
+                // 여기에서 서버로 인증번호를 검증하는 로직
+            }
+        }
+    </script>
+</head>
+<body>
+    <button type="button" class="title" onclick="location.href='main.html'">
+        <img src="img/login_logo.png" width="300">
+    </button>
+    <img class="gif" src="img/register.gif">
+    <p class="comment1">회원가입</p>
+    <form method="post" action="/register">
+        <p class="comment4">Email</p>
+        <input class="comment2" type="text" name="email">
+<!--        <a href="find_pw.html">이메일 인증</a>-->
+        <!-- 이메일 인증 버튼 -->
+        <a href="javascript:void(0)" onclick="showVerificationInput()">이메일 인증</a>
+
+        <!-- 인증번호 입력란 (처음에는 보이지 않음) -->
+        <input id="verificationInput" class="verification-input" type="text" placeholder="인증번호 입력">
+
+
+        <!-- 인증완료 버튼 (처음에는 보이지 않음) -->
+        <button id="verifyBtn" type="button" class="verify-btn" onclick="verifyCode()">인증완료</button>
+        <p class="comment5">Password</p>
+        <input class="comment3" type="password" name="password">
+        <input class="login" type="submit" value="Login">
+    </form>
+</body>
+</html>

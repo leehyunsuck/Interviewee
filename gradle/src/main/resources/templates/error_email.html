@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .ErrorEmail {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .gif{
+            width: 500px;
+            height: 500px;
+            left: 710px;
+            top: 100px;
+            position: absolute
+        }
+        .comemnt1{
+            left: 788px;
+            top: 600px;
+            position: absolute;
+            color: black;
+            font-size: 40px;
+            font-family: Archivo Black;
+            font-weight: 400;
+            word-wrap: break-word;
+        }
+    </style>
+    <script>
+        // 화면 클릭 시 뒤로 가기
+        window.addEventListener('click', function() {
+            // window.history.back();
+            window.location.href = 'login.html';
+        });
+    </script>
+</head>
+<body>
+
+<div class="ErrorEmail">
+    <img src="img/error.gif" class="gif">
+    <div class="comemnt1">없는 이메일입니다</div>
+</div>
+</body>
+</html>
