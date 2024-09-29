@@ -2,7 +2,7 @@ package Shingu.Interviewer.tool;
 
 import java.security.MessageDigest;
 
-public class JobCompletionEncode {
+public class HashEncode {
     public static String encode(String email, String password) {
         String hashPassword = null;
 

@@ -2,7 +2,7 @@ package Shingu.Interviewer.controller;
 
 import Shingu.Interviewer.entity.UserInfo;
 import Shingu.Interviewer.servic.UserInfoService;
-import Shingu.Interviewer.tool.JobCompletionEncode;
+import Shingu.Interviewer.tool.HashEncode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -39,7 +39,7 @@ public class UserInfoUpdatePasswordController extends HttpServlet {
             }
             
             //암호화 값 받기
-            String hashPassword = JobCompletionEncode.encode(email, password);
+            String hashPassword = HashEncode.encode(email, password);
 
             if (hashPassword == null) {
                 resp.sendRedirect("/basic/index.jsp");

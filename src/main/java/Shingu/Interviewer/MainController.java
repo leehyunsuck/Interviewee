@@ -1,6 +1,7 @@
 package Shingu.Interviewer;
 
 import Shingu.Interviewer.servic.LoginService;
+import Shingu.Interviewer.servic.SendMailService;
 import Shingu.Interviewer.tool.GetClientIP;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -20,8 +21,10 @@ import java.util.Map;
 @RequestMapping("/")
 public class MainController {
     private final LoginService loginService;
-    public MainController(LoginService loginService) {
+    private final SendMailService sendMailService;
+    public MainController(LoginService loginService, SendMailService sendMailService) {
         this.loginService = loginService;
+        this.sendMailService = sendMailService;
     }
 
     private final Map<String, Integer> ipMap = new HashMap<>();       // 유저IP : 요청 횟수
@@ -41,7 +44,7 @@ public class MainController {
         ipMap.put(ipAddress, requestCount);
 
         // 세션에 email 정보 있으면 공통적으로 model에 담기
-        if (session.getAttribute("email") != null) model.addAttribute("email", session.getAttribute("email"));
+        if (session.getAttribute("loggedInEmail") != null) model.addAttribute("loggedInEmail", session.getAttribute("loggedInEmail"));
     }
 
     @GetMapping
@@ -51,11 +54,27 @@ public class MainController {
 
     @GetMapping("login")
     public String login(Model model) {
-        if (model.getAttribute("email") != null) return "index";
+        if (model.getAttribute("loggedInEmail") != null) return "index";
         return "login";
     }
     @PostMapping("login")
     public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession session) {
         return loginService.login(email, password, model, session);
+    }
+
+    @GetMapping("register")
+    public String register(Model model) {
+        if (model.getAttribute("loggedInEmail") != null) return "index";
+        model.addAttribute("check", "false");
+        return "register";
+    }
+    @PostMapping("register")
+    public String register(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("password2") String password2, Model model) {
+        return "";
+    }
+    @PostMapping("registerSendMail")
+    public String registerSendMail(Model model, @RequestParam("email") String email) {
+        sendMailService.sendMail("", "", "");
+        return "register";
     }
 }

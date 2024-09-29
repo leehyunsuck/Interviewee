@@ -1,6 +1,6 @@
 package Shingu.Interviewer.servic;
 
-import Shingu.Interviewer.tool.JobCompletionEncode;
+import Shingu.Interviewer.tool.HashEncode;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -21,14 +21,14 @@ public class LoginService {
         }
 
         // 로그인 정보 일치 확인
-        String hashPassword = JobCompletionEncode.encode(email, password);
+        String hashPassword = HashEncode.encode(email, password);
         if (!userInfoService.isAccountExists(email, hashPassword)) {
             model.addAttribute("errorMsg", "옳바르지 않은 비밀번호 입니다.");
             return "login";
         }
 
-        session.setAttribute("email", email);
-        model.addAttribute("email", email);
+        session.setAttribute("loggedInEmail", email);
+        model.addAttribute("loggedInEmail", email);
         return "index";
     }
 }
