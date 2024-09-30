@@ -49,7 +49,7 @@ public class MainController {
 
     @GetMapping
     public String index() {
-        return "index";
+        return "main";
     }
 
     @GetMapping("login")
@@ -70,12 +70,8 @@ public class MainController {
     }
     @PostMapping("register")
     public String register(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("password2") String password2, Model model) {
+        //회원가입 로직
         return "";
-    }
-    @PostMapping("registerSendMail")
-    public String registerSendMail(Model model, @RequestParam("email") String email) {
-        sendMailService.sendMail("", "", "");
-        return "register";
     }
 
     @GetMapping("main")

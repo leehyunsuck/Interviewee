@@ -14,15 +14,9 @@ public class RegisterService {
     }
 
     public String register(String email, String password, String checkPassword, Model model) {
-        // 다음 확인사항 안지켜진거면 클라이언트 조작
-        if (password.length() < 8 || password.length() > 16) {
-        }
+        // 규칙확인 로직
 
-        if (!password.equals(checkPassword)) {
-        }
-
-
-
+        // 규칙 다 지켜졌으면 DB에 정보 저장
         String hashPassword = HashEncode.encode(email, password);
 
         UserInfo userInfo = new UserInfo();
@@ -30,16 +24,16 @@ public class RegisterService {
         userInfo.setPassword(hashPassword);
         userInfoService.saveUser(userInfo);
         model.addAttribute("loggedInEmail", email);
-        return "registerSuccess";
+        return "success_register";
     }
 
     public  String registerSendMail(Model model, String email) {
-        //이메일 유형 확인
-        if (userInfoService.isEmailExists(email)) {
-            model.addAttribute("errorMsg", "이미 가입된 이메일 입니다.");
-            return "register";
-        }
+        //이메일 유형 확인 로직
 
+        //이미 가입한 이메일 확인 로직
+
+        //위 두 조건 다 통과면 인증번호 전송
+        //인증번호는 service/SendMailService 에 구현해놨으니 호출해서 쓰면 됨
         return "";
     }
 }

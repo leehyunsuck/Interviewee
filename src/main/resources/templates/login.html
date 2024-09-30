@@ -125,16 +125,6 @@
             }
         }
     </style>
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        window.onload = function() {
-            var errorMsg = /*[[${errorMsg}]]*/ ''; // 서버에서 전달된 errorMsg
-            if (errorMsg.trim() !== '') {
-                alert(errorMsg);
-            }
-        };
-        /*]]>*/
-    </script>
 </head>
 <body>
     <button type="button" class="title" onclick="location.href='main'">
