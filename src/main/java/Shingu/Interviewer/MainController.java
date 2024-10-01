@@ -1,6 +1,7 @@
 package Shingu.Interviewer;
 
 import Shingu.Interviewer.servic.LoginService;
+import Shingu.Interviewer.servic.RegisterService;
 import Shingu.Interviewer.servic.SendMailService;
 import Shingu.Interviewer.tool.GetClientIP;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,9 +23,11 @@ import java.util.Map;
 public class MainController {
     private final LoginService loginService;
     private final SendMailService sendMailService;
-    public MainController(LoginService loginService, SendMailService sendMailService) {
+    private final RegisterService registerService;
+    public MainController(LoginService loginService, SendMailService sendMailService, RegisterService registerService) {
         this.loginService = loginService;
         this.sendMailService = sendMailService;
+        this.registerService = registerService;
     }
 
     private final Map<String, Integer> ipMap = new HashMap<>();       // 유저IP : 요청 횟수
@@ -70,8 +73,22 @@ public class MainController {
     }
     @PostMapping("register")
     public String register(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("password2") String password2, Model model) {
-        //회원가입 로직
-        return "";
+        String Result = registerService.register(email, password, password2, model);
+        if (model.containsAttribute("error")) {
+            return Result;
+        }
+        return "success_register";
+    }
+    @PostMapping("verifycode") //
+    public String verifyCode(@RequestParam("email") String email, @RequestParam("code") int code, Model model) {
+        boolean isValid = registerService.verifyCode(email, code);
+        if (isValid) {
+            model.addAttribute("verificationSuccess", true);
+            return "register";
+        } else {
+            model.addAttribute("verificationError", "인증번호가 올바르지 않습니다.");
+            return "register";
+        }
     }
 
     @GetMapping("main")

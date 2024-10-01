@@ -163,14 +163,29 @@
             document.getElementById("verifyBtn").style.display = "block"; // 인증완료 버튼 표시
         }
 
-
         function verifyCode() {
             let code = document.getElementById("verificationInput").value;
             if (code === "") {
                 alert("인증번호를 입력해주세요.");
-            } else {
+            }  else {
                 alert("인증이 완료되었습니다.");
-                // 여기에서 서버로 인증번호를 검증하는 로직
+                fetch('/verifycode', {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify({ code: code }),
+                })
+                .then(data => {
+                     if (data.success) {
+                          alert("인증이 완료되었습니다.");
+                     } else {
+                          alert("인증번호가 올바르지 않습니다.");
+                     }
+                })
+                .catch(error => {
+                          alert(error.message);
+                });
             }
         }
     </script>
