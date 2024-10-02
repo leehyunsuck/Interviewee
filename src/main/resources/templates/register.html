@@ -2,7 +2,7 @@
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login 더미</title>
+    <title>Register</title>
     <style>
         @media screen {
             body {
@@ -48,7 +48,7 @@
                 transform: translateY(-20%); /* 수직 중앙 정렬 */
             }
             .comment2 {
-                color: #FFF;
+                color: black;
                 width : 500px;
                 font-family: ABeeZee;
                 border-radius: 10px;
@@ -73,7 +73,7 @@
                 line-height: normal;
                 position: absolute; /* 변경 */
                 right: 390px; /* 오른쪽 정렬 */
-                top: 57%; /* 중간보다 조금 위 */
+                top: 50%; /* 중간보다 조금 위 */
                 transform: translateY(-20%); /* 수직 중앙 정렬 */
             }
             .comment4{
@@ -98,6 +98,34 @@
                 position: absolute; /* 변경 */
                 right: 790px; /* 오른쪽 정렬 */
                 top: 49%; /* 중간보다 조금 위 */
+                transform: translateY(-20%); /* 수직 중앙 정렬 */
+            }
+            .comment6 {
+                width: 500px;
+                font-family: ABeeZee;
+                border-radius: 10px;
+                border: 2px solid #817A7A;
+                font-size: 26px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                position: absolute; /* 변경 */
+                right: 390px; /* 오른쪽 정렬 */
+                top: 58%; /* 중간보다 조금 위 */
+                transform: translateY(-20%); /* 수직 중앙 정렬 */
+            }
+            .comment7 {
+                width: 500px;
+                font-family: ABeeZee;
+                border-radius: 10px;
+                border: 2px solid #817A7A;
+                font-size: 26px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                position: absolute; /* 변경 */
+                right: 390px; /* 오른쪽 정렬 */
+                top: 63%; /* 중간보다 조금 위 */
                 transform: translateY(-20%); /* 수직 중앙 정렬 */
             }
             .login{
@@ -157,60 +185,39 @@
             }
         }
     </style>
-    <script>
-        function showVerificationInput() {
-            document.getElementById("verificationInput").style.display = "block"; // 인증번호 입력란 표시
-            document.getElementById("verifyBtn").style.display = "block"; // 인증완료 버튼 표시
-        }
+    <script th:inline="javascript">
+        /* 모델 데이터를 자바스크립트 변수로 설정 */
+        var errorMsg = /*[[${errorMsg}]]*/ '';
 
-        function verifyCode() {
-            let code = document.getElementById("verificationInput").value;
-            if (code === "") {
-                alert("인증번호를 입력해주세요.");
-            }  else {
-                alert("인증이 완료되었습니다.");
-                fetch('/verifycode', {
-                     method: 'POST',
-                     headers: {
-                         'Content-Type': 'application/json',
-                     },
-                     body: JSON.stringify({ code: code }),
-                })
-                .then(data => {
-                     if (data.success) {
-                          alert("인증이 완료되었습니다.");
-                     } else {
-                          alert("인증번호가 올바르지 않습니다.");
-                     }
-                })
-                .catch(error => {
-                          alert(error.message);
-                });
+        // 페이지 로드 시 에러 메시지가 있으면 경고창 표시
+        window.addEventListener('load', function() {
+            if (errorMsg && errorMsg !== '') {
+                alert(errorMsg);
             }
-        }
+        });
     </script>
 </head>
 <body>
     <button type="button" class="title" onclick="location.href='main'">
         <img src="/img/login_logo.png" width="300">
     </button>
+
     <img class="gif" src="/img/register.gif">
+
     <p class="comment1">회원가입</p>
-    <form method="post" action="/register">
+
+    <form method="post"th:action="${action}">
         <p class="comment4">Email</p>
-        <input class="comment2" type="text" name="email">
-<!--        <a href="find_pw.html">이메일 인증</a>-->
-        <!-- 이메일 인증 버튼 -->
-        <a href="javascript:void(0)" onclick="showVerificationInput()">이메일 인증</a>
+        <input class="comment2" type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" th:value="${email}" th:readonly="${action == 'checkCode'}">
 
         <!-- 인증번호 입력란 (처음에는 보이지 않음) -->
-        <input id="verificationInput" class="verification-input" type="text" placeholder="인증번호 입력">
+        <input class="comment3" name="code" type="text" placeholder="인증번호 입력" th:if="${action == 'checkCode'}">
 
-        <!-- 인증완료 버튼 (처음에는 보이지 않음) -->
-        <button id="verifyBtn" type="button" class="verify-btn" onclick="verifyCode()">인증완료</button>
-        <p class="comment5">Password</p>
-        <input class="comment3" type="password" name="password">
-        <input class="login" type="submit" value="Login">
+        <p class="comment5" th:if="${action == 'register'}">Password</p>
+        <input class="comment6" type="password" name="password" th:if="${action == 'register'}">
+        <input class="comment7" type="password" name="password2" th:if="${action == 'register'}">
+
+        <input class="login" type="submit" th:value="${action}">
     </form>
 </body>
 </html>
