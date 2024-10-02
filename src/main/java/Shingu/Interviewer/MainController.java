@@ -22,11 +22,9 @@ import java.util.Map;
 @RequestMapping("/")
 public class MainController {
     private final LoginService loginService;
-    private final SendMailService sendMailService;
     private final RegisterService registerService;
     public MainController(LoginService loginService, SendMailService sendMailService, RegisterService registerService) {
         this.loginService = loginService;
-        this.sendMailService = sendMailService;
         this.registerService = registerService;
     }
 
@@ -68,27 +66,25 @@ public class MainController {
     @GetMapping("register")
     public String register(Model model) {
         if (model.getAttribute("loggedInEmail") != null) return "index";
-        model.addAttribute("check", "false");
+        model.addAttribute("action", "sendMail");
         return "register";
+    }
+    @PostMapping("sendMail")
+    public String sendMail(@RequestParam("email") String email, Model model) {
+        return registerService.sendMail(model, email);
+    }
+    @PostMapping("checkCode")
+    public String checkCode(@RequestParam("email") String email, @RequestParam("code") String code, Model model) {
+        return registerService.checkCode(email, code, model);
     }
     @PostMapping("register")
     public String register(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("password2") String password2, Model model) {
-        String Result = registerService.register(email, password, password2, model);
-        if (model.containsAttribute("error")) {
-            return Result;
-        }
-        return "success_register";
+        return registerService.register(email, password, password2, model);
     }
-    @PostMapping("verifycode") //
-    public String verifyCode(@RequestParam("email") String email, @RequestParam("code") int code, Model model) {
-        boolean isValid = registerService.verifyCode(email, code);
-        if (isValid) {
-            model.addAttribute("verificationSuccess", true);
-            return "register";
-        } else {
-            model.addAttribute("verificationError", "인증번호가 올바르지 않습니다.");
-            return "register";
-        }
+
+    @GetMapping("success_register")
+    public String success_register(Model model) {
+        return "success_register";
     }
 
     @GetMapping("main")

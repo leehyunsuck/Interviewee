@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import java.io.IOException;
 
 @Controller
-@WebServlet(name = "Register", value = "/register")
+//@WebServlet(name = "Register", value = "/register")
 public class UserInfoController extends HttpServlet {
     private final UserInfoService userInfoService;
 
