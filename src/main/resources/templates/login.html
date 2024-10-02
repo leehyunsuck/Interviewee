@@ -115,11 +115,19 @@
                 top:71%;
                 transform: translateY(-20%);
             }
-            a:link {
+            a:link.find {
                 color: #817979;
                 position: absolute;
                 right: 380px;
                 top: 62%;
+                margin-right: 20px;
+                transform: translateY(-20%);
+            }
+            a:link.register{
+                color: #817979;
+                position: absolute;
+                right: 380px;
+                top: 79%;
                 margin-right: 20px;
                 transform: translateY(-20%);
             }
@@ -142,7 +150,8 @@
         <p class="comment5">Password</p>
         <input class="comment3" type="password" name="password">
 
-        <a href="find_pw">비밀번호 찾기</a>
+        <a href="find_pw" class="find">비밀번호 찾기</a>
+        <a href="register" class="register">회원가입</a>
 
         <input class="login" type="submit" value="Login">
     </form>
