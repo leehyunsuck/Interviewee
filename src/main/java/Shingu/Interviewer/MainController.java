@@ -46,6 +46,7 @@ public class MainController {
 
         // 세션에 email 정보 있으면 공통적으로 model에 담기
         if (session.getAttribute("loggedInEmail") != null) model.addAttribute("loggedInEmail", session.getAttribute("loggedInEmail"));
+        System.out.println(model.getAttribute("loggedInEmail"));
     }
 
     @GetMapping
@@ -55,7 +56,7 @@ public class MainController {
 
     @GetMapping("login")
     public String login(Model model) {
-        if (model.getAttribute("loggedInEmail") != null) return "index";
+        if (model.getAttribute("loggedInEmail") != null) return "main";
         return "login";
     }
     @PostMapping("login")
@@ -65,7 +66,7 @@ public class MainController {
 
     @GetMapping("register")
     public String register(Model model) {
-        if (model.getAttribute("loggedInEmail") != null) return "index";
+        if (model.getAttribute("loggedInEmail") != null) return "main";
         model.addAttribute("action", "sendMail");
         return "register";
     }
