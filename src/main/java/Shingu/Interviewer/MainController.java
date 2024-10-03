@@ -65,8 +65,9 @@ public class MainController {
     }
 
     @GetMapping("register")
-    public String register(Model model) {
+    public String register(Model model, HttpSession session) {
         if (model.getAttribute("loggedInEmail") != null) return "main";
+        session.invalidate();   // 세션 무효
         model.addAttribute("action", "sendMail");
         return "register";
     }

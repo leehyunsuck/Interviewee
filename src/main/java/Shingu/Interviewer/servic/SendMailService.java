@@ -4,10 +4,12 @@ import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 @Service
 public class SendMailService {
@@ -18,7 +20,8 @@ public class SendMailService {
     @Value("${spring.mail.password}")
     private String password;
 
-    public boolean sendMail(String to, String title, String content) {
+    @Async
+    public void sendMail(String to, String title, String content) {
         //이메일 전송 구현
         try {
             // 메일 서버 설정
@@ -48,9 +51,8 @@ public class SendMailService {
             // 이메일 전송
             Transport.send(message);
         } catch (MessagingException | UnsupportedEncodingException e) {
-            System.out.println(e.getMessage());
-            return false;
+            Logger logger = Logger.getLogger(SendMailService.class.getName());
+            logger.warning("Failed to send email: " + e.getMessage());
         }
-        return true;
     }
 }
