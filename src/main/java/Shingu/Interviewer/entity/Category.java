@@ -8,17 +8,12 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@Table(name = "user_info")
-public class UserInfo {
+@Table(name = "category")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String email;
-
-    private String password;
+    @Column(name = "category_name", length = 255)
+    private String categoryName;
 }
