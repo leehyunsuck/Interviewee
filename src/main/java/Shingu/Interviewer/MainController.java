@@ -6,6 +6,7 @@ import Shingu.Interviewer.servic.SendMailService;
 import Shingu.Interviewer.tool.GetClientIP;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,7 +30,9 @@ public class MainController {
     }
 
     private final Map<String, Integer> ipMap = new HashMap<>();       // 유저IP : 요청 횟수
+
     private static final int MAX_REQUESTS_PER_MINUTE = 100;     // 분당 최대 요청 횟수
+
     @Scheduled(cron = "0 * * * * *")                            // 1분 마다 요청 횟수 Map 초기화
     public void resetIpMap() {
         ipMap.clear();
@@ -44,9 +47,9 @@ public class MainController {
         if (requestCount > MAX_REQUESTS_PER_MINUTE) throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "너무 많은 요청을 보내셨습니다. 서버 과부하 방지를 위해 1분뒤 다시 요청해주세요");
         ipMap.put(ipAddress, requestCount);
 
-        // 세션에 email 정보 있으면 공통적으로 model에 담기
+        // 세션에 email 정보 있으면 공통적으로 model에 담기, 없으면 세션 초기화
         if (session.getAttribute("loggedInEmail") != null) model.addAttribute("loggedInEmail", session.getAttribute("loggedInEmail"));
-        System.out.println(model.getAttribute("loggedInEmail"));
+        else session.invalidate();
     }
 
     @GetMapping
@@ -67,7 +70,6 @@ public class MainController {
     @GetMapping("register")
     public String register(Model model, HttpSession session) {
         if (model.getAttribute("loggedInEmail") != null) return "main";
-        session.invalidate();   // 세션 무효
         model.addAttribute("action", "sendMail");
         return "register";
     }

@@ -75,11 +75,11 @@ public class EmailSendUpdatePassword extends HttpServlet {
                 <p> [인증코드] </p>
                 """.replace("[인증코드]", String.valueOf(code));
 
-        if (sendMailService.sendMail(email, title, htmlContent)) {
-
-        } else {
-            //error
-        }
+//        if (sendMailService.sendMail(email, title, htmlContent)) {
+//
+//        } else {
+//            //error
+//        }
 
         req.getSession().setAttribute("email", email);
         req.getSession().setAttribute("code", code);
