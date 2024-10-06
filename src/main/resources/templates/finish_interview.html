@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>finish interview</title>
+    <style>
+        .ErrorEmail {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .gif {
+            width: 500px;
+            height: 500px;
+        }
+        .comemnt1 {
+            margin-top: 10px;
+            color: black;
+            font-size: 40px;
+            font-family: Archivo Black;
+            font-weight: 400;
+            text-align: center;
+            word-wrap: break-word;
+        }
+        .link {
+            color: #3D5AED;
+            position: absolute;
+            bottom: 10%;
+            margin-bottom: 20px;
+            transform: translateY(-20%);
+        }
+    </style>
+    <script th:inline="javascript">
+        window.addEventListener('click', function() {
+            var hrefValue = /*[[${hrefValue}]]*/ 'main';
+            window.location.href = hrefValue;
+        });
+    </script>
+</head>
+<body>
+<div class="ErrorEmail">
+    <img src="/static/img/finish_interview.gif" class="gif">
+    <div class="comemnt1">수고하셨습니다.</div>
+    <a href="" class="link">이메일로 보고서 보내기</a>
+</div>
+</body>
+</html>
+s

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>interview</title>
+    <style>
+        @media screen {
+            body {
+                margin: 0;
+                width: 1920px;
+                height: auto;
+                background-color: #E8ECEF;
+            }
+            div.menu {
+                border: none;
+                width: 1940px;
+                height: 80px;
+                background-color: white;
+            }
+            .title {
+                background-position: left top;
+                border: none;
+                background-color: transparent;
+                margin-top: 20px;
+                width: 250px;
+            }
+            .timer_image {
+                background-position: right top;
+                width: 40px;
+                border: none;
+                background-color: transparent;
+                position: absolute;
+                right: 95px;
+                top: 17px;
+            }
+            .chat-container {
+                width: 1900px;
+                height: 800px;
+                border: none;
+                background-color: #E8ECEF;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+                padding: 20px;
+                /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+            }
+            .message {
+                display: flex;
+                /*align-items: center;*/
+                margin: 200px 200px 350px;
+                padding: 30px;
+                border-radius: 40px;
+                max-width: 80%;
+                position: relative; /* 메시지 박스를 기준으로 위치 조정 */
+            }
+            .user-message {
+                font-size: 25px;
+                background-color: #ffffff;
+                color: black;
+                word-break: break-all;
+                width: 400px;
+                padding: 40px;
+                align-self: flex-end;
+                justify-content: flex-end;
+            }
+            .bot-message {
+                font-size: 25px;
+                color: white;
+                word-break: break-all;
+                width: 400px;
+                padding: 40px;
+                background-color: #6B7FE7;
+                align-self: flex-start;
+            }
+            .chat-img {
+                position: absolute;
+                left: -100px;
+                top: 20%;
+                transform: translateY(-50%);
+                width: 70px;
+                height: 70px;
+                margin-right: 5px;
+                border-radius: 50%;
+            }
+            .input-container {
+                font-size: 25px;
+                color: white;
+                word-break: break-all;
+                width: 400px;
+                padding: 30px;
+                background-color: transparent;
+                align-self: flex-start;
+                display: flex;
+                position: absolute;
+                right: 70px;
+                bottom: 80px;
+
+            }
+            .input-container textarea {
+                border: solid 18px white;
+                border-radius: 40px;
+                overflow:hidden;
+                resize: none;
+                font-size: 25px;
+                font-family: "Archivo Black";
+                align-content: center;
+                color: black;
+                outline: none;
+                word-break:break-all;
+                width: 400px;
+                padding: 40px;
+                background-color: #ffffff;
+                align-self: flex-start;
+            }
+
+            .input-container button {
+                font-size: 1px;
+                margin-left: 10px;
+                border: none;
+                background-color: transparent;
+                color: transparent;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .input-container button:hover {
+                background-color: transparent;
+            }
+            .timer {
+                position: absolute;
+                top: 21px;
+                right: 30px;
+                font-size: 20px;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="menu">
+    <button type="button" class="title" onclick="location.href='main'">
+        <img src="/static/img/resume_chat_logo.png" width="200">
+    </button>
+    <img class="timer_image" src="/static/img/timer_img.png">
+    <div class="timer" id="timer">00:00</div>
+</div>
+
+<div class="chat-container" id="chat-container">
+    <!-- 대화 내용이 여기에 추가됩니다. -->
+    <div class="input-container">
+        <textarea id="user-input" placeholder="답변을 입력하세요..." maxlength="1000"></textarea>
+        <button id="send-button">전송</button>
+    </div>
+</div>
+
+
+
+<script>
+
+    // const response = await fetch(`/api/questions?title=${encodeURIComponent(title)}`);
+    // if (!response.ok) {
+    //     throw new Error('네트워크 응답이 실패했습니다.');
+    // }
+    // const questions = await response.json();
+    // questions.forEach(question => {
+    //     addMessage(question, false); // 질문을 표시합니다.
+    // });
+    // }
+    //
+    // function addMessage(content, isUser) {
+    //     const messageDiv = document.createElement('div');
+    //     messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+
+    // if (!isUser) {
+    //     const chatImg = document.createElement('img');
+    //     chatImg.src = '/static/img/chat_img.png';
+    //     chatImg.className = 'chat-img';
+    //     messageDiv.appendChild(chatImg);
+    // }
+    //     const messageContent = document.createElement('div');
+    //     messageContent.textContent = content;
+    //     messageDiv.appendChild(messageContent);
+    //     document.getElementById('chat-container').appendChild(messageDiv);
+
+    //     scrollToBottom();
+    // }
+
+
+    const questions = [
+        "사용해본 프로그래밍 언어 중 가장 자신 있는 언어는 무엇이며, 그 언어를 사용해 해결한 문제나 프로젝트 경험을 설명해 주세요.",
+        "최근에 배운 새로운 기술이나 도구는 무엇이며, 이를 어떻게 실무에 적용할 계획인가요?",
+        "복잡한 문제를 해결하기 위해 사용한 알고리즘이나 자료 구조에 대해 설명해 주세요.",
+        "팀 프로젝트에서의 협업 경험을 공유해 주시고, 코드 리뷰나 Git을 사용한 버전 관리 경험이 있나요?",
+        "백엔드(또는 프론트엔드) 개발에서 가장 중요한 요소는 무엇이라고 생각하며, 그 이유는 무엇인가요?"
+    ];
+
+    let currentQuestionIndex = 0;
+    let timer;
+    let elapsedTime = 0;
+
+    function addMessage(content, isUser) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+
+        if (!isUser) {
+            const chatImg = document.createElement('img');
+            chatImg.src = '/static/img/chat_img.png';
+            chatImg.className = 'chat-img';
+            messageDiv.appendChild(chatImg);
+        }
+
+        const messageContent = document.createElement('div');
+        messageContent.textContent = content;
+        messageDiv.appendChild(messageContent);
+        document.getElementById('chat-container').appendChild(messageDiv);
+
+        // 메시지를 추가한 후 자동으로 스크롤을 맨 아래로 이동
+        scrollToBottom();
+    }
+
+
+    function scrollToBottom() {
+        const chatContainer = document.getElementById('chat-container');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function sendQuestion() {
+        if (currentQuestionIndex < questions.length) {
+            addMessage(questions[currentQuestionIndex], false);
+            currentQuestionIndex++;
+            resetTimer();
+        } else {
+
+            // 모든 질문이 끝나면 다른 페이지로 이동
+            window.location.href = "finish_interview.html"; // 이동할 페이지 경로
+        }
+    }
+
+    function resetTimer() {
+        clearTimeout(timer);
+        elapsedTime = 0;
+        updateTimerDisplay();
+        timer = setInterval(() => {
+            elapsedTime += 1;
+            updateTimerDisplay();
+        }, 1000); // 1초마다 업데이트
+        setTimeout(() => {
+            sendQuestion();
+        }, 300000); // 300000 milliseconds = 5 minutes
+    }
+
+    function updateTimerDisplay() {
+        const minutes = String(Math.floor(elapsedTime / 60)).padStart(2, '0');
+        const seconds = String(elapsedTime % 60).padStart(2, '0');
+        document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+    }
+
+    // 초기 질문 전송
+    sendQuestion();
+
+    // 사용자 입력 전송
+    document.getElementById('send-button').addEventListener('click', () => {
+        const userInput = document.getElementById('user-input').value.trim();
+        if (userInput) {
+            addMessage(userInput, true);
+            document.getElementById('user-input').value = ''; // 입력창 초기화
+            resetTimer();
+            sendQuestion(); // 답변 후 다음 질문 전송
+        }
+    });
+
+    // 엔터 키로 입력 가능
+    document.getElementById('user-input').addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            document.getElementById('send-button').click();
+        }
+    });
+</script>
+
+</body>
+</html>
