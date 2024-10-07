@@ -28,7 +28,8 @@
     </style>
     <script th:inline="javascript">
         window.addEventListener('click', function() {
-            var hrefValue = /*[[${hrefValue}]]*/ 'login';
+            var hrefValue = /*[[${hrefValue}]]*/ 'main';
+            if (!hrefValue) hrefValue = 'main';
             window.location.href = hrefValue;
         });
     </script>
