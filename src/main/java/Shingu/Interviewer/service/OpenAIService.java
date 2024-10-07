@@ -1,4 +1,4 @@
-package Shingu.Interviewer.servic;
+package Shingu.Interviewer.service;
 
 import Shingu.Interviewer.controller.CustomBotController;
 import Shingu.Interviewer.dto.ChatGPTResponse;

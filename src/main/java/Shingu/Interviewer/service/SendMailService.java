@@ -1,4 +1,4 @@
-package Shingu.Interviewer.servic;
+package Shingu.Interviewer.service;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;

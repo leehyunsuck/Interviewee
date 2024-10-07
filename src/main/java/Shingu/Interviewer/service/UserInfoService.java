@@ -1,4 +1,4 @@
-package Shingu.Interviewer.servic;
+package Shingu.Interviewer.service;
 
 import Shingu.Interviewer.entity.UserInfo;
 import Shingu.Interviewer.repository.UserInfoRepository;
