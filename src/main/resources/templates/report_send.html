@@ -2,9 +2,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>finish interview</title>
     <style>
-        .ErrorEmail {
+        .wait {
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -16,10 +16,10 @@
             width: 500px;
             height: 500px;
         }
-        .comemnt1 {
-            margin-top: 20px;
+        .comment1 {
+            margin-top: 10px;
             color: black;
-            font-size: 40px;
+            font-size: 25px;
             font-family: Archivo Black;
             font-weight: 400;
             text-align: center;
@@ -27,20 +27,17 @@
         }
     </style>
     <script th:inline="javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            window.addEventListener('click', function() {
-                var hrefValue = /*[[${hrefValue}]]*/ 'main';
-                if (!hrefValue) hrefValue = 'main';
-                window.location.href = hrefValue;
-            });
+        window.addEventListener('click', function(event) {
+            var hrefValue = /*[[${hrefValue}]]*/ 'main';
+            if (!hrefValue) hrefValue = 'main';
+            window.location.href = hrefValue;
         });
     </script>
-
 </head>
 <body>
-<div class="ErrorEmail">
-    <img src="/img/error.gif" class="gif">
-    <div class="comemnt1" th:text="${errorMsg}">에러 문자</div>
+<div class="wait">
+    <img src="/img/finish_interview.gif" class="gif">
+    <div class="comment1">메일 전송을 요청하였습니다. <br>15s ~ 5m 사이에 메일 도착 예정입니다.</div>
 </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package Shingu.Interviewer.servic;
+package Shingu.Interviewer.service;
 
 import Shingu.Interviewer.entity.UserInfo;
 import Shingu.Interviewer.tool.HashEncode;
@@ -81,7 +81,22 @@ public class RegisterService {
         Random random = new Random();
         int code = random.nextInt(900000) + 100000;
 
-        String content = "귀하의 인증번호는 " + code + "입니다."; // 이메일 내용
+        String content = """
+            <div class="container" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 20px;">
+                <div class="header"; margin-bottom: 20px;">
+                    <h2 style="color: #3D5AED; font-size: 24px; margin: 0;">Interviewee 인증코드</h2>
+                </div>
+                <div class="content" style="font-size: 18px; line-height: 1.6; margin-bottom: 20px; color: #333;">
+                    <p>안녕하세요,</p>
+                    <p>귀하의 인증번호는 <strong style="color: #3D5AED;">%s</strong>입니다.</p>
+                    <p>인증번호를 입력하여 본인 확인을 완료해 주세요.</p>
+                </div>
+                <div class="footer" style="text-align: center; margin-top: 20px; font-size: 14px; color: #999;">
+                    <p>감사합니다!</p>
+                    <p><a href="https://interviewee.kro.kr" style="color: #3D5AED; text-decoration: none;">Interviewee</a></p>
+                </div>
+            </div>
+            """.replace("%s", code + "");
         sendMailService.sendMail(email, "이메일 인증", content); // 메일 전송
         model.addAttribute("action", "checkCode");
         verificationCodes.put(email, code);

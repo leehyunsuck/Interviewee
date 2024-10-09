@@ -1,7 +1,7 @@
 package Shingu.Interviewer.basic.updatePassword;
 
-import Shingu.Interviewer.servic.SendMailService;
-import Shingu.Interviewer.servic.UserInfoService;
+import Shingu.Interviewer.service.SendMailService;
+import Shingu.Interviewer.service.UserInfoService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

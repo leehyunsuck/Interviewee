@@ -1,7 +1,7 @@
 package Shingu.Interviewer.controller;
 
 import Shingu.Interviewer.entity.UserInfo;
-import Shingu.Interviewer.servic.UserInfoService;
+import Shingu.Interviewer.service.UserInfoService;
 import Shingu.Interviewer.tool.HashEncode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

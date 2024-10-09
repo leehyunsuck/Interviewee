@@ -1,0 +1,16 @@
+[33m3655d6e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD^
+[33m34619d5[m HEAD@{1}: reset: moving to HEAD~2
+[33mf350416[m HEAD@{2}: reset: moving to HEAD^
+[33mce6a2b7[m HEAD@{3}: reset: moving to HEAD~1
+[33mf8aff82[m HEAD@{4}: reset: moving to HEAD~1
+[33m72fefe2[m HEAD@{5}: reset: moving to HEAD~1
+[33m415e67a[m HEAD@{6}: reset: moving to HEAD~1
+[33mc25bfda[m HEAD@{7}: reset: moving to HEAD~1
+[33mb1bbfce[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{8}: commit (merge): JobTitleService/JobTitleRepository 파일추가
+[33mc25bfda[m HEAD@{9}: commit: JobTitleService/JobTitleRepository 파일추가
+[33m415e67a[m HEAD@{10}: commit: JobTitleService/JobTitleRepository 파일추가
+[33m72fefe2[m HEAD@{11}: pull: Fast-forward
+[33mf350416[m HEAD@{12}: pull: Fast-forward
+[33m34619d5[m HEAD@{13}: pull: Fast-forward
+[33me206198[m HEAD@{14}: commit: DB 연동 entity 추가
+[33m71db809[m HEAD@{15}: clone: from https://github.com/leehyunsuck/Interviewer.git
