@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>interview</title>
+    <style>
+        @media screen {
+            body {
+                margin: 0;
+                width: 1920px;
+                height: auto;
+                background-color: #E8ECEF;
+            }
+            div.menu {
+                border: none;
+                width: 1920px;
+                height: 80px;
+                background-color: white;
+            }
+
+            .title {
+                background-position: left top;
+                border: none;
+                background-color: transparent;
+                margin-top: 27px;
+                width: 250px;
+            }
+
+            .jobObjectives {
+                font-family: "Azeret Mono";
+                position: absolute;
+                top: 130px;
+                left: 95px;
+            }
+
+
+
+            .jobObjectives_title {
+                margin: 0;
+                padding: 0;
+                border-bottom: solid #817A7A 1px;
+                width: 1720px;
+                height: 100px;
+                background-color: #E8ECEF;
+            }
+
+            .jobObjectives_title h2 {
+                position: relative;
+                top: 29px;
+                left: 33px;
+            }
+
+            .jobObjectives_title p {
+                position: relative;
+                top: 20px;
+                left: 32px;
+            }
+
+            .jobObjectives_title b {
+                color: #f97346;
+                font-size: 20px;
+                font-weight: bold;
+                position: relative;
+                top: 5px;
+            }
+
+            .select-container  {
+                /*margin: 20px;*/
+                /*padding: 50px;*/
+                width: 980px; /* 원하는 너비로 조정 */
+                height: auto; /* 높이는 자동으로 조정 */
+            }
+
+            .select-container select {
+                width: 980px;
+                height: 600px;
+                /*font-size: 40px;*/
+            }
+
+            .jobObjectives-container a {
+                font-family: "Azeret Mono";
+                color: #817A7A;
+                position: absolute;
+                top: 10px; /* 이동 시 위쪽 위치 */
+                right: 20px; /* 이동 시 오른쪽 상단으로 배치 */
+                transition: all 0.3s ease; /* 부드러운 애니메이션 효과 */
+            }
+
+            .jobObjectives-container a.center {
+                top: 60px; /* 가운데일 때 위치 */
+                left: 900px; /* 가운데 정렬 */
+            }
+
+            .jobObjectives-container img {
+                position: absolute;
+                top: 3px;
+                bottom: 5px; /* 기본적으로 텍스트와 일치하게 조정 */
+                right: 860px;
+                transition: all 0.3s ease; /* 이미지 이동 애니메이션 */
+            }
+
+            /*.custom-select {*/
+            /*    padding: 50px;*/
+            /*    border: 1px solid #ccc;*/
+            /*    background-color: #fff;*/
+            /*    cursor: pointer;*/
+            /*    text-align: left;*/
+            /*}*/
+
+            .options {
+                display: none;
+                position: absolute;
+                /*z-index: 1;*/
+                border: 1px solid #ccc;
+                background-color: #fff;
+                max-height: 600px;
+                overflow-y: auto;
+                width: 970px;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* 두 개의 열로 나눔 */
+                gap: 30px; /* 열 간 간격 */
+                padding: 10px; /* 패딩 추가 */
+
+                font-family: "Azeret Mono";
+                font-size: 30px;
+            }
+            .option {
+                padding: 20px;
+                cursor: pointer;
+            }
+            .option:hover {
+                margin: 0;
+                background-color: #6B7FE7;
+            }
+
+            .radio-group {
+                position: relative;
+                left: 1000px;
+                padding: 5%;
+                font-size: 28px;
+                display: none; /* 기본적으로 숨김 */
+                flex-direction: column; /* 세로 방향으로 정렬 */
+            }
+
+            .radio-group label {
+                display: flex; /* 라벨을 flexbox로 사용 */
+                align-items: center; /* 수직 정렬 */
+                margin-bottom: 40px ; /* 라벨 간의 간격 추가 */
+            }
+
+            .need_text {
+                font-family: "Azeret Mono";
+                position: relative;
+                top: 60px;
+                right: -1700px;
+            }
+
+            .star {
+                color: #f97346;
+                font-family: "Azeret Mono";
+                font-weight: bold;
+                font-size: 25px;
+                position: absolute;
+                top: -20px;
+                left: 15px;
+            }
+
+            .star-right {
+                color: #f97346;
+                font-family: "Azeret Mono";
+                font-weight: bold;
+                font-size: 25px;
+                position: absolute;
+                top: -30px;
+                left: -20px;
+            }
+
+            .jobObjectives-container {
+                width: 1720px;
+                height: 100px;
+                border: solid #817A7A 1px;
+                border-radius: 10px;
+                background-color: #ffffff;
+                overflow-y: auto;
+                position: absolute;
+                top: 200px;
+                left: 90px;
+                flex-direction: column;
+                padding: 20px;
+                /*text-align: left; !* 기본적으로 가운데 정렬 *!*/
+            }
+
+            .jobObjectives-container.has-data .add-link {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                text-align: right; /* 데이터가 있으면 오른쪽 정렬 */
+            }
+
+            .selected-job {
+                display: inline-block;
+                padding: 10px 15px;
+                margin: 5px;
+                background-color: #f2f2f2;
+                border: solid 1px #ccc;
+                border-radius: 5px;
+                font-family: "Azeret Mono";
+                font-size: 18px;
+                cursor: pointer;
+            }
+            .selected-job:hover {
+                background-color: #6B7FE7; /* 호버 시 색상 */
+                color: white;
+            }
+
+            .jobObjectives-container .add-link {
+                font-family: "Azeret Mono";
+                color: #817A7A;
+                text-decoration: none;
+            }
+
+            .jobObjectives-container a:link {
+                font-family: "Azeret Mono";
+                color: #817A7A;
+                position: absolute;
+                top: 60px;
+                left: 890px;
+            }
+
+            .jobObjectives-container img {
+                position: absolute;
+                top: 3px;
+            }
+
+            /* 팝업 스타일 */
+            .popup_layer {
+                display: none; /* 기본적으로 숨김 */
+                position: relative;
+                top: 500px;
+                left: 90px;
+                z-index: 10000;
+                width: 1720px;
+                height: auto;
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            .popup_box {
+                border: solid #817A7A 1px;
+                position: relative;
+                top: 50%;
+                left: 50%;
+                overflow: auto;
+                height: 752px;
+                width: 1720px;
+                transform: translate(-50%, -50%);
+                z-index: 1002;
+                box-sizing: border-box;
+                background: #fff;
+                box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.35);
+            }
+
+            .popup_box .popup_cont {
+                padding: 0; /* 패딩 조정 */
+                line-height: 1.4rem;
+                font-size: 14px;
+            }
+
+            .popup_box .popup_cont h2 {
+                padding: 0;
+                color: #333;
+                margin: 0;
+            }
+
+            .popup_box .popup_cont button {
+                border: none;
+                padding: 0;
+                position: absolute;
+                right: 30px;
+            }
+
+
+            .portfolio {
+                font-family: "Azeret Mono";
+                position: absolute;
+                top: 380px;
+                left: 95px;
+            }
+
+            .portfolio-container {
+                width: 1740px;
+                height: auto;
+                border: solid #817A7A 1px;
+                border-radius: 10px;
+                background-color: #ffffff;
+                /*overflow-y: auto;*/
+                position: absolute;
+                top: 460px;
+                left: 95px;
+                display: flex; /* Use flexbox for layout */
+                flex-direction: column;
+                padding: 10px;
+                text-align: left; /* 기본적으로 가운데 정렬 */
+            }
+
+            .portfolio-container .part {
+                position: relative;
+                top: 90px;
+                left: 45px;
+                width: 30%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: auto;
+                border: solid #817979 1px; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+            .portfolio-container .part textarea {
+                position: relative;
+                top: 5px;
+                left: 20px;
+                border: none;
+                font-size: 25px;
+                overflow:hidden;
+                resize: none;
+                font-family: "Archivo Black";
+                color: black;
+                outline: none;
+                word-break:break-all;
+            }
+
+            .portfolio-container .skills {
+                position: relative;
+                top: -83px;
+                left: 35.5%;
+                width: 30%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: auto;
+                border: solid #817979 1px; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+            .portfolio-container .skills textarea {
+                position: relative;
+                top: 5px;
+                left: 20px;
+                border: none;
+                font-size: 25px;
+                overflow:hidden;
+                resize: none;
+                font-family: "Archivo Black";
+                color: black;
+                outline: none;
+                word-break:break-all;
+            }
+
+            .portfolio-container .contribution {
+                position: relative;
+                top: -256px;
+                left: 68%;
+                width: 30%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: auto;
+                border: solid #817979 1px; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+            .portfolio-container .contribution textarea {
+                position: relative;
+                top: 5px;
+                left: 20px;
+                border: none;
+                font-size: 25px;
+                overflow:hidden;
+                resize: none;
+                font-family: "Archivo Black";
+                color: black;
+                outline: none;
+                word-break:break-all;
+            }
+
+            .portfolio-container .name {
+                position: relative;
+                top: 40px;
+                left: 45px;
+                width: 95%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: auto;
+                border: solid #817979 1px; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+
+            .portfolio-container .name div {
+                border: solid #817979 1px;
+                border-radius: 12px;
+                padding: 10px; /* Optional: Add padding for better appearance */
+            }
+
+
+            .portfolio-container .name textarea {
+                position: relative;
+                top: 5px;
+                left: 20px;
+                border: none;
+                font-size: 25px;
+                overflow:hidden;
+                resize: none;
+                font-family: "Archivo Black";
+                color: black;
+                outline: none;
+                word-break:break-all;
+            }
+
+            .portfolio-container .detail {
+                position: relative;
+                top: -200px;
+                left: 45px;
+                width: 95%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: 400px;
+                border: solid #817979 1px; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+            .portfolio-container .detail textarea {
+                position: relative;
+                top: 5px;
+                left: 20px;
+                height: 300px;
+                border: none;
+                font-size: 25px;
+                overflow:hidden;
+                resize: none;
+                font-family: "Archivo Black";
+                color: black;
+                outline: none;
+                word-break:break-all;
+            }
+
+            .portfolio-container h4{
+                font-family: "Azeret Mono";
+                margin: 10px; /* Reset margin */
+                padding: 10px 10px; /* Add top and bottom padding */
+                position: relative;
+                top: -5px;
+            }
+            .portfolio-container .add_btn {
+                position: relative;
+                top: -100px;
+                left: 650px;
+                width: 30%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: 100px;
+                border: none; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+            .portfolio-container .cancel_all_btn {
+                position: relative;
+                top: -100px;
+                left: 650px;
+                width: 30%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: 100px;
+                border: none; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+            .portfolio-container .add_btn img {
+                position: relative;
+                top: 6px;
+            }
+
+            .portfolio-container b{
+                color: #f97346;
+                font-family: "Azeret Mono";
+                font-weight: bold;
+                position: relative;
+                /*right: px;*/
+            }
+
+            .portfolio-container p {
+                position: relative;
+                right: -1550px;
+                font-weight: bold;
+            }
+
+            .self-introduction {
+                font-family: "Azeret Mono";
+                position: absolute;
+                top: 1760px;
+                left: 95px;
+            }
+
+            .self-introduction-container {
+                width: 1740px;
+                height: auto;
+                border: solid #817A7A 1px;
+                border-radius: 10px;
+                background-color: #ffffff;
+                overflow-y: auto;
+                position: absolute;
+                top: 1840px;
+                left: 95px;
+                display: flex; /* Use flexbox for layout */
+                flex-direction: column;
+                padding: 10px;
+                text-align: left; /* 기본적으로 가운데 정렬 */
+            }
+
+            .self-introduction-container .detail {
+                position: relative;
+                top: 20px;
+                left: 45px;
+                width: 95%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: 600px;
+                border: solid #817979 1px; /* name div의 테두리 설정 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+            .self-introduction-container .detail div {
+                border: solid #817979 1px;
+                padding: 10px; /* Optional: Add padding for better appearance */
+            }
+
+
+            .self-introduction-container .detail textarea {
+                height: 500px;
+                position: relative;
+                top: 30px;
+                left: 20px;
+                border: none;
+                font-size: 20px;
+                overflow:hidden;
+                resize: none;
+                font-family: "Archivo Black";
+                color: black;
+                outline: none;
+                word-break:break-all;
+            }
+
+
+            .self-introduction-container .title {
+                position: relative;
+                top: 20px;
+                left: 45px;
+                width: 95%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: auto;
+                border: solid #817979 1px; /* name div의 테두리 설정 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+
+            .self-introduction-container .title div {
+                border: solid #817979 1px;
+                padding: 10px; /* Optional: Add padding for better appearance */
+            }
+
+
+            .self-introduction-container .title textarea {
+                position: relative;
+                top: 1px;
+                left: 20px;
+                border: none;
+                font-size: 25px;
+                font-weight: bold;
+                overflow:hidden;
+                resize: none;
+                font-family: "Archivo Black";
+                color: black;
+                outline: none;
+                word-break:break-all;
+            }
+
+            .self-introduction-container .add_self_intro_btn {
+                position: relative;
+                top: 70px;
+                left: 650px;
+                width: 30%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: 100px;
+                border: none; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+            .self-introduction-container .add_self_intro_btn img{
+                position: relative;
+                top: 6px;
+            }
+
+            .self-introduction-container .add_self_intro_btns {
+                position: relative;
+                top: 10px;
+                left: 650px;
+                width: 30%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: 100px;
+                border: none; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+
+            .self-introduction-container .add_self_intro_btns img{
+                position: relative;
+                top: 6px;
+            }
+
+            .self-introduction-container .cancel_self_intro_btn {
+                position: relative;
+                top: 70px;
+                left: 1640px;
+                width: 5%; /* 부모 컨테이너의 100% 너비로 설정 */
+                height: 100px;
+                border: none; /* name div의 테두리 설정 */
+                border-radius: 12px; /* 둥근 모서리 추가 */
+                padding: 10px; /* 여백 추가 */
+                box-sizing: border-box; /* 패딩과 테두리가 총 너비/높이에 포함되도록 설정 */
+                background-color: #ffffff; /* 테두리를 보기 위해 배경색 설정 */
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="menu">
+    <button type="button" class="title" onclick="location.href='main'">
+        <img src="/static/img/resume_chat_logo.png" width="150">
+    </button>
+</div>
+
+<h2 class="jobObjectives">희망 직군</h2>
+<h5 class="need_text"><p class="star-right">*</p>필수 입력 항목입니다.</h5>
+<div class="jobObjectives-container" id="jobObjectives-container">
+    <p class="star">*</p>
+    <a href="javascript:openPop()" class="add-link" id="add-link"><img src="/static/img/add_icon.png" width="20" id="add-icon"> 추가하기</a>
+</div>
+
+<!-- 팝업 레이어 추가 -->
+<div class="popup_layer" id="popup_layer">
+    <div class="popup_box">
+        <div class="popup_cont">
+            <div class="jobObjectives_title">
+                <h2>직무 분야</h2>
+                <button onclick="closePop()">✕</button>
+                <p><b>*&nbsp</b>최대 2가지 직무 분야 선택가능</p>
+            </div>
+            <div class="select-container">
+                <!--                <div class="custom-select" id="selected-option">직무 선택하기</div>-->
+                <div class="options" id="options"></div>
+                <div class="radio-group" id="radio-group"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<h2 class="portfolio">포트폴리오</h2>
+<div class="portfolio-container" id="portfolio-container">
+    <div class="name">
+        <h4>프로젝트 이름</h4>
+        <textarea class="name"></textarea>
+    </div>
+    <div class="part">
+        <h4>맡은 부분</h4>
+        <textarea class="part"></textarea>
+    </div>
+    <div class="skills">
+        <h4>사용 기술</h4>
+        <textarea class="skills"></textarea>
+    </div>
+    <div class="contribution">
+        <h4>기여도</h4>
+        <textarea class="contribution"></textarea>
+    </div>
+    <div class="detail">
+        <h4>프로젝트 내용</h4>
+        <textarea class="detail"></textarea>
+    </div>
+    <button class="add_btn" onclick="addPortfolio()"><img src="/static/img/add_icon.png" width="20">  추가하기</button>
+    <button class="cancel_all_btn" onclick="cancelAll()" style="display: none;"><b>✕&nbsp</b>취소하기</button> <!-- 취소하기 버튼 추가 -->
+    <div id="portfolio-entries"></div> <!-- 포트폴리오 양식이 추가될 공간 -->
+
+    <p><b>*&nbsp</b>최대 2가지 입력 가능</p>
+</div>
+
+<h2 class="self-introduction">자기소개서</h2>
+<div class="self-introduction-container" id="self-introduction-container">
+    <div class="title">
+        <label>
+            <textarea class="title" placeholder="항목을 입력하세요."></textarea>
+        </label>
+    </div>
+    <div class="detail">
+        <label>
+            <textarea class="detail" placeholder="내용을 입력하세요."></textarea>
+        </label>
+    </div>
+    <button class="add_self_intro_btn" onclick="addSelfIntroduction()"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
+    <div id="self-introduction-entries"></div> <!-- 자기소개 항목들이 추가될 공간 -->
+</div>
+<script>
+
+    function addPortfolio() {
+        const portfolioForm = `
+        <div class="portfolio-entry">
+            <div class="name">
+                <h4>프로젝트 이름</h4>
+                <textarea class="name"></textarea>
+            </div>
+            <div class="part">
+                <h4>맡은 부분</h4>
+                <textarea class="part"></textarea>
+            </div>
+            <div class="skills">
+                <h4>사용 기술</h4>
+                <textarea class="skills"></textarea>
+            </div>
+            <div class="contribution">
+                <h4>기여도</h4>
+                <textarea class="contribution"></textarea>
+            </div>
+            <div class="detail">
+                <h4>프로젝트 내용</h4>
+                <textarea class="detail"></textarea>
+            </div>
+        </div>
+    `;
+
+        // 포트폴리오 양식 추가할 공간을 가져옴
+        const entriesContainer = document.getElementById('portfolio-entries');
+
+        // 포트폴리오 양식 추가
+        entriesContainer.insertAdjacentHTML('beforeend', portfolioForm);
+
+        // 추가된 포트폴리오 항목에 따라 자기소개서 위치 조정
+        adjustSelfIntroductionPosition();
+
+        // 추가하기 버튼 숨기기
+        const button = document.querySelector('.add_btn');
+        button.style.display = 'none';
+
+        // 모두 취소하기 버튼 보이기
+        const cancelAllButton = document.querySelector('.cancel_all_btn');
+        cancelAllButton.style.display = 'block';
+    }
+
+    function removePortfolio(button) {
+        // 버튼의 부모 요소를 찾아서 삭제
+        const portfolioEntry = button.parentElement;
+        portfolioEntry.remove();
+
+        // 포트폴리오 항목이 없을 경우 버튼 상태 초기화
+        const entriesContainer = document.getElementById('portfolio-entries');
+        if (entriesContainer.children.length === 0) {
+            const addButton = document.querySelector('.add_btn');
+            addButton.style.display = 'block';
+
+            const cancelAllButton = document.querySelector('.cancel_all_btn');
+            cancelAllButton.style.display = 'none'; // 모두 취소하기 버튼 숨기기
+        }
+
+        // 포트폴리오 항목 제거 후 자기소개서 위치 조정
+        adjustSelfIntroductionPosition();
+    }
+
+    function cancelAll() {
+        // 모든 포트폴리오 항목 제거
+        const entriesContainer = document.getElementById('portfolio-entries');
+        entriesContainer.innerHTML = '';
+
+        // 버튼 상태 초기화
+        const addButton = document.querySelector('.add_btn');
+        addButton.style.display = 'block';
+
+        const cancelAllButton = document.querySelector('.cancel_all_btn');
+        cancelAllButton.style.display = 'none'; // 모두 취소하기 버튼 숨기기
+
+        // 모두 취소 후 자기소개서 위치 초기화
+        adjustSelfIntroductionPosition();
+    }
+
+    function adjustSelfIntroductionPosition() {
+        // 포트폴리오 항목이 몇 개인지 확인
+        const portfolioEntries = document.getElementById('portfolio-entries').children.length;
+
+        // self-introduction 요소의 위치를 변경
+        const selfIntroduction = document.querySelector('.self-introduction');
+
+        // 포트폴리오 항목 수에 따라 자기소개서 위치 변경 (1개당 200px씩 증가한다고 가정)
+        const basePosition = 1760; // 기본 위치
+        const newPosition = basePosition + (portfolioEntries * 1100); // 포트폴리오 항목에 따라 위치 조정
+
+        // 새로운 위치 적용
+        selfIntroduction.style.top = newPosition + 'px';
+    }
+    let selfIntroCount = 0; // 자기소개 항목 개수 카운터
+
+    function addSelfIntroduction() {
+        if (selfIntroCount < 3) { // 최대 4개 제한
+            const selfIntroForm = `
+            <div class="self-introduction-entry" style="margin-bottom: 15px;">
+            <button class="cancel_self_intro_btn" onclick="removeSelfIntroduction(this)"><b>✕</b></button>
+                <div class="title">
+                    <label>
+                        <textarea class="title" placeholder="항목을 입력하세요."></textarea>
+                    </label>
+                </div>
+                <div class="detail">
+                    <label>
+                        <textarea class="detail" placeholder="내용을 입력하세요."></textarea>
+                    </label>
+                </div>
+            </div>
+        `;
+
+            // 항목이 추가될 공간에 중앙에 추가
+            const entriesContainer = document.getElementById('self-introduction-entries');
+            entriesContainer.insertAdjacentHTML('beforeend', selfIntroForm);
+
+            // 자기소개 항목 수 카운트 증가
+            selfIntroCount++;
+
+            // 추가하기 버튼 숨기고, 중앙에 표시된 새 추가하기 버튼 보이기
+            const addButtonTop = document.querySelector('.add_self_intro_btn');
+            addButtonTop.style.display = 'none';
+
+            // 추가하기 버튼이 중앙에 표시되도록 항목 추가 후 재위치
+            const addButtonBottom = `
+            <button class="add_self_intro_btns" onclick="addSelfIntroduction()" style="display: block; margin-top: 15px; text-align: center;"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
+        `;
+            entriesContainer.insertAdjacentHTML('beforeend', addButtonBottom);
+
+        } else {
+            alert("최대 4개의 항목만 추가할 수 있습니다.");
+        }
+    }
+
+    function removeSelfIntroduction(button) {
+        // 버튼의 부모 요소를 찾아서 해당 항목을 삭제
+        const selfIntroEntry = button.parentElement;
+        selfIntroEntry.remove();
+
+        // 자기소개 항목 수 카운트 감소
+        selfIntroCount--;
+
+        // 항목이 삭제된 후 항목이 없으면 상단 추가하기 버튼 다시 보이기
+        if (selfIntroCount === 0) {
+            const addButtonTop = document.querySelector('.add_self_intro_btn');
+            addButtonTop.style.display = 'block';
+        }
+
+        // 추가하기 버튼 다시 보이기
+        const addButtonBottom = document.querySelector('.add_self_intro_btns');
+        if (addButtonBottom) {
+            addButtonBottom.remove(); // 기존 추가하기 버튼 삭제
+        }
+
+        // 새롭게 중앙에 추가하기 버튼 다시 보이기
+        if (selfIntroCount > 0) {
+            const entriesContainer = document.getElementById('self-introduction-entries');
+            const addButtonBottomNew = `
+            <button class="add_self_intro_btns" onclick="addSelfIntroduction()" style="display: block; margin-top: 15px; text-align: center;"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
+        `;
+            entriesContainer.insertAdjacentHTML('beforeend', addButtonBottomNew);
+        }
+    }
+
+
+    const mockJobData = [
+        { id: 1, name: '소프트웨어 엔지니어', subOptions: ['프로그래밍', '시스템 설계'] },
+        { id: 2, name: '데이터 분석가', subOptions: ['통계 분석', '데이터 시각화'] },
+        { id: 3, name: 'UX/UI 디자이너', subOptions: ['프로토타입', '사용자 조사'] },
+        { id: 4, name: '프로젝트 매니저', subOptions: ['일정 관리', '팀 조정'] },
+        { id: 5, name: '시스템 관리자', subOptions: ['서버 관리', '네트워크 설정'] },
+        { id: 6, name: 'QA 엔지니어', subOptions: ['테스트 자동화', '버그 리포트'] },
+        { id: 7, name: '네트워크 엔지니어', subOptions: ['서버 설치', '네트워크 최적화'] },
+        { id: 8, name: '웹 개발자', subOptions: ['프론트엔드', '백엔드'] },
+        { id: 9, name: 'AI 엔지니어', subOptions: ['머신 러닝', '딥 러닝'] },
+        { id: 10, name: '백엔드 개발자', subOptions: ['API 설계', '서버 관리'] },
+        { id: 11, name: '프론트엔드 개발자', subOptions: ['HTML/CSS', 'JavaScript'] },
+        { id: 12, name: 'DevOps 엔지니어', subOptions: ['CI/CD', '자동화 스크립트'] },
+        { id: 13, name: '보안 전문가', subOptions: ['침투 테스트', '네트워크 보안'] },
+        { id: 14, name: 'IT 컨설턴트', subOptions: ['비즈니스 분석', '프로세스 개선'] },
+        { id: 15, name: '기술 지원', subOptions: ['사용자 교육', '문서화'] },
+        { id: 16, name: '데이터 엔지니어', subOptions: ['ETL 프로세스', '데이터 파이프라인'] },
+        { id: 17, name: '게임 개발자', subOptions: ['게임 디자인', '프로그래밍'] },
+        { id: 18, name: '모바일 개발자', subOptions: ['안드로이드', 'iOS'] },
+        { id: 19, name: '클라우드 전문가', subOptions: ['AWS', 'Azure'] },
+        { id: 20, name: '스마트 계약 개발자', subOptions: ['블록체인', '스마트 계약'] }
+    ];
+
+    // 선택 박스에 데이터 채우기
+    function populateSelectBoxes(data) {
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = ''; // 기존 내용 지우기
+
+        data.forEach((job) => {
+            const option = document.createElement('div');
+            option.className = 'option';
+            option.textContent = job.name;
+            option.dataset.value = job.id; // 직무 ID
+
+            // 선택한 직무에 하위 데이터 표시
+            option.addEventListener('click', () => {
+                showSubOptions(job.subOptions);
+            });
+
+            optionsContainer.appendChild(option);
+        });
+
+        // 팝업을 열 때 select 박스를 항상 보이도록 설정
+        optionsContainer.style.display = 'grid'; // 옵션 표시
+    }
+
+    // 최대 선택 가능한 직무 개수
+    const MAX_SELECTED_JOBS = 2;
+
+    // 선택된 직무를 jobObjectives-container에 추가
+    function addJobToContainer(selectedOption) {
+        const container = document.getElementById('jobObjectives-container');
+
+        // 이미 동일한 항목이 추가되어 있는지 확인
+        if (Array.from(container.getElementsByClassName('selected-job')).some(job => job.textContent === selectedOption)) {
+            return; // 이미 존재하면 추가하지 않음
+        }
+
+        // 최대 선택 수를 초과했는지 확인
+        if (container.getElementsByClassName('selected-job').length >= MAX_SELECTED_JOBS) {
+            alert(`최대 ${MAX_SELECTED_JOBS}개 직무만 선택할 수 있습니다.`);
+            return; // 최대 개수를 초과하면 추가하지 않음
+        }
+
+        // 선택된 항목을 추가할 div 생성
+        const newJobElement = document.createElement('div');
+        newJobElement.className = 'selected-job';
+        newJobElement.textContent = selectedOption;
+
+        // 클릭 시 해당 항목 삭제
+        newJobElement.addEventListener('click', () => {
+            container.removeChild(newJobElement);
+            checkJobContainer(); // 삭제 후 컨테이너 상태 확인
+        });
+
+        container.appendChild(newJobElement);
+        checkJobContainer(); // 항목 추가 후 컨테이너 상태 확인
+    }
+
+    // 팝업 열기
+    function openPop() {
+        document.getElementById('popup_layer').style.display = 'block';
+        document.getElementById('options').style.display = 'grid'; // select 박스가 항상 보이도록 설정
+        populateSelectBoxes(mockJobData); // 데이터로 select 박스를 채움
+    }
+
+    function checkJobContainer() {
+        const container = document.getElementById('jobObjectives-container');
+        const addIcon = document.getElementById('add-icon'); // Get the image element
+
+        if (container.querySelectorAll('.selected-job').length > 0) {
+            // 데이터가 있을 때는 오른쪽 상단으로 이동
+            container.classList.add('has-data');
+            addIcon.style.display = 'none'; // Hide the add icon
+        } else {
+            // 데이터가 없을 때는 가운데로 이동
+            container.classList.remove('has-data');
+            addIcon.style.display = 'block'; // Show the add icon
+        }
+    }
+
+
+    function showSubOptions(subOptions) {
+        const radioGroup = document.getElementById('radio-group');
+        radioGroup.innerHTML = ''; // 기존 내용 지우기
+        radioGroup.style.display = 'block'; // 라디오 그룹 보이기
+
+        subOptions.forEach((subOption) => {
+            const label = document.createElement('label');
+            label.textContent = subOption;
+
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'subOption';
+            radio.value = subOption;
+
+            label.prepend(radio);
+            radioGroup.appendChild(label);
+
+            // 라디오 버튼 클릭 시 선택된 옵션을 추가
+            radio.addEventListener('click', () => {
+                addJobToContainer(subOption); // 선택된 하위 옵션을 추가
+                closePop(); // 팝업 닫기
+            });
+        });
+    }
+
+
+    // 초기 상태를 확인하기 위해 DOM이 로드된 후에도 상태 확인
+    document.addEventListener('DOMContentLoaded', checkJobContainer);
+
+    // 팝업 닫기
+    function closePop() {
+        document.getElementById('popup_layer').style.display = 'none';
+    }
+
+    // 클릭 외부 시 옵션 숨기기
+    document.addEventListener('click', (e) => {
+        const selectContainer = document.querySelector('.select-container');
+        if (!selectContainer.contains(e.target)) {
+            document.getElementById('options').style.display = 'none';
+        }
+    });
+    // // 예시 데이터베이스에서 받아오는 함수 (AJAX 요청)
+    // async function fetchJobData() {
+    //     try {
+    //         const response = await fetch('/api/getJobData'); // 서버에서 데이터를 받아오는 API 엔드포인트
+    //         const jobData = await response.json(); // JSON 데이터 파싱
+    //         populateSelectBoxes(jobData); // 데이터를 기반으로 select 박스 채우기
+    //     } catch (error) {
+    //         console.error('Error fetching job data:', error);
+    //     }
+    // }
+    //
+    // // 데이터를 기반으로 select 옵션을 동적으로 생성
+    // function populateSelectBoxes(data) {
+    //     const selectContainer = document.querySelector('.select-container');
+    //     const column1 = document.createElement('select');
+    //     const column2 = document.createElement('select');
+    //
+    //     column1.setAttribute('multiple', true);
+    //     column2.setAttribute('multiple', true);
+    //     column1.setAttribute('size', 6);
+    //     column2.setAttribute('size', 6);
+    //
+    //     data.forEach((job, index) => {
+    //         const option = document.createElement('option');
+    //         option.value = job.id; // 직무 ID
+    //         option.textContent = job.name; // 직무 이름
+    //
+    //         if (index < 6) {
+    //             column1.appendChild(option);
+    //         } else {
+    //             column2.appendChild(option);
+    //         }
+    //     });
+    //
+    //     // 두 개의 열을 컨테이너에 추가
+    //     selectContainer.innerHTML = ''; // 기존 내용 지우기
+    //     selectContainer.appendChild(column1);
+    //     selectContainer.appendChild(column2);
+    // }
+    //
+    // // 팝업을 열 때 데이터를 로드
+    // function openPop() {
+    //     document.getElementById('popup_layer').style.display = 'block';
+    //     fetchJobData(); // 팝업이 열릴 때 직무 데이터를 가져옴
+    // }
+
+    // function closePop() {
+    //     document.getElementById('popup_layer').style.display = 'none';
+    // }
+    // }
+</script>
+
+</body>
+</html>
