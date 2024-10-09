@@ -6,81 +6,112 @@
     <style>
         @media screen {
             body {
-                width:auto;
-                height: auto;
+                width: 100vw;
+                height: 100vh;
                 background-color: #3D5AED;
+                overflow: hidden; /* 불필요한 스크롤 제거 */
             }
             .title {
                 background-position: left top;
                 border: none;
                 background-color: transparent;
-                margin-top: 20px;
-                width: 365px;
+                margin-top: 2vh;
+                width: 30vw; /* 크기 증가 */
+                position: absolute;
+                left: 0;
+                top: 0;
             }
             .goToLogin {
                 background-color: transparent;
                 border: none;
                 position: absolute;
-                right: 20px;
-                bottom: 20%;
+                right: 2vw;
+                bottom: 20vh;
                 transform: translateY(-20%);
+                width: 15vw; /* 크기 증가 */
             }
             .gif {
                 border: none;
                 background-color: transparent;
-                width: 750px;
+                width: 37.5vw;
                 float: left;
-                margin-right: 800px;
-                transform:rotate(-0.284deg) ;
+                margin-right: 40vw;
+                transform: rotate(-0.284deg);
             }
             .comment1 {
                 color: #FFF;
                 font-family: "Alfa Slab One";
-                font-size: 65px;
+                font-size: 3.25vw;
                 font-style: normal;
                 font-weight: 5000;
                 text-align: right;
                 line-height: normal;
                 position: absolute;
-                right: 20px;
-                top: 20%;
+                right: 2vw;
+                top: 20vh;
                 transform: translateY(-20%);
             }
             .comment2 {
                 color: #FFF;
                 font-family: ABeeZee;
-                font-size: 40px;
+                font-size: 2vw;
                 font-style: normal;
                 font-weight: 400;
                 line-height: normal;
                 position: absolute;
-                right: 20px;
-                top: 35%;
+                right: 2vw;
+                top: 35vh;
                 transform: translateY(-20%);
             }
             a:link {
                 color: #ffffff;
                 position: absolute;
-                right: 20px;
-                bottom: 18%;
-                margin-right: 20px;
+                right: 2vw;
+                bottom: 18vh;
+                margin-right: 2vw;
                 transform: translateY(-20%);
+            }
+        }
+
+        /* 세로가 더 긴 화면에서의 스타일 */
+        @media (max-aspect-ratio: 1/1) {
+            .title {
+                width: 40vw; /* 크기 증가 */
+            }
+            .goToLogin {
+                width: 25vw; /* 크기 증가 */
+            }
+            .gif {
+                width: 50vw; /* 크기 증가 */
+                margin-top: 10vh; /* 아래로 이동 */
+            }
+            .comment1 {
+                font-size: 5vw; /* 글씨 크기 증가 */
+                top: 15vh; /* 위치 조정 */
+            }
+            .comment2 {
+                font-size: 3vw; /* 글씨 크기 증가 */
+                top: 25vh; /* 위치 조정 */
+            }
+            a:link {
+                font-size: 3vw; /* 글씨 크기 증가 */
+                bottom: 15vh; /* 위치 조정 */
             }
         }
     </style>
 </head>
 <body>
-    <button type="button" class="title" onclick="location.href='main'">
-        <img src="/img/log.png" width="300">
-    </button>
-    <img class="gif" src="/img/main.gif">
-    <span>
+<button type="button" class="title" onclick="location.href='main'">
+    <img src="/img/log.png" width="100%">
+</button>
+<img class="gif" src="/img/main.gif">
+<span>
         <p class="comment1">Ai와 함께하는 모의 면접</p>
         <p class="comment2">with chat GPT</p>
     </span>
-    <button type="button" class="goToLogin" onclick="location.href='login'">
-        <img src="/img/main_button1.png" width="200">
-    </button>
-    <a href="index">비회원으로</a>
+<button type="button" class="goToLogin" onclick="location.href='login'">
+    <img src="/img/main_button1.png" width="100%">
+</button>
+<a href="index">비회원으로</a>
 </body>
 </html>
