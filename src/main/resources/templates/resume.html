@@ -803,13 +803,18 @@
 
         // self-introduction 요소의 위치를 변경
         const selfIntroduction = document.querySelector('.self-introduction');
+        const selfIntroduction_container = document.querySelector(".self-introduction-container");
 
         // 포트폴리오 항목 수에 따라 자기소개서 위치 변경 (1개당 200px씩 증가한다고 가정)
         const basePosition = 1760; // 기본 위치
+        const basePosition2 = 1840; // 기본 위치
         const newPosition = basePosition + (portfolioEntries * 1100); // 포트폴리오 항목에 따라 위치 조정
+        const newPosition2 = basePosition + (portfolioEntries * 1200); // 포트폴리오 항목에 따라 위치 조정
+
 
         // 새로운 위치 적용
         selfIntroduction.style.top = newPosition + 'px';
+        selfIntroduction_container.style.top = newPosition2 + 'px';
     }
     let selfIntroCount = 0; // 자기소개 항목 개수 카운터
 
