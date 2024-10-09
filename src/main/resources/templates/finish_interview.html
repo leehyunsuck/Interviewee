@@ -34,18 +34,47 @@
         }
     </style>
     <script th:inline="javascript">
-        window.addEventListener('click', function() {
-            var hrefValue = /*[[${hrefValue}]]*/ 'main';
-            window.location.href = hrefValue;
+        window.addEventListener('click', function(event) {
+            if (event.target.matches('#sendEmail')) {
+                event.preventDefault(); // 기본 동작 방지
+
+                // answers와 questions를 모델에서 가져오기
+                const answers = /*[[${answers}]]*/ [];
+                const questions = /*[[${questions}]]*/ [];
+
+                // 폼 생성
+                let form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'generateReport'; // 요청할 URL
+
+                // answers와 questions를 숨겨진 필드로 추가
+                let answersField = document.createElement('input');
+                answersField.type = 'hidden';
+                answersField.name = 'answers';
+                answersField.value = JSON.stringify(answers);
+                form.appendChild(answersField);
+
+                let questionsField = document.createElement('input');
+                questionsField.type = 'hidden';
+                questionsField.name = 'questions';
+                questionsField.value = JSON.stringify(questions);
+                form.appendChild(questionsField);
+
+                document.body.appendChild(form); // 폼을 DOM에 추가
+                form.submit(); // 폼 제출
+            } else {
+                var hrefValue = /*[[${hrefValue}]]*/ 'main';
+                if (!hrefValue) hrefValue = 'main';
+                window.location.href = hrefValue;
+            }
         });
     </script>
 </head>
 <body>
 <div class="ErrorEmail">
-    <img src="/static/img/finish_interview.gif" class="gif">
-    <div class="comemnt1">수고하셨습니다.</div>
-    <a href="" class="link">이메일로 보고서 보내기</a>
+    <img src="/img/finish_interview.gif" class="gif">
+    <div class="comment1">수고하셨습니다.</div>
+    <a href="#" class="link" id="sendEmail" th:if="${loggedInEmail}">이메일로 보고서 보내기</a>
 </div>
 </body>
 </html>
-s

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>finish interview</title>
+    <style>
+        .wait {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .gif {
+            width: 500px;
+            height: 500px;
+        }
+        .comment1 {
+            margin-top: 10px;
+            color: black;
+            font-size: 25px;
+            font-family: Archivo Black;
+            font-weight: 400;
+            text-align: center;
+            word-wrap: break-word;
+        }
+    </style>
+    <script th:inline="javascript">
+        window.addEventListener('click', function(event) {
+            var hrefValue = /*[[${hrefValue}]]*/ 'main';
+            if (!hrefValue) hrefValue = 'main';
+            window.location.href = hrefValue;
+        });
+    </script>
+</head>
+<body>
+<div class="wait">
+    <img src="/img/finish_interview.gif" class="gif">
+    <div class="comment1">메일 전송을 요청하였습니다. <br>15s ~ 5m 사이에 메일 도착 예정입니다.</div>
+</div>
+</body>
+</html>
