@@ -2,9 +2,9 @@ package Shingu.Interviewer.service;
 
 import Shingu.Interviewer.controller.CustomBotController;
 import Shingu.Interviewer.dto.ChatGPTResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -31,8 +32,100 @@ public class OpenAIService {
     }
 
     // 질문 생성
-    public String generateQuestions(String title) {
-        return "chat";
+    public List<String> generateQuestions(HttpServletRequest request, String error, int count) {
+        if (count > 3) return null;
+
+        String prompt = """
+            첨부한 이력서 내용 기반으로 면접 질문을 5개 생성하세요.
+            
+            아래 규칙과 반환 개수, 반환 형식을 지키지 않을 시 에러가 발생하기에 꼭 지켜야합니다.
+            반환하기 전 다시 한번 검토하세요.
+            
+            규칙:
+            - 5개의 질문을 반환하세요.
+            
+            반환 개수:
+            - 총 5개
+            
+            반환 형식:
+            {
+                "1" : "질문 내용",
+                "2" : "질문 내용",
+                "3" : "질문 내용",
+                "4" : "질문 내용",
+                "5" : "질문 내용"
+            }
+            
+            이력서 :
+            
+            """;
+
+        List<String> questions = new ArrayList<>();
+
+        try {
+            // 필수 데이터 받기
+            String projectName = request.getParameter("project-name");
+            String projectPart = request.getParameter("project-part");
+            String projectSkill = request.getParameter("project-skill");
+            String projectContribution = request.getParameter("project-contribution");
+            String projectContent = request.getParameter("project-content");
+
+            // 선택적 데이터 받기 (없을 수 있음)
+            String project2Name = request.getParameter("project2-name");
+            String project2Part = request.getParameter("project2-part");
+            String project2Skill = request.getParameter("project2-skill");
+            String project2Contribution = request.getParameter("project2-contribution");
+            String project2Content = request.getParameter("project2-content");
+
+            String[] coverLetterTitles = request.getParameterValues("cover-letter-title");
+            String[] coverLetterDetails = request.getParameterValues("cover-letter-detail");
+
+            // selected-job
+            String[] selectedJobs = request.getParameterValues("selected-job");
+            String selectedJob = "";
+            if (selectedJobs != null) for (int i = 0; i < selectedJobs.length; i++) selectedJob += selectedJobs[i];
+
+            StringBuilder promptBuilder = new StringBuilder(prompt);
+            promptBuilder.append("[선택 직군] : ").append(selectedJob).append("\n");
+            promptBuilder.append("[포트폴리오1] : ").append("\n");
+            promptBuilder.append("  - 이름 : ").append(projectName).append("\n");
+            promptBuilder.append("  - 맡은 역할 : ").append(projectPart).append("\n");
+            promptBuilder.append("  - 사용 스킬 : ").append(projectSkill).append("\n");
+            promptBuilder.append("  - 기여도 : ").append(projectContribution).append("\n");
+            promptBuilder.append("  - 프로젝트 내용 : ").append(projectContent).append("\n");
+            if (project2Name != null) {
+                promptBuilder.append("[포트폴리오2] : ").append("\n");
+                promptBuilder.append("  - 이름 : ").append(project2Name).append("\n");
+                promptBuilder.append("  - 맡은 역할 : ").append(project2Part).append("\n");
+                promptBuilder.append("  - 사용 스킬 : ").append(project2Skill).append("\n");
+                promptBuilder.append("  - 기여도 : ").append(project2Contribution).append("\n");
+                promptBuilder.append("  - 프로젝트 내용2 : ").append(project2Content).append("\n");
+            }
+            promptBuilder.append("[자기소개서]").append("\n");
+            for (int i = 0; i < coverLetterTitles.length; i++) {
+                promptBuilder.append(" - 제목 : " +coverLetterTitles[i]).append("\n");
+                if (coverLetterDetails.length < i) promptBuilder.append("- 내용 : " + coverLetterDetails[i]).append("\n");
+            }
+
+            if (!error.isEmpty()) promptBuilder.append("\n **에러 : ").append(error).append("\n");
+
+            // 질문 받기
+            String response = getResponse(promptBuilder.toString());
+
+            JSONObject jsonResponse = new JSONObject(response);
+            String[] keys = JSONObject.getNames(jsonResponse);
+
+            if (keys.length != 5) throw new Exception("질문의 개수가 5개가 넘어오지 않았습니다.");
+
+            for (int i = 0; i < keys.length; i++) questions.add(jsonResponse.getString(keys[i]));
+
+            return questions;
+        } catch (Exception e) {
+            Logger logger = Logger.getLogger("OpenAIService");
+            logger.warning("Error generating report: " + e.getMessage());
+            this.generateQuestions(request, e.getMessage(), count++);
+        }
+        return null;
     }
 
     @Async // 비동기로 보고서 생성 및 메일 전송

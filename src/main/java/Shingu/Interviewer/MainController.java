@@ -1,5 +1,6 @@
 package Shingu.Interviewer;
 
+import Shingu.Interviewer.entity.JobTitle;
 import Shingu.Interviewer.service.*;
 import Shingu.Interviewer.tool.GetClientIP;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,6 +25,9 @@ import java.util.*;
 @RequestMapping("/")
 public class MainController {
     @Autowired
+    private JobTitleService jobTitleService;
+
+    @Autowired
     private OpenAIService openAIService;
 
     @Autowired
@@ -38,7 +42,8 @@ public class MainController {
     @Autowired  // 로그인 서비스
     private LoginService loginService;
 
-    private final Map<String, Integer> countMap = new HashMap<>();
+    private final Map<String, Integer> reportGeneratecountMap = new HashMap<>();
+    private final Map<String, Integer> questionGenerateCountMap = new HashMap<>();
     private final Map<String, Integer> ipMap = new HashMap<>();     // 유저IP : 요청 횟수
     private static final int MAX_REQUESTS_PER_MINUTE = 100;         // 분당 최대 요청 횟수
     @Scheduled(cron = "0 * * * * *")                                // 1분 마다 요청 횟수 Map 초기화
@@ -47,7 +52,8 @@ public class MainController {
     }
     @Scheduled(cron = "0 0 0 * * *")
     public void restCountMap() {
-        countMap.clear();
+        reportGeneratecountMap.clear();
+        questionGenerateCountMap.clear();
     }
 
     // 공통 처리 부분
@@ -127,6 +133,33 @@ public class MainController {
         return "interview";
     }
 
+    @PostMapping("interview")
+    public String interviewPost(Model model, HttpServletRequest request) {
+        // 질문 요청 맵 필요
+        String email = (String) model.getAttribute("loggedInEmail");
+        String address = GetClientIP.getClientIP(request);
+        int count = questionGenerateCountMap.getOrDefault(address, 0);
+        if (count > 5 && !email.equals("5talk2394ty76@gmail.com")) {
+            model.addAttribute("errorMsg", "한 계정당 하루 최대 5번 사용 가능합니다.");
+            model.addAttribute("hrefValue", "main");
+            return "error";
+        }
+        questionGenerateCountMap.put(address, count + 1);
+
+        List<String> questions = openAIService.generateQuestions(request, "", 0);
+
+        if (questions.isEmpty()) {
+            model.addAttribute("errorMsg", "질문을 생성하는 동안 에러가 발생했습니다.\n다시 시도해주세요");
+            model.addAttribute("hrefValue", "resume");
+            return "error";
+        }
+
+        model.addAttribute("questions", questions);
+        model.addAttribute("audioFiles", createVoiceService.createVoice(questions, GetClientIP.getClientIP(request)));
+
+        return "interview";
+    }
+
     @PostMapping("finish_interview")
     public String finishInterview(@RequestParam Map<String, String> data, Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -151,15 +184,22 @@ public class MainController {
         }
 
         String email = (String) model.getAttribute("loggedInEmail");
-        int count = countMap.getOrDefault(email, 0);
+        int count = reportGeneratecountMap.getOrDefault(email, 0);
         if (count > 5 && !email.equals("5talk2394ty76@gmail.com")) {
             model.addAttribute("errorMsg", "한 계정당 하루 최대 5번 사용 가능합니다.");
             model.addAttribute("hrefValue", "main");
             return "error";
         }
-        countMap.put(email, count + 1);
+        reportGeneratecountMap.put(email, count + 1);
 
         openAIService.generateReport(data, model, "", 0);  //비동기 로직
         return "report_send";
+    }
+
+    @GetMapping("resume")
+    public String resume(Model model) {
+        List<JobTitle> jobTitles = jobTitleService.getAllJobTitles();
+
+        return "resume";
     }
 }

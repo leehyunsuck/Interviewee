@@ -671,7 +671,7 @@
 <body>
 <div class="menu">
     <button type="button" class="title" onclick="location.href='main'">
-        <img src="/static/img/resume_chat_logo.png" width="150">
+        <img src="/img/resume_chat_logo.png" width="150">
     </button>
 </div>
 
@@ -679,7 +679,7 @@
 <h5 class="need_text"><p class="star-right">*</p>필수 입력 항목입니다.</h5>
 <div class="jobObjectives-container" id="jobObjectives-container">
     <p class="star">*</p>
-    <a href="javascript:openPop()" class="add-link" id="add-link"><img src="/static/img/add_icon.png" width="20" id="add-icon"> 추가하기</a>
+    <a href="javascript:openPop()" class="add-link" id="add-link"><img src="/img/add_icon.png" width="20" id="add-icon"> 추가하기</a>
 </div>
 
 <!-- 팝업 레이어 추가 -->
@@ -705,25 +705,25 @@
 <div class="portfolio-container" id="portfolio-container">
     <div class="name">
         <h4>프로젝트 이름</h4>
-        <textarea class="name" id="project-name"></textarea>
+        <textarea class="name" name="project-name" id="project-name"></textarea>
     </div>
     <div class="part">
         <h4>맡은 부분</h4>
-        <textarea class="part" id="project-part"></textarea>
+        <textarea class="part" name="project-part" id="project-part"></textarea>
     </div>
     <div class="skills">
         <h4>사용 기술</h4>
-        <textarea class="skills" id="project-skill"></textarea>
+        <textarea class="skills" name="project-skill" id="project-skill"></textarea>
     </div>
     <div class="contribution">
         <h4>기여도</h4>
-        <textarea class="contribution" id="project-contribution"></textarea>
+        <textarea class="contribution" name="project-contribution" id="project-contribution"></textarea>
     </div>
     <div class="detail">
         <h4>프로젝트 내용</h4>
-        <textarea class="detail" id="project-content"></textarea>
+        <textarea class="detail" name="project-content" id="project-content"></textarea>
     </div>
-    <button class="add_btn" onclick="addPortfolio()"><img src="/static/img/add_icon.png" width="20">  추가하기</button>
+    <button class="add_btn" onclick="addPortfolio()"><img src="/img/add_icon.png" width="20">  추가하기</button>
     <button class="cancel_all_btn" onclick="cancelAll()" style="display: none;"><b>✕&nbsp</b>취소하기</button> <!-- 취소하기 버튼 추가 -->
     <div id="portfolio-entries"></div> <!-- 포트폴리오 양식이 추가될 공간 -->
 
@@ -734,44 +734,108 @@
 <div class="self-introduction-container" id="self-introduction-container">
     <div class="title">
         <label>
-            <textarea class="title" id="cover-letter-title" placeholder="항목을 입력하세요."></textarea>
+            <textarea class="title" name="cover-letter-title" id="cover-letter-title" placeholder="항목을 입력하세요."></textarea>
         </label>
     </div>
     <div class="detail">
         <label>
-            <textarea class="detail" id="cover-letter-detail" placeholder="내용을 입력하세요."></textarea>
+            <textarea class="detail" name="cover-letter-detail" id="cover-letter-detail" placeholder="내용을 입력하세요."></textarea>
         </label>
     </div>
     <div id="self-introduction-entries"></div> <!-- 자기소개 항목들이 추가될 공간 -->
-    <button class="add_self_intro_btn" onclick="addSelfIntroduction()"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
+    <button class="add_self_intro_btn" onclick="addSelfIntroduction()"><img src="/img/add_icon.png" width="20"> 추가하기</button>
 </div>
 <div class="btn_container">
-    <button class="send_btn">제출</button>
+    <button class="send_btn" id="resume-submit">제출</button>
 </div>
 <script>
+    document.getElementById('resume-submit').addEventListener('click', function() {
+        let form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'interview';
+
+        // 필수 데이터
+        let projectName = document.getElementById('project-name').value;
+        let projectPart = document.getElementById('project-part').value;
+        let projectSkill = document.getElementById('project-skill').value;
+        let projectContribution = document.getElementById('project-contribution').value;
+        let projectContent = document.getElementById('project-content').value;
+
+        form.appendChild(createHiddenInput('project-name', projectName));
+        form.appendChild(createHiddenInput('project-part', projectPart));
+        form.appendChild(createHiddenInput('project-skill', projectSkill));
+        form.appendChild(createHiddenInput('project-contribution', projectContribution));
+        form.appendChild(createHiddenInput('project-content', projectContent));
+
+        // 선택적 데이터 (없을 수 있음)
+        let project2Name = document.getElementById('project2-name');
+        let project2Part = document.getElementById('project2-part');
+        let project2Skill = document.getElementById('project2-skill');
+        let project2Contribution = document.getElementById('project2-contribution');
+        let project2Content = document.getElementById('project2-content');
+
+        if (project2Name) form.appendChild(createHiddenInput('project2-name', project2Name.value));
+        if (project2Part) form.appendChild(createHiddenInput('project2-part', project2Part.value));
+        if (project2Skill) form.appendChild(createHiddenInput('project2-skill', project2Skill.value));
+        if (project2Contribution) form.appendChild(createHiddenInput('project2-contribution', project2Contribution.value));
+        if (project2Content) form.appendChild(createHiddenInput('project2-content', project2Content.value));
+
+        // 다중 데이터 (1~4개 사이)
+        for (let i = 1; i <= 4; i++) {
+            let coverLetterTitle = document.querySelectorAll('textarea[name="cover-letter-title"]');
+            let coverLetterDetail = document.querySelectorAll('textarea[name="cover-letter-detail"]');
+
+            if (coverLetterTitle[i - 1]) {
+                form.appendChild(createHiddenInput('cover-letter-title', coverLetterTitle[i - 1].value));
+            }
+            if (coverLetterDetail[i - 1]) {
+                form.appendChild(createHiddenInput('cover-letter-detail', coverLetterDetail[i - 1].value));
+            }
+        }
+
+
+
+        // 선택된 직무를 모두 추가 (이름이 동일함)
+        document.querySelectorAll('#jobObjectives-container .selected-job').forEach(job => {
+            form.appendChild(createHiddenInput('selected-job', job.textContent));
+        });
+
+        // Form 제출
+        document.body.appendChild(form);
+        form.submit();
+    });
+
+    // Hidden input 생성 함수
+    function createHiddenInput(name, value) {
+        let input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        return input;
+    }
 
     function addPortfolio() {
         const portfolioForm = `
         <div class="portfolio-entry">
             <div class="name">
                 <h4>프로젝트 이름</h4>
-                <textarea class="name" id="project2-name"></textarea>
+                <textarea class="name" name="project2-name" id="project2-name"></textarea>
             </div>
             <div class="part">
                 <h4>맡은 부분</h4>
-                <textarea class="part" id="project2-part"></textarea>
+                <textarea class="part" name="project2-part" id="project2-part"></textarea>
             </div>
             <div class="skills">
                 <h4>사용 기술</h4>
-                <textarea class="skills" id="project2-skill"></textarea>
+                <textarea class="skills" name="project2-skill" id="project2-skill"></textarea>
             </div>
             <div class="contribution">
                 <h4>기여도</h4>
-                <textarea class="contribution" id="project2-contribution"></textarea>
+                <textarea class="contribution" name="project2-contribution" id="project2-contribution"></textarea>
             </div>
             <div class="detail">
                 <h4>프로젝트 내용</h4>
-                <textarea class="detail" id="project2-content"></textarea>
+                <textarea class="detail" name="prject2-content" id="project2-content"></textarea>
             </div>
         </div>
     `;
@@ -857,12 +921,12 @@
             <button class="cancel_self_intro_btn" onclick="removeSelfIntroduction(this)"><b>✕</b></button>
                 <div class="title">
                     <label>
-                        <textarea class="title" id="cover-letter-title" placeholder="항목을 입력하세요."></textarea>
+                        <textarea class="title" name="cover-letter-title" id="cover-letter-title" placeholder="항목을 입력하세요."></textarea>
                     </label>
                 </div>
                 <div class="detail">
                     <label>
-                        <textarea class="detail" id="cover-letter-detail" placeholder="내용을 입력하세요."></textarea>
+                        <textarea class="detail" name="cover-letter-detail" id="cover-letter-detail" placeholder="내용을 입력하세요."></textarea>
                     </label>
                 </div>
             </div>
@@ -874,16 +938,6 @@
 
             // 자기소개 항목 수 카운트 증가
             selfIntroCount++;
-
-            // 추가하기 버튼 숨기고, 중앙에 표시된 새 추가하기 버튼 보이기
-            // const addButtonTop = document.querySelector('.add_self_intro_btn');
-            // addButtonTop.style.display = 'none';
-
-            // 추가하기 버튼이 중앙에 표시되도록 항목 추가 후 재위치
-            //     const addButtonBottom = `
-            //     <button class="add_self_intro_btns" onclick="addSelfIntroduction()" style="display: block; margin-top: 15px; text-align: center;"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
-            // `;
-            //     entriesContainer.insertAdjacentHTML('beforeend', addButtonBottom);
 
         } else {
             alert("최대 4개의 항목만 추가할 수 있습니다.");
@@ -897,27 +951,6 @@
 
         // 자기소개 항목 수 카운트 감소
         selfIntroCount--;
-
-        // 항목이 삭제된 후 항목이 없으면 상단 추가하기 버튼 다시 보이기
-        // if (selfIntroCount === 0) {
-        //     const addButtonTop = document.querySelector('.add_self_intro_btn');
-        //     addButtonTop.style.display = 'block';
-        // }
-
-        //추가하기 버튼 다시 보이기
-        // const addButtonBottom = document.querySelector('.add_self_intro_btns');
-        // if (addButtonBottom) {
-        //     addButtonBottom.remove(); // 기존 추가하기 버튼 삭제
-        // }
-
-        // 새롭게 중앙에 추가하기 버튼 다시 보이기
-        // if (selfIntroCount > 0) {
-        //     const entriesContainer = document.getElementById('self-introduction-entries');
-        //     const addButtonBottomNew = `
-        //     <button class="add_self_intro_btns" onclick="addSelfIntroduction()" style="display: block; margin-top: 15px; text-align: center;"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
-        // `;
-        //     entriesContainer.insertAdjacentHTML('beforeend', addButtonBottomNew);
-        // }
     }
 
 
@@ -989,6 +1022,7 @@
         const newJobElement = document.createElement('div');
         newJobElement.className = 'selected-job';
         newJobElement.id = 'selected-job';
+        newJobElement.name = 'selected-job';
         newJobElement.textContent = selectedOption;
 
         // 클릭 시 해당 항목 삭제
@@ -1065,57 +1099,6 @@
             document.getElementById('options').style.display = 'none';
         }
     });
-    // // 예시 데이터베이스에서 받아오는 함수 (AJAX 요청)
-    // async function fetchJobData() {
-    //     try {
-    //         const response = await fetch('/api/getJobData'); // 서버에서 데이터를 받아오는 API 엔드포인트
-    //         const jobData = await response.json(); // JSON 데이터 파싱
-    //         populateSelectBoxes(jobData); // 데이터를 기반으로 select 박스 채우기
-    //     } catch (error) {
-    //         console.error('Error fetching job data:', error);
-    //     }
-    // }
-    //
-    // // 데이터를 기반으로 select 옵션을 동적으로 생성
-    // function populateSelectBoxes(data) {
-    //     const selectContainer = document.querySelector('.select-container');
-    //     const column1 = document.createElement('select');
-    //     const column2 = document.createElement('select');
-    //
-    //     column1.setAttribute('multiple', true);
-    //     column2.setAttribute('multiple', true);
-    //     column1.setAttribute('size', 6);
-    //     column2.setAttribute('size', 6);
-    //
-    //     data.forEach((job, index) => {
-    //         const option = document.createElement('option');
-    //         option.value = job.id; // 직무 ID
-    //         option.textContent = job.name; // 직무 이름
-    //
-    //         if (index < 6) {
-    //             column1.appendChild(option);
-    //         } else {
-    //             column2.appendChild(option);
-    //         }
-    //     });
-    //
-    //     // 두 개의 열을 컨테이너에 추가
-    //     selectContainer.innerHTML = ''; // 기존 내용 지우기
-    //     selectContainer.appendChild(column1);
-    //     selectContainer.appendChild(column2);
-    // }
-    //
-    // // 팝업을 열 때 데이터를 로드
-    // function openPop() {
-    //     document.getElementById('popup_layer').style.display = 'block';
-    //     fetchJobData(); // 팝업이 열릴 때 직무 데이터를 가져옴
-    // }
-
-    // function closePop() {
-    //     document.getElementById('popup_layer').style.display = 'none';
-    // }
-    // }
-
 </script>
 
 </body>

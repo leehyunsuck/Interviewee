@@ -109,9 +109,10 @@
         <p class="comment1">Ai와 함께하는 모의 면접</p>
         <p class="comment2">with chat GPT</p>
     </span>
-<button type="button" class="goToLogin" onclick="location.href='login'">
+<button type="button" class="goToLogin"
+        th:onclick="${loggedInEmail != null} ? 'location.href=\'resume\'' : 'location.href=\'login\''">
     <img src="/img/main_button1.png" width="100%">
 </button>
-<a href="index">비회원으로</a>
+<a href="resume">비회원으로</a>
 </body>
 </html>
