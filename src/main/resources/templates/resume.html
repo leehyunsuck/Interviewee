@@ -676,23 +676,23 @@
 <div class="portfolio-container" id="portfolio-container">
     <div class="name">
         <h4>프로젝트 이름</h4>
-        <textarea class="name"></textarea>
+        <textarea class="name" id="project-name"></textarea>
     </div>
     <div class="part">
         <h4>맡은 부분</h4>
-        <textarea class="part"></textarea>
+        <textarea class="part" id="project-part"></textarea>
     </div>
     <div class="skills">
         <h4>사용 기술</h4>
-        <textarea class="skills"></textarea>
+        <textarea class="skills" id="project-skill"></textarea>
     </div>
     <div class="contribution">
         <h4>기여도</h4>
-        <textarea class="contribution"></textarea>
+        <textarea class="contribution" id="project-contribution"></textarea>
     </div>
     <div class="detail">
         <h4>프로젝트 내용</h4>
-        <textarea class="detail"></textarea>
+        <textarea class="detail" id="project-content"></textarea>
     </div>
     <button class="add_btn" onclick="addPortfolio()"><img src="/static/img/add_icon.png" width="20">  추가하기</button>
     <button class="cancel_all_btn" onclick="cancelAll()" style="display: none;"><b>✕&nbsp</b>취소하기</button> <!-- 취소하기 버튼 추가 -->
@@ -705,12 +705,12 @@
 <div class="self-introduction-container" id="self-introduction-container">
     <div class="title">
         <label>
-            <textarea class="title" placeholder="항목을 입력하세요."></textarea>
+            <textarea class="title" id="cover-letter-title" placeholder="항목을 입력하세요."></textarea>
         </label>
     </div>
     <div class="detail">
         <label>
-            <textarea class="detail" placeholder="내용을 입력하세요."></textarea>
+            <textarea class="detail" id="cover-letter-detail" placeholder="내용을 입력하세요."></textarea>
         </label>
     </div>
     <div id="self-introduction-entries"></div> <!-- 자기소개 항목들이 추가될 공간 -->
@@ -723,23 +723,23 @@
         <div class="portfolio-entry">
             <div class="name">
                 <h4>프로젝트 이름</h4>
-                <textarea class="name"></textarea>
+                <textarea class="name" id="project2-name"></textarea>
             </div>
             <div class="part">
                 <h4>맡은 부분</h4>
-                <textarea class="part"></textarea>
+                <textarea class="part" id="project2-part"></textarea>
             </div>
             <div class="skills">
                 <h4>사용 기술</h4>
-                <textarea class="skills"></textarea>
+                <textarea class="skills" id="project2-skill"></textarea>
             </div>
             <div class="contribution">
                 <h4>기여도</h4>
-                <textarea class="contribution"></textarea>
+                <textarea class="contribution" id="project2-contribution"></textarea>
             </div>
             <div class="detail">
                 <h4>프로젝트 내용</h4>
-                <textarea class="detail"></textarea>
+                <textarea class="detail" id="project2-content"></textarea>
             </div>
         </div>
     `;
@@ -816,21 +816,21 @@
         selfIntroduction.style.top = newPosition + 'px';
         selfIntroduction_container.style.top = newPosition2 + 'px';
     }
-    let selfIntroCount = 0; // 자기소개 항목 개수 카운터
+    let selfIntroCount = 1; // 자기소개 항목 개수 카운터
 
     function addSelfIntroduction() {
-        if (selfIntroCount < 3) { // 최대 4개 제한
+        if (selfIntroCount < 4) { // 최대 4개 제한
             const selfIntroForm = `
             <div class="self-introduction-entry" style="margin-bottom: 15px;">
             <button class="cancel_self_intro_btn" onclick="removeSelfIntroduction(this)"><b>✕</b></button>
                 <div class="title">
                     <label>
-                        <textarea class="title" placeholder="항목을 입력하세요."></textarea>
+                        <textarea class="title" id="cover-letter-title" placeholder="항목을 입력하세요."></textarea>
                     </label>
                 </div>
                 <div class="detail">
                     <label>
-                        <textarea class="detail" placeholder="내용을 입력하세요."></textarea>
+                        <textarea class="detail" id="cover-letter-detail" placeholder="내용을 입력하세요."></textarea>
                     </label>
                 </div>
             </div>
@@ -956,6 +956,7 @@
         // 선택된 항목을 추가할 div 생성
         const newJobElement = document.createElement('div');
         newJobElement.className = 'selected-job';
+        newJobElement.id = 'selected-job';
         newJobElement.textContent = selectedOption;
 
         // 클릭 시 해당 항목 삭제
