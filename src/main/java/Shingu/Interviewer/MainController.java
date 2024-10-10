@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -120,20 +121,6 @@ public class MainController {
         return getAudioService.getAudioFile(filename);
     }
 
-    @GetMapping("interview")
-    public String interview(Model model, HttpServletRequest request) {
-        List<String> questions = Arrays.asList("사용해본 프로그래밍 언어 중 가장 자신 있는 언어는 무엇이며, 그 언어를 사용해 해결한 문제나 프로젝트 경험을 설명해 주세요.",
-                "최근에 배운 새로운 기술이나 도구는 무엇이며, 이를 어떻게 실무에 적용할 계획인가요?",
-                "복잡한 문제를 해결하기 위해 사용한 알고리즘이나 자료 구조에 대해 설명해 주세요.",
-                "팀 프로젝트에서의 협업 경험을 공유해 주시고, 코드 리뷰나 Git을 사용한 버전 관리 경험이 있나요?",
-                "백엔드(또는 프론트엔드) 개발에서 가장 중요한 요소는 무엇이라고 생각하며, 그 이유는 무엇인가요?"
-        );
-        model.addAttribute("questions", questions);
-        model.addAttribute("audioFiles", createVoiceService.createVoice(questions, GetClientIP.getClientIP(request)));
-
-        return "interview";
-    }
-
     @PostMapping("interview")
     public String interviewPost(Model model, HttpServletRequest request) {
         // 질문 요청 맵 필요
@@ -198,6 +185,7 @@ public class MainController {
     }
 
 
+    @Transactional
     @GetMapping(value = "resumeEntity", produces = "application/json; charset=UTF-8")
     public ResponseEntity<List<Map<String, Object>>> resumeEntity() {
         List<JobTitle> jobTitles = jobTitleService.getAllJobTitles();
@@ -224,7 +212,6 @@ public class MainController {
 
     @GetMapping("resume")
     public String resume(Model model) {
-
         return "resume";
     }
 }
