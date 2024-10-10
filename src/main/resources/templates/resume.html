@@ -713,8 +713,8 @@
             <textarea class="detail" placeholder="내용을 입력하세요."></textarea>
         </label>
     </div>
-    <button class="add_self_intro_btn" onclick="addSelfIntroduction()"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
     <div id="self-introduction-entries"></div> <!-- 자기소개 항목들이 추가될 공간 -->
+    <button class="add_self_intro_btn" onclick="addSelfIntroduction()"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
 </div>
 <script>
 
@@ -834,7 +834,7 @@
                     </label>
                 </div>
             </div>
-        `;
+            `;
 
             // 항목이 추가될 공간에 중앙에 추가
             const entriesContainer = document.getElementById('self-introduction-entries');
@@ -844,14 +844,14 @@
             selfIntroCount++;
 
             // 추가하기 버튼 숨기고, 중앙에 표시된 새 추가하기 버튼 보이기
-            const addButtonTop = document.querySelector('.add_self_intro_btn');
-            addButtonTop.style.display = 'none';
+            // const addButtonTop = document.querySelector('.add_self_intro_btn');
+            // addButtonTop.style.display = 'none';
 
             // 추가하기 버튼이 중앙에 표시되도록 항목 추가 후 재위치
-            const addButtonBottom = `
-            <button class="add_self_intro_btns" onclick="addSelfIntroduction()" style="display: block; margin-top: 15px; text-align: center;"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
-        `;
-            entriesContainer.insertAdjacentHTML('beforeend', addButtonBottom);
+        //     const addButtonBottom = `
+        //     <button class="add_self_intro_btns" onclick="addSelfIntroduction()" style="display: block; margin-top: 15px; text-align: center;"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
+        // `;
+        //     entriesContainer.insertAdjacentHTML('beforeend', addButtonBottom);
 
         } else {
             alert("최대 4개의 항목만 추가할 수 있습니다.");
@@ -867,25 +867,25 @@
         selfIntroCount--;
 
         // 항목이 삭제된 후 항목이 없으면 상단 추가하기 버튼 다시 보이기
-        if (selfIntroCount === 0) {
-            const addButtonTop = document.querySelector('.add_self_intro_btn');
-            addButtonTop.style.display = 'block';
-        }
+        // if (selfIntroCount === 0) {
+        //     const addButtonTop = document.querySelector('.add_self_intro_btn');
+        //     addButtonTop.style.display = 'block';
+        // }
 
-        // 추가하기 버튼 다시 보이기
-        const addButtonBottom = document.querySelector('.add_self_intro_btns');
-        if (addButtonBottom) {
-            addButtonBottom.remove(); // 기존 추가하기 버튼 삭제
-        }
+        //추가하기 버튼 다시 보이기
+        // const addButtonBottom = document.querySelector('.add_self_intro_btns');
+        // if (addButtonBottom) {
+        //     addButtonBottom.remove(); // 기존 추가하기 버튼 삭제
+        // }
 
         // 새롭게 중앙에 추가하기 버튼 다시 보이기
-        if (selfIntroCount > 0) {
-            const entriesContainer = document.getElementById('self-introduction-entries');
-            const addButtonBottomNew = `
-            <button class="add_self_intro_btns" onclick="addSelfIntroduction()" style="display: block; margin-top: 15px; text-align: center;"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
-        `;
-            entriesContainer.insertAdjacentHTML('beforeend', addButtonBottomNew);
-        }
+        // if (selfIntroCount > 0) {
+        //     const entriesContainer = document.getElementById('self-introduction-entries');
+        //     const addButtonBottomNew = `
+        //     <button class="add_self_intro_btns" onclick="addSelfIntroduction()" style="display: block; margin-top: 15px; text-align: center;"><img src="/static/img/add_icon.png" width="20"> 추가하기</button>
+        // `;
+        //     entriesContainer.insertAdjacentHTML('beforeend', addButtonBottomNew);
+        // }
     }
 
 
