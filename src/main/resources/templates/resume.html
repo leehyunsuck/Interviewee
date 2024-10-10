@@ -677,6 +677,110 @@
                 right: -1620px;
                 top: -10px;
             }
+
+            @keyframes blinkCursor {
+                50% {
+                    border-right-color: transparent;
+                }
+            }
+
+            @keyframes typeAndDelete {
+                0%,
+                10% {
+                    width: 0;
+                }
+                45%,
+                55% {
+                    width: 6.2em;
+                } /* adjust width based on content */
+                90%,
+                100% {
+                    width: 0;
+                }
+            }
+
+            .terminal-loader {
+                border: 0.1em solid #333;
+                background-color: #1a1a1a;
+                color: #0f0;
+                font-family: "Courier New", Courier, monospace;
+                font-size: 1em;
+                padding: 1.5em 1em;
+                width: 12em;
+                margin: 100px auto;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                border-radius: 4px;
+                position: relative;
+                overflow: hidden;
+                box-sizing: border-box;
+            }
+
+            .terminal-header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 1.5em;
+                background-color: #333;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                padding: 0 0.4em;
+                box-sizing: border-box;
+            }
+
+            .terminal-controls {
+                float: right;
+            }
+
+            .control {
+                display: inline-block;
+                width: 0.6em;
+                height: 0.6em;
+                margin-left: 0.4em;
+                border-radius: 50%;
+                background-color: #777;
+            }
+
+            .control.close {
+                background-color: #e33;
+            }
+
+            .control.minimize {
+                background-color: #ee0;
+            }
+
+            .control.maximize {
+                background-color: #0b0;
+            }
+
+            .terminal-title {
+                float: left;
+                line-height: 1.5em;
+                color: #eee;
+            }
+
+            .text {
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                border-right: 0.2em solid green; /* Cursor */
+                animation: typeAndDelete 4s steps(11) infinite,
+                blinkCursor 0.5s step-end infinite alternate;
+                margin-top: 1.5em;
+            }
+
+            #loading-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.8); /* 반투명 배경 */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999; /* 페이지의 다른 요소들 위에 표시 */
+            }
         }
     </style>
 
@@ -688,81 +792,105 @@
     </button>
 </div>
 
-<h2 class="jobObjectives">희망 직군</h2>
-<h5 class="need_text"><p class="star-right">*</p>필수 입력 항목입니다.</h5>
-<div class="jobObjectives-container" id="jobObjectives-container">
-    <p class="star">*</p>
-    <a href="javascript:openPop()" class="add-link" id="add-link"><img src="/img/add_icon.png" width="35" id="add-icon"> 추가하기</a>
+<div id="loading-container" style="display: none;">
+    <div class="terminal-loader" id="loading-screen">
+        <div class="terminal-header">
+            <div class="terminal-title">상태</div>
+            <div class="terminal-controls">
+                <div class="control close"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+            </div>
+        </div>
+        <div class="text">질문 생성 중 ...</div>
+        <div style="color: white">질문 말풍선 클릭 시 음성이 재생됩니다!</div>
+    </div>
 </div>
 
-<!-- 팝업 레이어 추가 -->
-<div class="popup_layer" id="popup_layer">
-    <div class="popup_box">
-        <div class="popup_cont">
-            <div class="jobObjectives_title">
-                <h2>직무 분야</h2>
-                <button onclick="closePop()">✕</button>
-                <p><b>*&nbsp</b>최대 2가지 직무 분야 선택가능</p>
-            </div>
-            <div class="select-container">
-                <!--                <div class="custom-select" id="selected-option">직무 선택하기</div>-->
-                <div class="options" id="options"></div>
-                <div class="radio-group" id="radio-group"></div>
-            </div>
+<!-- 나머지 페이지 내용 -->
+<div id="main-content">
+    <h2 class="jobObjectives">희망 직군</h2>
+    <h5 class="need_text"><p class="star-right">*</p>필수 입력 항목입니다.</h5>
+    <div class="jobObjectives-container" id="jobObjectives-container">
+        <p class="star">*</p>
+        <a href="javascript:openPop()" class="add-link" id="add-link"><img src="/img/add_icon.png" width="35" id="add-icon"> 추가하기</a>
+    </div>
 
+    <!-- 팝업 레이어 추가 -->
+    <div class="popup_layer" id="popup_layer">
+        <div class="popup_box">
+            <div class="popup_cont">
+                <div class="jobObjectives_title">
+                    <h2>직무 분야</h2>
+                    <button onclick="closePop()">✕</button>
+                    <p><b>*&nbsp</b>최대 2가지 직무 분야 선택가능</p>
+                </div>
+                <div class="select-container">
+                    <!--                <div class="custom-select" id="selected-option">직무 선택하기</div>-->
+                    <div class="options" id="options"></div>
+                    <div class="radio-group" id="radio-group"></div>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
 
-<h2 class="portfolio">포트폴리오</h2>
-<div class="portfolio-container" id="portfolio-container">
-    <div class="name">
-        <h4>프로젝트 이름</h4>
-        <textarea class="name" name="project-name" id="project-name"></textarea>
-    </div>
-    <div class="part">
-        <h4>맡은 부분</h4>
-        <textarea class="part" name="project-part" id="project-part"></textarea>
-    </div>
-    <div class="skills">
-        <h4>사용 기술</h4>
-        <textarea class="skills" name="project-skill" id="project-skill"></textarea>
-    </div>
-    <div class="contribution">
-        <h4>기여도</h4>
-        <textarea class="contribution" name="project-contribution" id="project-contribution"></textarea>
-    </div>
-    <div class="detail">
-        <h4>프로젝트 내용</h4>
-        <textarea class="detail" name="project-content" id="project-content"></textarea>
-    </div>
-    <button class="add_btn" onclick="addPortfolio()"><img src="/img/add_icon.png" width="35">  추가하기</button>
-    <button class="cancel_all_btn" onclick="cancelAll()" style="display: none;"><b>✕&nbsp</b>취소하기</button> <!-- 취소하기 버튼 추가 -->
-    <div id="portfolio-entries"></div> <!-- 포트폴리오 양식이 추가될 공간 -->
+    <h2 class="portfolio">포트폴리오</h2>
+    <div class="portfolio-container" id="portfolio-container">
+        <div class="name">
+            <h4>프로젝트 이름</h4>
+            <textarea class="name" name="project-name" id="project-name"></textarea>
+        </div>
+        <div class="part">
+            <h4>맡은 부분</h4>
+            <textarea class="part" name="project-part" id="project-part"></textarea>
+        </div>
+        <div class="skills">
+            <h4>사용 기술</h4>
+            <textarea class="skills" name="project-skill" id="project-skill"></textarea>
+        </div>
+        <div class="contribution">
+            <h4>기여도</h4>
+            <textarea class="contribution" name="project-contribution" id="project-contribution"></textarea>
+        </div>
+        <div class="detail">
+            <h4>프로젝트 내용</h4>
+            <textarea class="detail" name="project-content" id="project-content"></textarea>
+        </div>
+        <button class="add_btn" onclick="addPortfolio()"><img src="/img/add_icon.png" width="35">  추가하기</button>
+        <button class="cancel_all_btn" onclick="cancelAll()" style="display: none;"><b>✕&nbsp</b>취소하기</button> <!-- 취소하기 버튼 추가 -->
+        <div id="portfolio-entries"></div> <!-- 포트폴리오 양식이 추가될 공간 -->
 
-    <p><b>*&nbsp</b>최대 2가지 입력 가능</p>
-</div>
+        <p><b>*&nbsp</b>최대 2가지 입력 가능</p>
+    </div>
 
-<h2 class="self-introduction">자기소개서</h2>
-<div class="self-introduction-container" id="self-introduction-container">
-    <div class="title">
-        <label>
-            <textarea class="title" name="cover-letter-title" id="cover-letter-title" placeholder="항목을 입력하세요."></textarea>
-        </label>
+    <h2 class="self-introduction">자기소개서</h2>
+    <div class="self-introduction-container" id="self-introduction-container">
+        <div class="title">
+            <label>
+                <textarea class="title" name="cover-letter-title" id="cover-letter-title" placeholder="항목을 입력하세요."></textarea>
+            </label>
+        </div>
+        <div class="detail">
+            <label>
+                <textarea class="detail" name="cover-letter-detail" id="cover-letter-detail" placeholder="내용을 입력하세요."></textarea>
+            </label>
+        </div>
+        <div id="self-introduction-entries"></div> <!-- 자기소개 항목들이 추가될 공간 -->
+        <button class="add_self_intro_btn" onclick="addSelfIntroduction()"><img src="/img/add_icon.png" width="35"> 추가하기</button>
     </div>
-    <div class="detail">
-        <label>
-            <textarea class="detail" name="cover-letter-detail" id="cover-letter-detail" placeholder="내용을 입력하세요."></textarea>
-        </label>
+    <div class="btn_container">
+        <button class="send_btn" id="resume-submit">제출</button>
     </div>
-    <div id="self-introduction-entries"></div> <!-- 자기소개 항목들이 추가될 공간 -->
-    <button class="add_self_intro_btn" onclick="addSelfIntroduction()"><img src="/img/add_icon.png" width="35"> 추가하기</button>
-</div>
-<div class="btn_container">
-    <button class="send_btn" id="resume-submit">제출</button>
 </div>
 <script>
     document.getElementById('resume-submit').addEventListener('click', function() {
+        // 로딩 화면 표시
+        document.getElementById('loading-container').style.display = 'flex'; // Flex로 변경하여 중앙 정렬
+
+        // 나머지 페이지 콘텐츠 숨기기
+        document.getElementById('main-content').style.display = 'none';
+
         let form = document.createElement('form');
         form.method = 'POST';
         form.action = 'interview';
