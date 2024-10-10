@@ -110,6 +110,11 @@ public class OpenAIService {
                 """;
             StringBuilder reportBuilder = new StringBuilder(header);
 
+            if (keys.length != 5) {
+                this.generateReport(data, model, "피드백 개수가 부족합니다. 피드백은 총 5가지가 넘어와야합니다.", repeat);
+                return;
+            }
+
             for (int i = 0; i < keys.length; i++) {
                 String key = keys[i];
                 String value = jsonResponse.getString(key);
