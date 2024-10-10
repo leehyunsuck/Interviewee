@@ -182,7 +182,7 @@
         document.getElementById('chat-container').appendChild(messageDiv);
 
         // 클릭 시 오디오 재생
-        messageDiv.addEventListener('click', function() {
+        messageDiv.addEventListener('click', function () {
             const audioFilePath = audioFiles[currentQuestionIndex - 1];
 
             // 기존 재생 중인 오디오가 있다면 정지
@@ -290,6 +290,12 @@
             event.preventDefault();
             document.getElementById('send-button').click();
         }
+    });
+
+    // 뒤로가기 방지
+    window.history.pushState(null, document.title, window.location.href);
+    window.addEventListener('popstate', function(event) {
+        window.history.pushState(null, document.title, window.location.href);
     });
 </script>
 

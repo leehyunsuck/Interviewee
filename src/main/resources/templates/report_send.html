@@ -32,6 +32,11 @@
             if (!hrefValue) hrefValue = 'main';
             window.location.href = hrefValue;
         });
+        // 뒤로가기 방지
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+            window.history.pushState(null, document.title, window.location.href);
+        });
     </script>
 </head>
 <body>
