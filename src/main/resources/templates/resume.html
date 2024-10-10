@@ -1102,28 +1102,22 @@
     }
 
 
-    const mockJobData = [
-        { id: 1, name: '소프트웨어 엔지니어', subOptions: ['프로그래밍', '시스템 설계'] },
-        { id: 2, name: '데이터 분석가', subOptions: ['통계 분석', '데이터 시각화'] },
-        { id: 3, name: 'UX/UI 디자이너', subOptions: ['프로토타입', '사용자 조사'] },
-        { id: 4, name: '프로젝트 매니저', subOptions: ['일정 관리', '팀 조정'] },
-        { id: 5, name: '시스템 관리자', subOptions: ['서버 관리', '네트워크 설정'] },
-        { id: 6, name: 'QA 엔지니어', subOptions: ['테스트 자동화', '버그 리포트'] },
-        { id: 7, name: '네트워크 엔지니어', subOptions: ['서버 설치', '네트워크 최적화'] },
-        { id: 8, name: '웹 개발자', subOptions: ['프론트엔드', '백엔드'] },
-        { id: 9, name: 'AI 엔지니어', subOptions: ['머신 러닝', '딥 러닝'] },
-        { id: 10, name: '백엔드 개발자', subOptions: ['API 설계', '서버 관리'] },
-        { id: 11, name: '프론트엔드 개발자', subOptions: ['HTML/CSS', 'JavaScript'] },
-        { id: 12, name: 'DevOps 엔지니어', subOptions: ['CI/CD', '자동화 스크립트'] },
-        { id: 13, name: '보안 전문가', subOptions: ['침투 테스트', '네트워크 보안'] },
-        { id: 14, name: 'IT 컨설턴트', subOptions: ['비즈니스 분석', '프로세스 개선'] },
-        { id: 15, name: '기술 지원', subOptions: ['사용자 교육', '문서화'] },
-        { id: 16, name: '데이터 엔지니어', subOptions: ['ETL 프로세스', '데이터 파이프라인'] },
-        { id: 17, name: '게임 개발자', subOptions: ['게임 디자인', '프로그래밍'] },
-        { id: 18, name: '모바일 개발자', subOptions: ['안드로이드', 'iOS'] },
-        { id: 19, name: '클라우드 전문가', subOptions: ['AWS', 'Azure'] },
-        { id: 20, name: '스마트 계약 개발자', subOptions: ['블록체인', '스마트 계약'] }
-    ];
+    const mockJobData = [];
+
+    async function fetchJobData() {
+    try {
+            const response = await fetch('/resumeEntity');
+            const jobData = await response.json();
+            mockJobData.push(...jobData);
+            console.log('Mock Job Data:', mockJobData);
+            populateSelectBoxes(mockJobData);
+        } catch (error) {
+            console.error('Error fetching job data:', error);
+        }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchJobData();
+    });
 
     // 선택 박스에 데이터 채우기
     function populateSelectBoxes(data) {

@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @EnableScheduling
@@ -196,9 +197,33 @@ public class MainController {
         return "report_send";
     }
 
+
+    @GetMapping(value = "resumeEntity", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<List<Map<String, Object>>> resumeEntity() {
+        List<JobTitle> jobTitles = jobTitleService.getAllJobTitles();
+        List<Map<String, Object>> mockJobData = new ArrayList<>();
+
+        jobTitles.stream()
+                .collect(Collectors.groupingBy(
+                        jobTitle -> jobTitle.getCategory().getCategoryName(),
+                        Collectors.toList()
+                ))
+                .forEach((categoryName, jobTitlesInCategory) -> {
+                    Map<String, Object> jobData = new HashMap<>();
+                    int id = jobTitlesInCategory.get(0).getCategory().getId().intValue();
+                    jobData.put("id", id);
+                    jobData.put("name", categoryName);
+                    jobData.put("subOptions", jobTitlesInCategory.stream()
+                            .map(JobTitle::getArmy)
+                            .collect(Collectors.toList()));
+                    mockJobData.add(jobData);
+                });
+
+        return ResponseEntity.ok(mockJobData); // mockJobData를 JSON 형식으로 반환
+    }
+
     @GetMapping("resume")
     public String resume(Model model) {
-        List<JobTitle> jobTitles = jobTitleService.getAllJobTitles();
 
         return "resume";
     }
