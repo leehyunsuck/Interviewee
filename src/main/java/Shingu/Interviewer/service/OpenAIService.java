@@ -87,14 +87,16 @@ public class OpenAIService {
 
             StringBuilder promptBuilder = new StringBuilder(prompt);
             promptBuilder.append("[선택 직군] : ").append(selectedJob).append("\n");
-            promptBuilder.append("[포트폴리오1] : ").append("\n");
-            promptBuilder.append("  - 이름 : ").append(projectName).append("\n");
-            promptBuilder.append("  - 맡은 역할 : ").append(projectPart).append("\n");
-            promptBuilder.append("  - 사용 스킬 : ").append(projectSkill).append("\n");
-            promptBuilder.append("  - 기여도 : ").append(projectContribution).append("\n");
-            promptBuilder.append("  - 프로젝트 내용 : ").append(projectContent).append("\n");
+            if (projectName != null && !projectName.isEmpty()) {
+                promptBuilder.append("[포트폴리오]").append("\n");
+                promptBuilder.append("  - 이름 : ").append(projectName).append("\n");
+                promptBuilder.append("  - 맡은 역할 : ").append(projectPart).append("\n");
+                promptBuilder.append("  - 사용 스킬 : ").append(projectSkill).append("\n");
+                promptBuilder.append("  - 기여도 : ").append(projectContribution).append("\n");
+                promptBuilder.append("  - 프로젝트 내용 : ").append(projectContent).append("\n");
+            }
             if (project2Name != null) {
-                promptBuilder.append("[포트폴리오2] : ").append("\n");
+                promptBuilder.append("[포트폴리오]").append("\n");
                 promptBuilder.append("  - 이름 : ").append(project2Name).append("\n");
                 promptBuilder.append("  - 맡은 역할 : ").append(project2Part).append("\n");
                 promptBuilder.append("  - 사용 스킬 : ").append(project2Skill).append("\n");
@@ -104,11 +106,12 @@ public class OpenAIService {
             promptBuilder.append("[자기소개서]").append("\n");
             for (int i = 0; i < coverLetterTitles.length; i++) {
                 promptBuilder.append(" - 제목 : " +coverLetterTitles[i]).append("\n");
-                if (coverLetterDetails.length < i) promptBuilder.append("- 내용 : " + coverLetterDetails[i]).append("\n");
+                if (coverLetterDetails.length > i) promptBuilder.append(" - 내용 : " + coverLetterDetails[i]).append("\n");
             }
 
             if (!error.isEmpty()) promptBuilder.append("\n **에러 : ").append(error).append("\n");
 
+            System.out.println(promptBuilder.toString());
             // 질문 받기
             String response = getResponse(promptBuilder.toString());
 
@@ -138,12 +141,12 @@ public class OpenAIService {
             면접 질문과 답변에 대한 면접 전문가의 피드백을 반환하세요.
             
             규칙:
-            - 피드백 첫 부분에 '몇 번째 응답은...' 과 같은 서론을 작성하지 마세요.
-            - 답변이 너무 성의없으면 주의 주는 내용을 포함해 주세요.
-            - 질문과 답변의 연관성이 없거나, 답변이 입력되어있지 않으면 칭찬 내용 없이 피드백 불가능 하다는 내용을 반환하세요.
-            - 질문에 대한 답변이 좋거나 틀리면 그 이유를 포함해 주세요.
-            - 해당 순서에 맞지 않은 질문과 답변에 대한 피드백은 참견하지 마세요.
-            - 답변이 단순히 아무 문자나 작성했으면 경고성 내용을 반환하세요.
+            - 질문과 답변이 순서대로 일치하지 않을 경우 피드백을 제공하지 마세요. 하지만 답변이 비어 있거나 성의 없는 경우, 순서와 상관없이 경고성 피드백을 제공하세요.
+            - 서론으로 '몇 번째 응답은...'과 같은 표현을 사용하지 마세요.
+            - 답변이 성의 없을 경우, 그 이유와 함께 개선 사항을 포함한 구체적인 피드백을 제공하세요.
+            - 질문과 답변의 연관성이 없거나 답변이 입력되지 않으면, "피드백 불가능"이라는 경고성 메시지만 반환하세요.
+            - 답변이 아무 문자나 작성된 경우, 경고성 메시지를 반환하세요.
+            - 각 피드백은 2-3 문장으로 간결하고 구체적으로 작성하세요.
             
             반환 개수:
             - 총 5개
@@ -157,8 +160,8 @@ public class OpenAIService {
                 "5" : "피드백 내용"
             }
             
-            위 규칙과 반환 개수, 반환 형식을 지키지 않을 시 에러가 발생하기에 꼭 지켜야합니다.
             반환하기 전 다시 한번 검토하세요.
+            
             """;
 
         if (!error.isEmpty()) prompt += "\n" + "다음과 같은 에러가 발생했었으니 검토 똑바로 해줘.\n" + error;
