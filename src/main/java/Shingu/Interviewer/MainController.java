@@ -116,6 +116,13 @@ public class MainController {
         return "main";
     }
 
+    @GetMapping("logout")
+    public String logout(HttpSession session, Model model) {
+        session.invalidate();
+        model.asMap().clear();
+        return "main";
+    }
+
     @GetMapping("/mp3/{filename:.+}")   // 오디오 파일 반환
     public ResponseEntity<Resource> getAudioFile(@PathVariable String filename) {
         return getAudioService.getAudioFile(filename);

@@ -113,6 +113,6 @@
         th:onclick="${loggedInEmail != null} ? 'location.href=\'resume\'' : 'location.href=\'login\''">
     <img src="/img/main_button1.png" width="100%">
 </button>
-<a href="resume">비회원으로</a>
+<a th:href="${loggedInEmail == null ? 'resume' : 'logout'}" th:text="${loggedInEmail == null ? '비회원으로' : '로그아웃'}"></a>
 </body>
 </html>
