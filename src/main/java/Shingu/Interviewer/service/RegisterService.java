@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +20,7 @@ public class RegisterService {
     private final SendMailService sendMailService;
 
     private Map<String, Integer> verificationCodes = new HashMap<>();
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private static final String EMAIL_REGEX =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
@@ -46,7 +50,11 @@ public class RegisterService {
             model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");
         } else if (password.length() < 8 || password.length() > 16) {
             model.addAttribute("errorMsg", "비밀번호는 8자 이상 16자 이하로 입력해주세요.");
+        } else if (verificationCodes.getOrDefault(email, 0) != 999999999) {
+            model.addAttribute("errorMsg", "이메일 인증을 하지 않았습니다.");
         } else {
+            verificationCodes.remove(email);
+
             // 규칙 다 지켜졌으면 DB에 정보 저장
             String hashPassword = HashEncode.encode(email, password);
 
@@ -101,6 +109,9 @@ public class RegisterService {
         model.addAttribute("action", "checkCode");
         verificationCodes.put(email, code);
 
+        // 10분뒤 인증정보 삭제
+        scheduler.schedule(() -> verificationCodes.remove(email), 10, TimeUnit.MINUTES);
+
         return "register";
     }
     public String checkCode(String email, String code, Model model) {
@@ -115,6 +126,8 @@ public class RegisterService {
             model.addAttribute("errorMsg", "인증번호가 일치하지 않습니다.");
             model.addAttribute("action", "checkCode");
         }
+
+        verificationCodes.put(email, 999999999);
 
         return "register";
     }
