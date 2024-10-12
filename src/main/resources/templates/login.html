@@ -6,154 +6,211 @@
     <style>
         @media screen {
             body {
-                width:auto;
-                height: auto;
+                width: 100vw;
+                height: 100vh;
+                background-color: #fff;
+                overflow: hidden; /* 불필요한 스크롤 제거 */
             }
             .title {
                 background-position: left top;
                 border: none;
                 background-color: transparent;
-                margin-top: 20px;
-                width: 365px;
-            }
-
-            .goToLogin {
-                background-color: transparent;
-                border: none;
+                margin-top: 2vh;
+                width: 20vw;
                 position: absolute;
-                right: 20px;
-                bottom: 20%;
-                transform: translateY(-20%);
+                left: 2vw;
+                top: 2vh;
             }
             .gif {
                 border: none;
                 background-color: transparent;
-                width: 750px;
+                width: 35vw;
                 position: absolute;
                 left: 50px;
-                top: 10%;
-                transform:rotate(-0.284deg) ;
+                top: 20vh;
+                transform: rotate(-0.284deg);
             }
             .comment1 {
                 color: #000;
                 font-family: "Noto Serif Malayalam";
-                font-size: 70px;
+                font-size: 3.5vw;
                 font-style: normal;
                 font-weight: 400;
-                line-height: normal;
                 position: absolute;
-                right: 550px;
-                top: 15%;
+                right: 20vw;
+                top: 15vh;
                 transform: translateY(-20%);
+            }
+            .comment2,
+            .comment3 {
+                width: 30vw;
+                height: 2vh;
+                font-family: ABeeZee;
+                border-radius: 10px;
+                border: 2px solid #817A7A;
+                font-size: 1.8vw;
+                font-style: normal;
+                position: absolute;
+                right: 10vw;
+                padding: 0.5vw;
             }
             .comment2 {
-                width : 500px;
-                font-family: ABeeZee;
-                border-radius: 10px;
-                border: 2px solid #817A7A;
-                font-size: 26px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-                position: absolute;
-                right: 400px;
-                top: 45%;
-                transform: translateY(-20%);
+                top: 40vh;
             }
             .comment3 {
-                width: 500px;
-                font-family: ABeeZee;
-                border-radius: 10px;
-                border: 2px solid #817A7A;
-                font-size: 26px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-                position: absolute;
-                right: 400px;
-                top: 57%;
-                transform: translateY(-20%);
+                top: 52vh;
             }
-            .comment4{
+            .comment4,
+            .comment5 {
                 color: #423F3F;
                 font-family: "Azeret Mono";
-                font-size: 26px;
+                font-size: 1.5vw;
                 font-style: normal;
-                font-weight: 200;
-                line-height: normal;
                 position: absolute;
-                right: 840px;
-                top: 37%;
-                transform: translateY(-20%);
+                left: 58.75vw; /* 위치 조정 */
+                transform: translateY(-100%); /* 입력란 위로 위치 조정 */
             }
-            .comment5{
-                color: #423F3F;
-                font-family: "Azeret Mono";
-                font-size: 26px;
-                font-style: normal;
-                font-weight: 200;
-                line-height: normal;
-                position: absolute;
-                right: 800px;
-                top: 49%;
-                transform: translateY(-20%);
+            .comment4 {
+                top: 37vh; /* 위치 조정 */
             }
-            .login{
-                width: 180px;
-                height: 70px;
+            .comment5 {
+                top: 48.75vh; /* 위치 조정 */
+            }
+            .login {
+                width: 15vw;
+                height: 6vh;
                 border: none;
                 border-radius: 46px;
                 background: #3D5AED;
                 color: #FFF;
                 font-family: "Archivo Black";
-                font-size: 24px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
+                font-size: 1.5vw;
                 position: absolute;
-                right: 400px;
-                top:71%;
-                transform: translateY(-20%);
+                left: 82.5vw;
+                transform: translate(-50%, -20%); /* 중앙 정렬 */
+                top: 70vh;
             }
-            a:link.find {
+            a.find {
                 color: #817979;
                 position: absolute;
-                right: 380px;
-                top: 62%;
-                margin-right: 20px;
-                transform: translateY(-20%);
+                left: 82vw; /* 위치 조정 */
+                font-size: 1.2vw;
+                top: 61vh; /* 비밀번호 찾기 링크 위치 */
             }
-            a:link.register{
+            a.register {
                 color: #817979;
                 position: absolute;
-                right: 380px;
-                top: 79%;
-                margin-right: 20px;
-                transform: translateY(-20%);
+                left: 75vw; /* 비밀번호 찾기 왼쪽으로 이동 */
+                font-size: 1.2vw;
+                top: 61vh; /* 위치 조정 */
+            }
+        }
+
+        @media (max-aspect-ratio: 1/1) {
+            body {
+                background-color: #fff; /* 배경색 유지 */
+            }
+
+            .gif {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* 비율 유지하며 전체 영역을 채우도록 설정 */
+                opacity: 0.5; /* 투명도 조정 */
+                z-index: -1; /* 배경으로 설정 */
+            }
+
+            .title {
+                left: 5vw; /* 좌측 여백 조정 */
+                top: 5vh; /* 상단 여백 조정 */
+            }
+
+            .comment1 {
+                font-size: 8vw; /* 제목 글자 크기 조정 */
+                top: 10vh; /* 제목 위치 조정 */
+                left: 52.5vw; /* 가운데 정렬을 위해 조정 */
+                transform: translateX(-50%); /* 가운데 정렬 */
+            }
+
+            .comment2,
+            .comment3 {
+                width: 80vw; /* 입력란 너비 조정 */
+                height: 3vh;
+                margin: 0 auto; /* 중앙 정렬 */
+                display: block; /* 블록 요소로 변경 */
+                font-size: 4vw;
+            }
+
+            .comment2 {
+                top: 30vh;
+            }
+
+            .comment3 {
+                top: 37vh;
+            }
+
+            .comment4, .comment5 {
+                font-size: 4vw;
+                left: 50%; /* 가운데 정렬을 위해 조정 */
+                transform: translateX(-50%); /* 가운데 정렬 */
+            }
+
+            .comment4 {
+                top: 25vh; /* 위치 조정 */
+                left: 14vw;
+            }
+
+            .comment5 {
+                left : 18vw;
+                top: 32vh; /* 위치 조정 */
+            }
+
+            .login {
+                font-size: 5vw;
+                width: 80vw; /* 버튼 너비 조정 */
+                top: 50vh; /* 버튼 위치 조정 */
+                left: 50%; /* 가운데 정렬을 위해 조정 */
+                transform: translateX(-50%); /* 중앙 정렬 */
+            }
+
+            a.find, a.register {
+                font-size: 3vw; /* 링크 글자 크기 조정 */
+                position: absolute;
+                top: 42vh; /* 비밀번호 찾기 위치 조정 */
+            }
+
+            a.find {
+                left: 70%; /* 오른쪽으로 위치 조정 */
+            }
+
+            a.register {
+                left: 50%; /* 비밀번호 찾기 왼쪽으로 이동 */
             }
         }
     </style>
 </head>
 <body>
-    <button type="button" class="title" onclick="location.href='main'">
-        <img src="/img/login_logo.png" width="300">
-    </button>
+<button type="button" class="title" onclick="location.href='main'">
+    <img src="/img/login_logo.png" width="80%"> <!-- 로고 크기 조정 -->
+</button>
 
-    <img class="gif" src="/img/login.gif">
+<img class="gif" src="/img/login.gif">
 
-    <p class="comment1">로그인</p>
+<p class="comment1">로그인</p>
 
-    <form method="post" action="/login">
-        <p class="comment4">Email</p>
-        <input class="comment2" type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+<form method="post" action="/login">
+    <p class="comment4">Email</p>
+    <input class="comment2" type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
 
-        <p class="comment5">Password</p>
-        <input class="comment3" type="password" name="password">
+    <p class="comment5">Password</p>
+    <input class="comment3" type="password" name="password">
 
-        <a href="find_pw" class="find">비밀번호 찾기</a>
-        <a href="register" class="register">회원가입</a>
+    <a href="find_pw" class="find">비밀번호 찾기</a>
+    <a href="register" class="register">회원가입</a>
 
-        <input class="login" type="submit" value="Login">
-    </form>
+    <input class="login" type="submit" value="Login">
+</form>
 </body>
 </html>

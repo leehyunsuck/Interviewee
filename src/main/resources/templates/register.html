@@ -6,182 +6,191 @@
     <style>
         @media screen {
             body {
-                width:auto;
-                height: auto;
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                overflow: hidden;
             }
+
             .title {
                 background-position: left top;
                 border: none;
                 background-color: transparent;
-                margin-top: 20px;
-                width: 365px;
-            }
-
-            .goToLogin {
-                background-color: transparent;
-                border: none;
-                position: absolute; /* 변경 */
-                right: 20px; /* 오른쪽 정렬 */
-                bottom: 20%;
-                transform: translateY(-20%);
+                margin-top: 2vh;
+                width: 20vw;
+                position: absolute;
+                left: 2vw;
+                top: 2vh;
             }
             .gif {
                 border: none;
                 background-color: transparent;
-                width: 500px;
-                position: absolute; /* 변경 */
-                left: 200px; /* 오른쪽 정렬 */
-                top: 30%;
-                /*margin-top: 100px;*/
-                transform:rotate(-0.284deg) ;
+                width: 30vw;
+                position: absolute;
+                left: 50px;
+                top: 20vh;
+                transform: rotate(-0.284deg);
             }
             .comment1 {
                 color: #000;
                 font-family: "Noto Serif Malayalam";
-                font-size: 70px;
+                font-size: 3.5vw;
                 font-style: normal;
                 font-weight: 400;
-                line-height: normal;
-                position: absolute; /* 변경 */
-                right: 500px; /* 오른쪽 정렬 */
-                top: 15%; /* 중간보다 조금 위 */
-                transform: translateY(-20%); /* 수직 중앙 정렬 */
+                position: absolute;
+                right: 20vw;
+                top: 15vh;
+                transform: translateY(-20%);
             }
+
+            .comment2, .comment3, .comment6, .comment7 {
+                width: 30vw;
+                height: 2vh;
+                font-family: ABeeZee;
+                border-radius: 10px;
+                border: 2px solid #817A7A;
+                font-size: 1.5vw;
+                font-style: normal;
+                position: absolute;
+                right: 10vw;
+                padding: 0.5vw;
+            }
+
             .comment2 {
-                color: black;
-                width : 500px;
-                font-family: ABeeZee;
-                border-radius: 10px;
-                border: 2px solid #817A7A;
-                font-size: 26px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-                position: absolute; /* 변경 */
-                right: 390px; /* 오른쪽 정렬 */
-                top: 43%; /* 중간보다 조금 위 */
-                transform: translateY(-20%); /* 수직 중앙 정렬 */
+                top: 40vh;
             }
+
             .comment3 {
-                width: 500px;
-                font-family: ABeeZee;
-                border-radius: 10px;
-                border: 2px solid #817A7A;
-                font-size: 26px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-                position: absolute; /* 변경 */
-                right: 390px; /* 오른쪽 정렬 */
-                top: 50%; /* 중간보다 조금 위 */
-                transform: translateY(-20%); /* 수직 중앙 정렬 */
+                top: 45vh;
             }
-            .comment4{
+
+            .comment4, .comment5 {
                 color: #423F3F;
                 font-family: "Azeret Mono";
-                font-size: 26px;
+                font-size: 1.5vw;
                 font-style: normal;
-                font-weight: 200;
-                line-height: normal;
-                position: absolute; /* 변경 */
-                right: 830px; /* 오른쪽 정렬 */
-                top: 35%; /* 중간보다 조금 위 */
-                transform: translateY(-20%); /* 수직 중앙 정렬 */
+                position: absolute;
+                transform: translateY(-100%);
             }
-            .comment5{
-                color: #423F3F;
-                font-family: "Azeret Mono";
-                font-size: 26px;
-                font-style: normal;
-                font-weight: 200;
-                line-height: normal;
-                position: absolute; /* 변경 */
-                right: 790px; /* 오른쪽 정렬 */
-                top: 49%; /* 중간보다 조금 위 */
-                transform: translateY(-20%); /* 수직 중앙 정렬 */
+
+            .comment4 {
+                left: 58.75vw;
+                top: 37vh;
             }
+
+            .comment5 {
+                right: 35vw;
+                top: 46vh;
+            }
+
             .comment6 {
-                width: 500px;
-                font-family: ABeeZee;
-                border-radius: 10px;
-                border: 2px solid #817A7A;
-                font-size: 26px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-                position: absolute; /* 변경 */
-                right: 390px; /* 오른쪽 정렬 */
-                top: 58%; /* 중간보다 조금 위 */
-                transform: translateY(-20%); /* 수직 중앙 정렬 */
+                top: 49vh;
             }
+
             .comment7 {
-                width: 500px;
-                font-family: ABeeZee;
-                border-radius: 10px;
-                border: 2px solid #817A7A;
-                font-size: 26px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-                position: absolute; /* 변경 */
-                right: 390px; /* 오른쪽 정렬 */
-                top: 63%; /* 중간보다 조금 위 */
-                transform: translateY(-20%); /* 수직 중앙 정렬 */
+                top: 54vh;
             }
-            .login{
-                width: 180px;
-                height: 70px;
+
+            .login {
+                width: 15vw;
+                height: 6vh;
                 border: none;
                 border-radius: 46px;
                 background: #3D5AED;
                 color: #FFF;
                 font-family: "Archivo Black";
-                font-size: 24px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-                position: absolute; /* 변경 */
-                right: 380px; /* 오른쪽 정렬 */
-                top:71%; /* 중간보다 조금 위 */
-                transform: translateY(-20%); /* 수직 중앙 정렬 */
+                font-size: 1.5vw;
+                position: absolute;
+                left: 82.5vw;
+                transform: translate(-50%, -20%);
+                top: 65vh;
             }
+
             a:link {
                 color: #817979;
-                position: absolute; /* 변경 */
-                right: 380px; /* 오른쪽 정렬 */
-                top: 48%;
-                margin-right: 20px;
-                transform: translateY(-20%);
-            }
-            .verification-input {
-                color: #817979;
-                width : 150px;
-                font-family: ABeeZee;
-                border-radius: 7px;
-                border: 1px solid #817A7A;
-                font-size: 16px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
                 position: absolute;
-                right: 600px;
-                top: 48%;
-                display: none; /* 처음에는 감춰둠 */
-                transform: translateY(-20%);
+                right: 20vw;
+                top: 75vh;
+                margin-right: 2vw;
             }
-            .verify-btn {
-                color: #FFF;
-                background-color: #3D5AED;
-                border: none;
-                padding: 6px 20px;
-                border-radius: 155px;
-                font-family: "Archivo Black";
-                font-size: 12px;
+        }
+
+        /* 세로 화면 (모바일 포함) 미디어 쿼리 */
+        @media screen and (orientation: portrait) {
+            .title {
+                left: 5vw; /* 좌측 여백 조정 */
+                top: 5vh; /* 상단 여백 조정 */
+            }
+
+            .gif {
                 position: absolute;
-                right: 500px;
-                top: 48%;
-                display: none;
-                transform: translateY(-20%);
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* 비율 유지하며 전체 영역을 채우도록 설정 */
+                opacity: 0.5; /* 투명도 조정 */
+                z-index: -1; /* 배경으로 설정 */
+            }
+
+            .comment1 {
+                font-size: 8vw; /* 제목 글자 크기 조정 */
+                top: 10vh; /* 제목 위치 조정 */
+                left: 52.5vw; /* 가운데 정렬을 위해 조정 */
+                width: 40%;
+                transform: translateX(-50%); /* 가운데 정렬 */
+            }
+
+            .comment2, .comment3, .comment6, .comment7 {
+                width: 80vw; /* 입력란 너비 조정 */
+                height: 3vh;
+                margin: 0 auto; /* 중앙 정렬 */
+                display: block; /* 블록 요소로 변경 */
+                font-size: 4vw;
+            }
+
+            .comment2 {
+                top: 28vh;
+            }
+
+            .comment3 {
+                top: 33vh;
+            }
+
+            .comment4, .comment5 {
+                font-size: 4vw;
+            }
+
+            .comment4 {
+                left: 10vw;
+                top: 26vh;
+            }
+
+            .comment5 {
+                left: 10vw;
+                top: 34vh;
+            }
+
+            .comment6 {
+                top: 36vh;
+            }
+
+            .comment7 {
+                top: 40vh;
+            }
+
+            .login {
+                font-size: 5vw;
+                width: 80vw; /* 버튼 너비 조정 */
+                top: 45vh; /* 버튼 위치 조정 */
+                left: 50%; /* 가운데 정렬을 위해 조정 */
+                transform: translateX(-50%); /* 중앙 정렬 */
+            }
+
+            a:link {
+                right: 10vw;
+                top: 90vh;
+                font-size: 2.5vw;
             }
         }
     </style>
@@ -208,16 +217,17 @@
 
     <form method="post"th:action="${action}">
         <p class="comment4">Email</p>
-        <input class="comment2" type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" th:value="${email}" th:readonly="${action == 'checkCode'}">
+        <input class="comment2" type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" th:value="${email}" th:readonly="${action != 'sendMail'}">
+        <input class="login" type="submit" style="top: 50vh" th:value="${action}" th:if="${action == 'sendMail'}">
 
         <!-- 인증번호 입력란 (처음에는 보이지 않음) -->
-        <input class="comment3" name="code" type="text" placeholder="인증번호 입력" th:if="${action == 'checkCode'}">
+        <input class="comment3" name="code" type="text" placeholder="인증번호 입력"  th:if="${action == 'checkCode'}">
 
         <p class="comment5" th:if="${action == 'register'}">Password</p>
         <input class="comment6" type="password" name="password" th:if="${action == 'register'}">
         <input class="comment7" type="password" name="password2" th:if="${action == 'register'}">
 
-        <input class="login" type="submit" th:value="${action}">
+        <input class="login" type="submit" th:value="${action}" th:if="${action != 'sendMail'}">
     </form>
 </body>
 </html>
