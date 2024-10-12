@@ -111,7 +111,7 @@ public class OpenAIService {
 
             if (!error.isEmpty()) promptBuilder.append("\n **에러 : ").append(error).append("\n");
 
-            System.out.println(promptBuilder.toString());
+            //System.out.println(promptBuilder.toString());
             // 질문 받기
             String response = getResponse(promptBuilder.toString());
 
@@ -222,6 +222,14 @@ public class OpenAIService {
                         .replace("[답변]", answer)
                         .replace("[피드백]", value));
             }
+
+            // 하단 내용 추가
+            String footer = """
+                    <div class="footer" style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0; font-size: 12px; color: #999;">
+                            © 2024 모의 면접 보고서
+                    </div>
+                    """;
+            reportBuilder.append(footer);
 
             sendMailService.sendMail((String) model.getAttribute("loggedInEmail"), "Interviewee 보고서", reportBuilder.toString());
         } catch (Exception e) {
