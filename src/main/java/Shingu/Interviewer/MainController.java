@@ -134,7 +134,7 @@ public class MainController {
         String email = (String) model.getAttribute("loggedInEmail");
         String address = GetClientIP.getClientIP(request);
         int count = questionGenerateCountMap.getOrDefault(address, 0);
-        if (count > 5 && !email.equals("5talk2394ty76@gmail.com")) {
+        if (count >= 5 && (email == null || !email.equals("5talk2394ty76@gmail.com"))) {
             model.addAttribute("errorMsg", "한 계정당 하루 최대 5번 사용 가능합니다.");
             model.addAttribute("hrefValue", "main");
             return "error";
