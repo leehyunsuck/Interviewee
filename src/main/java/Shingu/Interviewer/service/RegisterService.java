@@ -122,12 +122,11 @@ public class RegisterService {
         if (storedCode.equals(code)) {
             model.addAttribute("errorMsg", "");
             model.addAttribute("action", "register");
+            verificationCodes.put(email, 999999999);
         } else {
             model.addAttribute("errorMsg", "인증번호가 일치하지 않습니다.");
             model.addAttribute("action", "checkCode");
         }
-
-        verificationCodes.put(email, 999999999);
 
         return "register";
     }

@@ -46,6 +46,7 @@ public class SendMailService {
             message.setFrom(new InternetAddress(username, "Interviewer Admin"));  // 발신자 설정
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));  // 수신자 설정
             message.setSubject(title);  // 제목 설정
+            message.setHeader("X-Priority", "1");
             message.setContent(content, "text/html; charset=utf-8");
 
             // 이메일 전송

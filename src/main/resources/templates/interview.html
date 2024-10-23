@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>interview</title>
+    <!--
     <style>
         @media screen {
             body {
@@ -130,6 +131,136 @@
                 top: 21px;
                 right: 30px;
                 font-size: 20px;
+                font-weight: bold;
+            }
+        }
+    </style>
+    -->
+    <style>
+        @media screen {
+            body {
+                margin: 0;
+                width: 100vw;
+                height: auto;
+                background-color: #E8ECEF;
+                overflow-x: hidden;
+            }
+            div.menu {
+                border: none;
+                width: 100vw;
+                height: 6vh; /* 80px -> 4.17vh */
+                background-color: white;
+            }
+            .title {
+                background-position: left top;
+                border: none;
+                background-color: transparent;
+                margin-top: 1.5vh; /* 20px -> 1.04vh */
+                width: 13vw; /* 250px -> 13vw */
+            }
+            .timer_image {
+                background-position: right top;
+                width: 2.08vw; /* 40px -> 2.08vw */
+                border: none;
+                background-color: transparent;
+                position: absolute;
+                right: 4.95vw; /* 95px -> 4.95vw */
+                margin-top: 1.5vh; /* 20px -> 1.04vh */
+            }
+            .chat-container {
+                width: 100vw; /* 1900px -> 98.96vw */
+                height: 80vh; /* 800px -> 41.67vh */
+                border: none;
+                background-color: #E8ECEF;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+                padding: 1.04vh; /* 20px -> 1.04vh */
+            }
+            .message {
+                display: flex;
+                margin: 10.42vh 10.42vw 40vh; /* 200px 200px 350px -> 10.42vh 10.42vw 18.23vh */
+                padding: 1.56vh; /* 30px -> 1.56vh */
+                border-radius: 2.08vh; /* 40px -> 2.08vh */
+                max-width: 80%;
+                position: relative;
+            }
+            .user-message {
+                font-size: 1.3vw; /* 25px -> 1.3vw */
+                background-color: #ffffff;
+                color: black;
+                word-break: break-all;
+                width: 20.83vw; /* 400px -> 20.83vw */
+                padding: 2.08vh; /* 40px -> 2.08vh */
+                align-self: flex-end;
+                justify-content: flex-end;
+            }
+            .bot-message {
+                font-size: 1.3vw; /* 25px -> 1.3vw */
+                color: white;
+                word-break: break-all;
+                width: 20.83vw; /* 400px -> 20.83vw */
+                padding: 2.08vh; /* 40px -> 2.08vh */
+                background-color: #6B7FE7;
+                align-self: flex-start;
+            }
+            .chat-img {
+                position: absolute;
+                left: -5.21vw; /* -100px -> -5.21vw */
+                top: 20%;
+                transform: translateY(-50%);
+                width: 3.65vw; /* 70px -> 3.65vw */
+                height: 3.65vw; /* 70px -> 3.65vw */
+                margin-right: 0.26vw; /* 5px -> 0.26vw */
+                border-radius: 50%;
+            }
+            .input-container {
+                font-size: 1.3vw; /* 25px -> 1.3vw */
+                color: white;
+                word-break: break-all;
+                width: 20.83vw; /* 400px -> 20.83vw */
+                padding: 1.56vh; /* 30px -> 1.56vh */
+                background-color: transparent;
+                align-self: flex-start;
+                display: flex;
+                position: absolute;
+                right: 3.65vw; /* 70px -> 3.65vw */
+                bottom: 4.17vh; /* 80px -> 4.17vh */
+            }
+            .input-container textarea {
+                border: solid 0.94vh white; /* 18px -> 0.94vh */
+                border-radius: 2.08vh; /* 40px -> 2.08vh */
+                overflow: hidden;
+                resize: none;
+                font-size: 1.3vw; /* 25px -> 1.3vw */
+                font-family: "Archivo Black";
+                align-content: center;
+                color: black;
+                outline: none;
+                word-break: break-all;
+                width: 20.83vw; /* 400px -> 20.83vw */
+                padding: 2.08vh; /* 40px -> 2.08vh */
+                background-color: #ffffff;
+                align-self: flex-start;
+            }
+
+            .input-container button {
+                font-size: 0.05vw; /* 1px -> 0.05vw */
+                margin-left: 0.52vw; /* 10px -> 0.52vw */
+                border: none;
+                background-color: transparent;
+                color: transparent;
+                border-radius: 0.26vw; /* 5px -> 0.26vw */
+                cursor: pointer;
+            }
+            .input-container button:hover {
+                background-color: transparent;
+            }
+            .timer {
+                position: absolute;
+                top: 1.09vh; /* 21px -> 1.09vh */
+                right: 1.56vw; /* 30px -> 1.56vw */
+                font-size: 1.04vw; /* 20px -> 1.04vw */
                 font-weight: bold;
             }
         }

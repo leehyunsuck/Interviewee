@@ -6,6 +6,7 @@ import Shingu.Interviewer.tool.GetClientIP;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +21,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.stream.Collectors;
 
 @Controller
@@ -43,6 +47,8 @@ public class MainController {
 
     @Autowired  // 로그인 서비스
     private LoginService loginService;
+
+    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     private final Map<String, Integer> reportGeneratecountMap = new HashMap<>();
     private final Map<String, Integer> questionGenerateCountMap = new HashMap<>();
@@ -133,6 +139,16 @@ public class MainController {
         // 질문 요청 맵 필요
         String email = (String) model.getAttribute("loggedInEmail");
         String address = GetClientIP.getClientIP(request);
+
+        int count = questionGenerateCountMap.getOrDefault(email == null ? address : email, 0);
+        if (count >= 5) {
+            if (email == null) model.addAttribute("errorMsg", "비회원 사용 횟수를 초과하였습니다.\n로그인 후 사용해주세요");
+            else model.addAttribute("errorMsg", "한 계정당 하루 최대 5번 사용 가능합니다.");
+            model.addAttribute("hrefValue", "main");
+            return "error";
+        }
+        questionGenerateCountMap.put(email == null ? address : email, count + 1);
+        /*
         int count = questionGenerateCountMap.getOrDefault(address, 0);
         if (count >= 5 && (email == null || !email.equals("5talk2394ty76@gmail.com"))) {
             model.addAttribute("errorMsg", "한 계정당 하루 최대 5번 사용 가능합니다.");
@@ -140,6 +156,8 @@ public class MainController {
             return "error";
         }
         questionGenerateCountMap.put(address, count + 1);
+        */
+
 
         List<String> questions = openAIService.generateQuestions(request, "", 0);
 
@@ -179,8 +197,9 @@ public class MainController {
         }
 
         String email = (String) model.getAttribute("loggedInEmail");
+
         int count = reportGeneratecountMap.getOrDefault(email, 0);
-        if (count > 5 && !email.equals("5talk2394ty76@gmail.com")) {
+        if (count >= 5) {
             model.addAttribute("errorMsg", "한 계정당 하루 최대 5번 사용 가능합니다.");
             model.addAttribute("hrefValue", "main");
             return "error";

@@ -4,13 +4,51 @@
     <meta charset="UTF-8">
     <title>interview</title>
     <style>
+        body {
+            transform-origin: top left;
+            transition: transform 0.2s ease-in-out; /* 스무스한 스케일링 변화를 위해 */
+        }
+
+        @media screen and (orientation: portrait) {
+            html {
+                /*transform: scale(0.8);*/
+                transform-origin: center;
+            }
+
+            /*body {*/
+            /*    transform: translateX(-17vw); !* 원하는 만큼 왼쪽으로 이동 *!*/
+            /*}*/
+
+            .smallContainer {
+                transform-origin: center;
+                right: 10vw;
+            }
+
+            #loading-container {
+                transform: scale(3.5);
+                margin-left: 25vw;
+                margin-top: 25vh;
+                width: 100vw;
+                height: 100vh;
+                background-color: rgba(0, 0, 0); /* 반투명 배경 */
+            }
+        }
+
         @media screen {
             body {
                 margin: 0;
-                width: 1920px;
+                width: 100vw;
                 height: auto;
                 background-color: #E8ECEF;
+                overflow-x: hidden; /* 불필요한 스크롤 제거 */
             }
+
+            .smallContainer {
+                position: relative;
+                transform: scale(0.8);
+                transform-origin: center;
+            }
+
             div.menu {
                 border: none;
                 width: 1920px;
@@ -152,7 +190,7 @@
             .need_text {
                 font-family: "Azeret Mono";
                 position: relative;
-                top: 60px;
+                top: 150px;
                 right: -1700px;
             }
 
@@ -810,6 +848,8 @@
     </div>
 </div>
 
+<div class="smallContainer"> <!-- 테스트 -->
+
 <!-- 나머지 페이지 내용 -->
 <div id="main-content">
     <h2 class="jobObjectives">희망 직군</h2>
@@ -886,6 +926,9 @@
         <button class="send_btn" id="resume-submit">제출</button>
     </div>
 </div>
+
+</div>  <!-- smallContainer -->
+
 <script>
     document.getElementById('resume-submit').addEventListener('click', function() {
         // 로딩 화면 표시
