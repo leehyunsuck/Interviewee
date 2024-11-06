@@ -22,10 +22,6 @@ public class UserReview {
     @Column(columnDefinition = "TEXT")
     private String feedback;
 
-    @OneToOne
-    @JoinColumn(name = "email", referencedColumnName = "email", insertable = false, updatable = false)
-    private UserInfo userInfo;
-
     public UserReview(String email, String pros, String cons, String feedback) {
         this.email = email;
         this.pros = pros;
