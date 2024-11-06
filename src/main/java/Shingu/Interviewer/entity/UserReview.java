@@ -19,14 +19,14 @@ public class UserReview {
     @Column(columnDefinition = "TEXT")
     private String cons;
 
-    @Column(columnDefinition = "TEXT")
-    private String feedback;
+    @Column(name = "review", nullable = true)
+    private Integer review;
 
-    public UserReview(String email, String pros, String cons, String feedback) {
+    public UserReview(String email, String pros, String cons, Integer review) {
         this.email = email;
         this.pros = pros;
         this.cons = cons;
-        this.feedback = feedback;
+        this.review = review;
     }
 
     protected UserReview() {

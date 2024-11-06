@@ -24,8 +24,8 @@ public class UserReviewService {
         return userReviewRepository.findByEmailIsNull(); //null인 이메일 조회
     }
 
-    public UserReview addReview(String email, String pros, String cons, String feedback) {
-        UserReview userReview = new UserReview(email, pros, cons, feedback);
+    public UserReview addReview(String email, String pros, String cons, Integer review) {
+        UserReview userReview = new UserReview(email, pros, cons, review);
         return userReviewRepository.save(userReview);  // 리뷰 저장
     }
 }
