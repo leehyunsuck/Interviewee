@@ -16,16 +16,25 @@ public class UserReviewService {
         this.userReviewRepository = userReviewRepository;
     }
 
-
     public UserReview findReviewByEmail(String email) {
-        return userReviewRepository.findByEmail(email);  // 이메일 조회
+        return userReviewRepository.findByEmail(email);  // email 조회
     }
+
     public List<UserReview> findEmailIsNullReviews() {
-        return userReviewRepository.findByEmailIsNull(); //null인 이메일 조회
+        return userReviewRepository.findByEmailIsNull(); // null인 이메일 조회
     }
 
     public UserReview addReview(String email, String pros, String cons, Integer review) {
-        UserReview userReview = new UserReview(email, pros, cons, review);
-        return userReviewRepository.save(userReview);  // 리뷰 저장
+        UserReview usedReview = userReviewRepository.findByEmail(email);
+
+        if (usedReview != null) {      // 기존 email이 존재할 경우
+            usedReview.setPros(pros);
+            usedReview.setCons(cons);
+            usedReview.setReview(review);
+            return userReviewRepository.save(usedReview);
+        } else {
+            UserReview newReview = new UserReview(email, pros, cons, review);
+            return userReviewRepository.save(newReview);
+        }
     }
 }
