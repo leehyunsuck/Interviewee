@@ -20,9 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+
+import java.time.LocalDateTime;
 import java.util.*;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.stream.Collectors;
 
@@ -47,6 +52,9 @@ public class MainController {
 
     @Autowired  // 로그인 서비스
     private LoginService loginService;
+
+    @Autowired
+    private UserReviewService userReviewService;
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
@@ -76,6 +84,17 @@ public class MainController {
         // 세션에 email 정보 있으면 공통적으로 model에 담기, 없으면 세션 초기화
         if (session.getAttribute("loggedInEmail") != null) model.addAttribute("loggedInEmail", session.getAttribute("loggedInEmail"));
         else session.invalidate();
+
+        // 로그 남기기
+        String requestURI = request.getRequestURI();
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String logEntry = now.format(formatter) + " :: " + ipAddress + " :: " + requestURI;
+        try (FileWriter writer = new FileWriter("logs.txt", true)) {
+            writer.write(logEntry + System.lineSeparator());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping
@@ -148,16 +167,6 @@ public class MainController {
             return "error";
         }
         questionGenerateCountMap.put(email == null ? address : email, count + 1);
-        /*
-        int count = questionGenerateCountMap.getOrDefault(address, 0);
-        if (count >= 5 && (email == null || !email.equals("5talk2394ty76@gmail.com"))) {
-            model.addAttribute("errorMsg", "한 계정당 하루 최대 5번 사용 가능합니다.");
-            model.addAttribute("hrefValue", "main");
-            return "error";
-        }
-        questionGenerateCountMap.put(address, count + 1);
-        */
-
 
         List<String> questions = openAIService.generateQuestions(request, "", 0);
 
@@ -239,5 +248,35 @@ public class MainController {
     @GetMapping("resume")
     public String resume(Model model) {
         return "resume";
+    }
+
+    @GetMapping("review")
+    public String review(Model model) {
+        return "review";
+    }
+
+    @PostMapping("review")
+    public String reviewePost(  @RequestParam("pros") String[] pros,
+                                @RequestParam("cons") String[] cons,
+                                @RequestParam("review") Integer review,
+                                HttpServletRequest request,
+                                Model model)
+    {
+        StringBuilder prosBuilder = new StringBuilder();
+        StringBuilder consBuilder = new StringBuilder();
+
+        for (String pro : pros) prosBuilder.append(pro).append(" ");
+        for (String con : cons) consBuilder.append(con).append(" ");
+
+        String email = (String) model.getAttribute("loggedInEmail");
+        if (email == null) email = GetClientIP.getClientIP(request);
+
+        userReviewService.addReview(email, prosBuilder.toString(), consBuilder.toString(), review);
+        return "main";
+    }
+
+    @GetMapping("/naver75a00abd916b175cac002e97515a0379.html")
+    public String navrSearch(Model model) {
+        return "naver75a00abd916b175cac002e97515a0379";
     }
 }

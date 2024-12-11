@@ -126,7 +126,7 @@ public class OpenAIService {
         } catch (Exception e) {
             Logger logger = Logger.getLogger("OpenAIService");
             logger.warning("Error generating report: " + e.getMessage());
-            this.generateQuestions(request, e.getMessage(), count++);
+            this.generateQuestions(request, e.getMessage(), count + 1);
         }
         return null;
     }
