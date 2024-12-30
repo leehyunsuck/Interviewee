@@ -1,14 +1,15 @@
 package Shingu.Interviewer.service;
 
-import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 @Service
@@ -17,40 +18,24 @@ public class SendMailService {
     @Value("${spring.mail.username}")
     private String username;
 
-    @Value("${spring.mail.password}")
-    private String password;
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Async
     public void sendMail(String to, String title, String content) {
-        //이메일 전송 구현
         try {
-            // 메일 서버 설정
-            Properties properties = new Properties();
-            properties.put("mail.smtp.host", "smtp.gmail.com");
-            properties.put("mail.smtp.port", "587");
-            properties.put("mail.smtp.auth", "true");
-            properties.put("mail.smtp.starttls.enable", "true");
+            // MimeMessage 객체 생성
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 
-            // Gmail 인증
-            Authenticator auth = new Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, password);
-                }
-            };
-
-            // 세션 생성
-            Session session = Session.getInstance(properties, auth);
-
-            // 이메일 생성
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username, "Interviewer Admin"));  // 발신자 설정
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));  // 수신자 설정
-            message.setSubject(title);  // 제목 설정
-            message.setHeader("X-Priority", "1");
-            message.setContent(content, "text/html; charset=utf-8");
+            // 이메일 설정
+            helper.setFrom(username, "Interviewer Admin"); // 발신자 이름 설정
+            helper.setTo(to); // 수신자 이메일 주소
+            helper.setSubject(title); // 이메일 제목
+            helper.setText(content, true); // HTML 지원 (true 설정)
 
             // 이메일 전송
-            Transport.send(message);
+            mailSender.send(message);
         } catch (MessagingException | UnsupportedEncodingException e) {
             Logger logger = Logger.getLogger(SendMailService.class.getName());
             logger.warning("Failed to send email: " + e.getMessage());
