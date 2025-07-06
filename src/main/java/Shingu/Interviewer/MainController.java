@@ -170,7 +170,7 @@ public class MainController {
 
         List<String> questions = openAIService.generateQuestions(request, "", 0);
 
-        if (questions.isEmpty()) {
+        if (questions == null || questions.isEmpty()) {
             model.addAttribute("errorMsg", "질문을 생성하는 동안 에러가 발생했습니다.\n다시 시도해주세요");
             model.addAttribute("hrefValue", "resume");
             return "error";

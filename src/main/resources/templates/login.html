@@ -1,216 +1,163 @@
+<!-- UI -> AI로 수정 -->
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
-        @media screen {
-            body {
-                width: 100vw;
-                height: 100vh;
-                background-color: #fff;
-                overflow: hidden; /* 불필요한 스크롤 제거 */
-            }
-            .title {
-                background-position: left top;
-                border: none;
-                background-color: transparent;
-                margin-top: 2vh;
-                width: 20vw;
-                position: absolute;
-                left: 2vw;
-                top: 2vh;
-            }
-            .gif {
-                border: none;
-                background-color: transparent;
-                width: 35vw;
-                position: absolute;
-                left: 50px;
-                top: 20vh;
-                transform: rotate(-0.284deg);
-            }
-            .comment1 {
-                color: #000;
-                font-family: "Noto Serif Malayalam";
-                font-size: 3.5vw;
-                font-style: normal;
-                font-weight: 400;
-                position: absolute;
-                right: 20vw;
-                top: 15vh;
-                transform: translateY(-20%);
-            }
-            .comment2,
-            .comment3 {
-                width: 30vw;
-                height: 2vh;
-                font-family: ABeeZee;
-                border-radius: 10px;
-                border: 2px solid #817A7A;
-                font-size: 1.8vw;
-                font-style: normal;
-                position: absolute;
-                right: 10vw;
-                padding: 0.5vw;
-            }
-            .comment2 {
-                top: 40vh;
-            }
-            .comment3 {
-                top: 52vh;
-            }
-            .comment4,
-            .comment5 {
-                color: #423F3F;
-                font-family: "Azeret Mono";
-                font-size: 1.5vw;
-                font-style: normal;
-                position: absolute;
-                left: 58.75vw; /* 위치 조정 */
-                transform: translateY(-100%); /* 입력란 위로 위치 조정 */
-            }
-            .comment4 {
-                top: 37vh; /* 위치 조정 */
-            }
-            .comment5 {
-                top: 48.75vh; /* 위치 조정 */
-            }
-            .login {
-                width: 15vw;
-                height: 6vh;
-                border: none;
-                border-radius: 46px;
-                background: #3D5AED;
-                color: #FFF;
-                font-family: "Archivo Black";
-                font-size: 1.5vw;
-                position: absolute;
-                left: 82.5vw;
-                transform: translate(-50%, -20%); /* 중앙 정렬 */
-                top: 70vh;
-            }
-            a.find {
-                color: #817979;
-                position: absolute;
-                left: 82vw; /* 위치 조정 */
-                font-size: 1.2vw;
-                top: 61vh; /* 비밀번호 찾기 링크 위치 */
-            }
-            a.register {
-                color: #817979;
-                position: absolute;
-                left: 75vw; /* 비밀번호 찾기 왼쪽으로 이동 */
-                font-size: 1.2vw;
-                top: 61vh; /* 위치 조정 */
-            }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
         }
 
-        @media (max-aspect-ratio: 1/1) {
+        .login-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .image-section {
+            flex: 1;
+            background: url('/img/login.gif') no-repeat center center;
+            background-size: contain;
+        }
+
+        .form-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .header {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            width: 12rem;
+        }
+
+        .header img {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-form h1 {
+            font-family: "Noto Serif Malayalam", serif;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: "Azeret Mono", monospace;
+            font-size: 1rem;
+            color: #423F3F;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 2px solid #817A7A;
+            box-sizing: border-box;
+        }
+
+        .link-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 2rem;
+        }
+
+        .link-group a {
+            color: #817979;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 46px;
+            background: #3D5AED;
+            color: #FFF;
+            font-family: "Archivo Black", sans-serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* 모바일/세로 화면 */
+        @media (max-width: 768px) {
+            .image-section {
+                display: none; /* 모바일에서는 이미지 섹션 숨김 */
+            }
+            .form-section {
+                flex-basis: 100%;
+                justify-content: flex-start;
+                padding-top: 8rem;
+            }
             body {
-                background-color: #fff; /* 배경색 유지 */
+                background: url('/img/login.gif') no-repeat center center;
+                background-size: cover;
             }
-
-            .gif {
+            .form-section::before {
+                content: '';
                 position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover; /* 비율 유지하며 전체 영역을 채우도록 설정 */
-                opacity: 0.5; /* 투명도 조정 */
-                z-index: -1; /* 배경으로 설정 */
+                top: 0; left: 0; right: 0; bottom: 0;
+                background-color: rgba(255, 255, 255, 0.7); /* 반투명 흰색 오버레이 */
+                z-index: -1;
             }
-
-            .title {
-                left: 5vw; /* 좌측 여백 조정 */
-                top: 5vh; /* 상단 여백 조정 */
-            }
-
-            .comment1 {
-                font-size: 8vw; /* 제목 글자 크기 조정 */
-                top: 10vh; /* 제목 위치 조정 */
-                left: 52.5vw; /* 가운데 정렬을 위해 조정 */
-                transform: translateX(-50%); /* 가운데 정렬 */
-            }
-
-            .comment2,
-            .comment3 {
-                width: 80vw; /* 입력란 너비 조정 */
-                height: 3vh;
-                margin: 0 auto; /* 중앙 정렬 */
-                display: block; /* 블록 요소로 변경 */
-                font-size: 4vw;
-            }
-
-            .comment2 {
-                top: 30vh;
-            }
-
-            .comment3 {
-                top: 37vh;
-            }
-
-            .comment4, .comment5 {
-                font-size: 4vw;
-                left: 50%; /* 가운데 정렬을 위해 조정 */
-                transform: translateX(-50%); /* 가운데 정렬 */
-            }
-
-            .comment4 {
-                top: 25vh; /* 위치 조정 */
-                left: 14vw;
-            }
-
-            .comment5 {
-                left : 18vw;
-                top: 32vh; /* 위치 조정 */
-            }
-
-            .login {
-                font-size: 5vw;
-                width: 80vw; /* 버튼 너비 조정 */
-                top: 50vh; /* 버튼 위치 조정 */
-                left: 50%; /* 가운데 정렬을 위해 조정 */
-                transform: translateX(-50%); /* 중앙 정렬 */
-            }
-
-            a.find, a.register {
-                font-size: 3vw; /* 링크 글자 크기 조정 */
-                position: absolute;
-                top: 42vh; /* 비밀번호 찾기 위치 조정 */
-            }
-
-            a.find {
-                left: 70%; /* 오른쪽으로 위치 조정 */
-            }
-
-            a.register {
-                left: 50%; /* 비밀번호 찾기 왼쪽으로 이동 */
+            .login-form h1 {
+                font-size: 2.5rem;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
-<button type="button" class="title" onclick="location.href='main'">
-    <img src="/img/login_logo.png" width="80%"> <!-- 로고 크기 조정 -->
-</button>
-
-<img class="gif" src="/img/login.gif">
-
-<p class="comment1">로그인</p>
-
-<form method="post" action="/login">
-    <p class="comment4">Email</p>
-    <input class="comment2" type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-
-    <p class="comment5">Password</p>
-    <input class="comment3" type="password" name="password">
-
-    <a href="find_pw" class="find">비밀번호 찾기</a>
-    <a href="register" class="register">회원가입</a>
-
-    <input class="login" type="submit" value="Login">
-</form>
+<main class="login-container">
+    <section class="image-section"></section>
+    <section class="form-section">
+        <header class="header">
+            <img src="/img/login_logo.png" alt="logo" onclick="location.href='main'">
+        </header>
+        <div class="login-form">
+            <h1>로그인</h1>
+            <form method="post" action="/login">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password">
+                </div>
+                <div class="link-group">
+                    <a href="register">회원가입</a>
+                </div>
+                <input class="login-button" type="submit" value="Login">
+            </form>
+        </div>
+    </section>
+</main>
 </body>
 </html>

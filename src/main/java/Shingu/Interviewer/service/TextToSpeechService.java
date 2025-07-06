@@ -12,6 +12,84 @@ import org.springframework.http.MediaType;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Collections;
+
+@Service
+public class TextToSpeechService {
+
+    // Flask TTS 서버 URL (application.properties 등에 설정 가능)
+    @Value("${flask.tts.url}")
+    private String ttsServerUrl;
+
+    // 파일들이 저장될 디렉토리 경로를 설정
+    @Value("${file.storage.path}")
+    private String fileStoragePath;
+
+    @PostConstruct
+    public void deleteAllFilesOnStartup() {
+        File directory = new File(fileStoragePath);
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        try {
+                            file.delete();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void synthesizeText(String text, String outputFileName) throws Exception {
+        File directory = new File(fileStoragePath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.valueOf("audio/mpeg")));
+
+        String requestJson = "{\"text\":\"" + text.replace("\"", "\\\"") + "\"}";
+
+        HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
+
+        // Flask 서버에 POST 요청하여 음성(mp3) 데이터 바이트 받기
+        ResponseEntity<byte[]> response = restTemplate.exchange(ttsServerUrl, HttpMethod.POST, entity, byte[].class);
+
+        byte[] audioBytes = response.getBody();
+
+        if (audioBytes == null || audioBytes.length == 0) {
+            throw new RuntimeException("Empty audio content received from TTS server");
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(outputFileName)) {
+            fos.write(audioBytes);
+        }
+    }
+}
+
+/*
+package Shingu.Interviewer.service;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Base64;
 import java.util.Collections;
 
@@ -79,3 +157,4 @@ public class TextToSpeechService {
         }
     }
 }
+*/

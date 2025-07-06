@@ -1,204 +1,145 @@
+<!-- UI -> AI 활용 -->
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <style>
-        @media screen {
-            body {
-                width: 100vw;
-                height: 100vh;
-                margin: 0;
-                overflow: hidden;
-            }
-
-            .title {
-                background-position: left top;
-                border: none;
-                background-color: transparent;
-                margin-top: 2vh;
-                width: 20vw;
-                position: absolute;
-                left: 2vw;
-                top: 2vh;
-            }
-            .gif {
-                border: none;
-                background-color: transparent;
-                width: 30vw;
-                position: absolute;
-                left: 50px;
-                top: 20vh;
-                transform: rotate(-0.284deg);
-            }
-            .comment1 {
-                color: #000;
-                font-family: "Noto Serif Malayalam";
-                font-size: 3.5vw;
-                font-style: normal;
-                font-weight: 400;
-                position: absolute;
-                right: 20vw;
-                top: 15vh;
-                transform: translateY(-20%);
-            }
-
-            .comment2, .comment3, .comment6, .comment7 {
-                width: 30vw;
-                height: 2vh;
-                font-family: ABeeZee;
-                border-radius: 10px;
-                border: 2px solid #817A7A;
-                font-size: 1.5vw;
-                font-style: normal;
-                position: absolute;
-                right: 10vw;
-                padding: 0.5vw;
-            }
-
-            .comment2 {
-                top: 40vh;
-            }
-
-            .comment3 {
-                top: 45vh;
-            }
-
-            .comment4, .comment5 {
-                color: #423F3F;
-                font-family: "Azeret Mono";
-                font-size: 1.5vw;
-                font-style: normal;
-                position: absolute;
-                transform: translateY(-100%);
-            }
-
-            .comment4 {
-                left: 58.75vw;
-                top: 37vh;
-            }
-
-            .comment5 {
-                right: 35vw;
-                top: 46vh;
-            }
-
-            .comment6 {
-                top: 49vh;
-            }
-
-            .comment7 {
-                top: 54vh;
-            }
-
-            .login {
-                width: 15vw;
-                height: 6vh;
-                border: none;
-                border-radius: 46px;
-                background: #3D5AED;
-                color: #FFF;
-                font-family: "Archivo Black";
-                font-size: 1.5vw;
-                position: absolute;
-                left: 82.5vw;
-                transform: translate(-50%, -20%);
-                top: 65vh;
-            }
-
-            a:link {
-                color: #817979;
-                position: absolute;
-                right: 20vw;
-                top: 75vh;
-                margin-right: 2vw;
-            }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
         }
 
-        /* 세로 화면 (모바일 포함) 미디어 쿼리 */
-        @media screen and (orientation: portrait) {
-            .title {
-                left: 5vw; /* 좌측 여백 조정 */
-                top: 5vh; /* 상단 여백 조정 */
-            }
+        .register-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
 
-            .gif {
+        .image-section {
+            flex: 1;
+            background: url('/img/register.gif') no-repeat center center;
+            background-size: contain;
+        }
+
+        .form-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .header {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            width: 12rem;
+        }
+
+        .header img {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .register-form {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .register-form h1 {
+            font-family: "Noto Serif Malayalam", serif;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: "Azeret Mono", monospace;
+            font-size: 1rem;
+            color: #423F3F;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 2px solid #817A7A;
+            box-sizing: border-box;
+        }
+
+        .input-group.email-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .email-group input[type="email"] {
+            flex-grow: 1;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border: none;
+            border-radius: 46px;
+            background: #3D5AED;
+            color: #FFF;
+            font-family: "Archivo Black", sans-serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .email-group .submit-button {
+            width: auto;
+            flex-shrink: 0;
+            padding: 0.8rem 1rem;
+            margin-top: 0;
+            font-size: 0.9rem;
+        }
+
+        /* 모바일/세로 화면 */
+        @media (max-width: 768px) {
+            .image-section {
+                display: none;
+            }
+            .form-section {
+                flex-basis: 100%;
+                justify-content: flex-start;
+                padding-top: 8rem;
+            }
+            body {
+                background: url('/img/register.gif') no-repeat center center;
+                background-size: cover;
+            }
+            .form-section::before {
+                content: '';
                 position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover; /* 비율 유지하며 전체 영역을 채우도록 설정 */
-                opacity: 0.5; /* 투명도 조정 */
-                z-index: -1; /* 배경으로 설정 */
+                top: 0; left: 0; right: 0; bottom: 0;
+                background-color: rgba(255, 255, 255, 0.7);
+                z-index: -1;
             }
-
-            .comment1 {
-                font-size: 8vw; /* 제목 글자 크기 조정 */
-                top: 10vh; /* 제목 위치 조정 */
-                left: 52.5vw; /* 가운데 정렬을 위해 조정 */
-                width: 40%;
-                transform: translateX(-50%); /* 가운데 정렬 */
-            }
-
-            .comment2, .comment3, .comment6, .comment7 {
-                width: 80vw; /* 입력란 너비 조정 */
-                height: 3vh;
-                margin: 0 auto; /* 중앙 정렬 */
-                display: block; /* 블록 요소로 변경 */
-                font-size: 4vw;
-            }
-
-            .comment2 {
-                top: 28vh;
-            }
-
-            .comment3 {
-                top: 33vh;
-            }
-
-            .comment4, .comment5 {
-                font-size: 4vw;
-            }
-
-            .comment4 {
-                left: 10vw;
-                top: 26vh;
-            }
-
-            .comment5 {
-                left: 10vw;
-                top: 34vh;
-            }
-
-            .comment6 {
-                top: 36vh;
-            }
-
-            .comment7 {
-                top: 40vh;
-            }
-
-            .login {
-                font-size: 5vw;
-                width: 80vw; /* 버튼 너비 조정 */
-                top: 45vh; /* 버튼 위치 조정 */
-                left: 50%; /* 가운데 정렬을 위해 조정 */
-                transform: translateX(-50%); /* 중앙 정렬 */
-            }
-
-            a:link {
-                right: 10vw;
-                top: 90vh;
-                font-size: 2.5vw;
+            .register-form h1 {
+                font-size: 2.5rem;
+                text-align: center;
             }
         }
     </style>
     <script th:inline="javascript">
-        /* 모델 데이터를 자바스크립트 변수로 설정 */
         var errorMsg = /*[[${errorMsg}]]*/ '';
-
-        // 페이지 로드 시 에러 메시지가 있으면 경고창 표시
         window.addEventListener('load', function() {
             if (errorMsg && errorMsg !== '') {
                 alert(errorMsg);
@@ -207,27 +148,39 @@
     </script>
 </head>
 <body>
-    <button type="button" class="title" onclick="location.href='main'">
-        <img src="/img/login_logo.png" width="300">
-    </button>
+<main class="register-container">
+    <section class="image-section"></section>
+    <section class="form-section">
+        <header class="header">
+            <img src="/img/login_logo.png" alt="logo" onclick="location.href='main'">
+        </header>
+        <div class="register-form">
+            <h1>회원가입</h1>
+            <form method="post" th:action="${action}">
+                <div class="input-group email-group">
+                    <input type="email" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" th:value="${email}" th:readonly="${action != 'sendMail'}">
+                    <input class="submit-button" type="submit" th:value="${action == 'sendMail' ? '인증' : '진행'}" th:if="${action == 'sendMail'}">
+                </div>
 
-    <img class="gif" src="/img/register.gif">
+                <div class="input-group" th:if="${action == 'checkCode'}">
+                    <input name="code" type="text" placeholder="인증번호 입력">
+                </div>
 
-    <p class="comment1">회원가입</p>
+                <div th:if="${action == 'register'}">
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" name="password">
+                    </div>
+                    <div class="input-group">
+                        <label for="password2">Confirm Password</label>
+                        <input id="password2" type="password" name="password2">
+                    </div>
+                </div>
 
-    <form method="post"th:action="${action}">
-        <p class="comment4">Email</p>
-        <input class="comment2" type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" th:value="${email}" th:readonly="${action != 'sendMail'}">
-        <input class="login" type="submit" style="top: 50vh" th:value="${action}" th:if="${action == 'sendMail'}">
-
-        <!-- 인증번호 입력란 (처음에는 보이지 않음) -->
-        <input class="comment3" name="code" type="text" placeholder="인증번호 입력"  th:if="${action == 'checkCode'}">
-
-        <p class="comment5" th:if="${action == 'register'}">Password</p>
-        <input class="comment6" type="password" name="password" th:if="${action == 'register'}">
-        <input class="comment7" type="password" name="password2" th:if="${action == 'register'}">
-
-        <input class="login" type="submit" th:value="${action}" th:if="${action != 'sendMail'}">
-    </form>
+                <input class="submit-button" type="submit" th:value="${action}" th:if="${action != 'sendMail'}">
+            </form>
+        </div>
+    </section>
+</main>
 </body>
 </html>

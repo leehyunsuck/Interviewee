@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Message {
     private String role;
-    private String content; //프롬프트
+    private String content;
 }

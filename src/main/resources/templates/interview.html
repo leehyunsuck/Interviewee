@@ -2,266 +2,193 @@
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>interview</title>
-    <!--
+    <title>interviewee</title>
+    <meta name="description" content="모의 면접, 이력서 기반 모의 면접을 제공하는 interviewee 입니다.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        @media screen {
-            body {
-                margin: 0;
-                width: 1920px;
-                height: auto;
-                background-color: #E8ECEF;
-            }
-            div.menu {
-                border: none;
-                width: 1940px;
-                height: 80px;
-                background-color: white;
-            }
-            .title {
-                background-position: left top;
-                border: none;
-                background-color: transparent;
-                margin-top: 20px;
-                width: 250px;
-            }
-            .timer_image {
-                background-position: right top;
-                width: 40px;
-                border: none;
-                background-color: transparent;
-                position: absolute;
-                right: 95px;
-                top: 17px;
-            }
-            .chat-container {
-                width: 1900px;
-                height: 800px;
-                border: none;
-                background-color: #E8ECEF;
-                overflow-y: auto;
-                display: flex;
-                flex-direction: column;
-                padding: 20px;
-                /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-            }
-            .message {
-                display: flex;
-                /*align-items: center;*/
-                margin: 200px 200px 350px;
-                padding: 30px;
-                border-radius: 40px;
-                max-width: 80%;
-                position: relative; /* 메시지 박스를 기준으로 위치 조정 */
-            }
-            .user-message {
-                font-size: 25px;
-                background-color: #ffffff;
-                color: black;
-                word-break: break-all;
-                width: 400px;
-                padding: 40px;
-                align-self: flex-end;
-                justify-content: flex-end;
-            }
-            .bot-message {
-                font-size: 25px;
-                color: white;
-                word-break: break-all;
-                width: 400px;
-                padding: 40px;
-                background-color: #6B7FE7;
-                align-self: flex-start;
-            }
-            .chat-img {
-                position: absolute;
-                left: -100px;
-                top: 20%;
-                transform: translateY(-50%);
-                width: 70px;
-                height: 70px;
-                margin-right: 5px;
-                border-radius: 50%;
-            }
-            .input-container {
-                font-size: 25px;
-                color: white;
-                word-break: break-all;
-                width: 400px;
-                padding: 30px;
-                background-color: transparent;
-                align-self: flex-start;
-                display: flex;
-                position: absolute;
-                right: 70px;
-                bottom: 80px;
-
-            }
-            .input-container textarea {
-                border: solid 18px white;
-                border-radius: 40px;
-                overflow:hidden;
-                resize: none;
-                font-size: 25px;
-                font-family: "Archivo Black";
-                align-content: center;
-                color: black;
-                outline: none;
-                word-break:break-all;
-                width: 400px;
-                padding: 40px;
-                background-color: #ffffff;
-                align-self: flex-start;
-            }
-
-            .input-container button {
-                font-size: 1px;
-                margin-left: 10px;
-                border: none;
-                background-color: transparent;
-                color: transparent;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            .input-container button:hover {
-                background-color: transparent;
-            }
-            .timer {
-                position: absolute;
-                top: 21px;
-                right: 30px;
-                font-size: 20px;
-                font-weight: bold;
-            }
+        /* 기본 설정: 모바일 우선 접근 */
+        :root {
+            --menu-height: 60px; /* 상단 메뉴 높이 */
+            --input-container-height: 90px; /* 하단 입력창 영역 높이 */
         }
-    </style>
-    -->
-    <style>
-        @media screen {
-            body {
-                margin: 0;
-                width: 100vw;
-                height: auto;
-                background-color: #E8ECEF;
-                overflow-x: hidden;
-            }
-            div.menu {
-                border: none;
-                width: 100vw;
-                height: 6vh; /* 80px -> 4.17vh */
-                background-color: white;
-            }
-            .title {
-                background-position: left top;
-                border: none;
-                background-color: transparent;
-                margin-top: 1.5vh; /* 20px -> 1.04vh */
-                width: 13vw; /* 250px -> 13vw */
-            }
-            .timer_image {
-                background-position: right top;
-                width: 2.08vw; /* 40px -> 2.08vw */
-                border: none;
-                background-color: transparent;
-                position: absolute;
-                right: 4.95vw; /* 95px -> 4.95vw */
-                margin-top: 1.5vh; /* 20px -> 1.04vh */
-            }
-            .chat-container {
-                width: 100vw; /* 1900px -> 98.96vw */
-                height: 80vh; /* 800px -> 41.67vh */
-                border: none;
-                background-color: #E8ECEF;
-                overflow-y: auto;
-                display: flex;
-                flex-direction: column;
-                padding: 1.04vh; /* 20px -> 1.04vh */
-            }
-            .message {
-                display: flex;
-                margin: 10.42vh 10.42vw 40vh; /* 200px 200px 350px -> 10.42vh 10.42vw 18.23vh */
-                padding: 1.56vh; /* 30px -> 1.56vh */
-                border-radius: 2.08vh; /* 40px -> 2.08vh */
-                max-width: 80%;
-                position: relative;
-            }
-            .user-message {
-                font-size: 1.3vw; /* 25px -> 1.3vw */
-                background-color: #ffffff;
-                color: black;
-                word-break: break-all;
-                width: 20.83vw; /* 400px -> 20.83vw */
-                padding: 2.08vh; /* 40px -> 2.08vh */
-                align-self: flex-end;
-                justify-content: flex-end;
-            }
-            .bot-message {
-                font-size: 1.3vw; /* 25px -> 1.3vw */
-                color: white;
-                word-break: break-all;
-                width: 20.83vw; /* 400px -> 20.83vw */
-                padding: 2.08vh; /* 40px -> 2.08vh */
-                background-color: #6B7FE7;
-                align-self: flex-start;
-            }
-            .chat-img {
-                position: absolute;
-                left: -5.21vw; /* -100px -> -5.21vw */
-                top: 20%;
-                transform: translateY(-50%);
-                width: 3.65vw; /* 70px -> 3.65vw */
-                height: 3.65vw; /* 70px -> 3.65vw */
-                margin-right: 0.26vw; /* 5px -> 0.26vw */
-                border-radius: 50%;
-            }
-            .input-container {
-                font-size: 1.3vw; /* 25px -> 1.3vw */
-                color: white;
-                word-break: break-all;
-                width: 20.83vw; /* 400px -> 20.83vw */
-                padding: 1.56vh; /* 30px -> 1.56vh */
-                background-color: transparent;
-                align-self: flex-start;
-                display: flex;
-                position: absolute;
-                right: 3.65vw; /* 70px -> 3.65vw */
-                bottom: 4.17vh; /* 80px -> 4.17vh */
-            }
-            .input-container textarea {
-                border: solid 0.94vh white; /* 18px -> 0.94vh */
-                border-radius: 2.08vh; /* 40px -> 2.08vh */
-                overflow: hidden;
-                resize: none;
-                font-size: 1.3vw; /* 25px -> 1.3vw */
-                font-family: "Archivo Black";
-                align-content: center;
-                color: black;
-                outline: none;
-                word-break: break-all;
-                width: 20.83vw; /* 400px -> 20.83vw */
-                padding: 2.08vh; /* 40px -> 2.08vh */
-                background-color: #ffffff;
-                align-self: flex-start;
+
+        html {
+            font-size: 16px; /* rem 단위의 기준. 모바일에서 1rem = 16px */
+        }
+
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #E8ECEF;
+            overflow: hidden; /* 전체 페이지 스크롤 방지 */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        /* --- 상단 메뉴 --- */
+        div.menu {
+            width: 100%;
+            height: var(--menu-height);
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            box-sizing: border-box;
+            border-bottom: 1px solid #ddd;
+            position: fixed; /* 상단에 고정 */
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .title {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+        .title img {
+            height: 35px;
+            width: auto;
+        }
+
+        /* 타이머와 이미지를 그룹으로 묶어 정렬 */
+        .timer-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timer_image {
+            width: 28px;
+            height: 28px;
+        }
+
+        .timer {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* --- 채팅 컨테이너 --- */
+        .chat-container {
+            width: 100%;
+            height: 100vh; /* 뷰포트 전체 높이 */
+            background-color: #E8ECEF;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            box-sizing: border-box;
+            /* 상단 메뉴와 하단 입력창에 가려지지 않도록 패딩으로 공간 확보 */
+            padding-top: calc(var(--menu-height) + 1rem);
+            padding-bottom: calc(var(--input-container-height) + 1rem);
+        }
+
+        /* --- 메시지 버블 --- */
+        .message {
+            display: flex;
+            margin: 0.5rem 0;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            max-width: 85%; /* 모바일에서 메시지 너비를 좀 더 유연하게 */
+            position: relative;
+            line-height: 1.5;
+            word-break: break-word; /* 단어 단위로 줄바꿈 */
+        }
+
+        .user-message {
+            font-size: 1rem;
+            background-color: #ffffff;
+            color: black;
+            align-self: flex-end;
+            border-radius: 18px 18px 0 18px;
+        }
+
+        .bot-message {
+            font-size: 1rem;
+            color: white;
+            background-color: #6B7FE7;
+            align-self: flex-start;
+            padding-left: 3.5rem;
+            border-radius: 18px 18px 18px 0;
+        }
+
+        .chat-img {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* --- 하단 입력창 --- */
+        .input-container {
+            position: fixed; /* 화면 하단에 고정 */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            background-color: #ffffff;
+            border-top: 1px solid #ddd;
+            box-sizing: border-box;
+            min-height: 70px;
+        }
+
+        .input-container textarea {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            resize: none;
+            font-size: 1rem;
+            font-family: inherit;
+            padding: 0.7rem 1rem;
+            max-height: 120px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .input-container textarea:focus {
+            border-color: #6B7FE7;
+            box-shadow: 0 0 0 2px rgba(107, 127, 231, 0.2);
+        }
+
+        .input-container button {
+            width: 45px;
+            height: 45px;
+            margin-left: 0.5rem;
+            border: none;
+            background-color: #6B7FE7;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='22' y1='2' x2='11' y2='13'%3E%3C/line%3E%3Cpolygon points='22 2 15 22 11 13 2 9 22 2'%3E%3C/polygon%3E%3C/svg%3E");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            font-size: 0;
+        }
+
+        .input-container button:hover {
+            background-color: #5a6dcf;
+        }
+
+        /* --- 태블릿 및 데스크톱을 위한 미디어 쿼리 --- */
+        @media screen and (min-width: 1024px) {
+            html {
+                font-size: 17px; /* 대화면에서 기본 폰트 크기를 약간 키워 가독성 향상 */
             }
 
-            .input-container button {
-                font-size: 0.05vw; /* 1px -> 0.05vw */
-                margin-left: 0.52vw; /* 10px -> 0.52vw */
-                border: none;
-                background-color: transparent;
-                color: transparent;
-                border-radius: 0.26vw; /* 5px -> 0.26vw */
-                cursor: pointer;
-            }
-            .input-container button:hover {
-                background-color: transparent;
-            }
-            .timer {
-                position: absolute;
-                top: 1.09vh; /* 21px -> 1.09vh */
-                right: 1.56vw; /* 30px -> 1.56vw */
-                font-size: 1.04vw; /* 20px -> 1.04vw */
-                font-weight: bold;
+            .message {
+                max-width: 80%; /* 데스크탑에서 메시지 최대 너비 조정 */
             }
         }
     </style>
@@ -271,15 +198,18 @@
     <button type="button" class="title" onclick="location.href='main'">
         <img src="/img/resume_chat_logo.png" width="200">
     </button>
-    <img class="timer_image" src="/img/timer_img.png">
-    <div class="timer" id="timer">00:00</div>
-</div>
-<div class="chat-container" id="chat-container">
-    <!-- 대화 내용이 여기에 추가됩니다. -->
-    <div class="input-container">
-        <textarea id="user-input" placeholder="답변을 입력하세요..." maxlength="1000"></textarea>
-        <button id="send-button">전송</button>
+    <div class="timer-wrapper">
+        <img class="timer_image" src="/img/timer_img.png">
+        <div class="timer" id="timer">00:00</div>
     </div>
+</div>
+
+<div class="chat-container" id="chat-container">
+</div>
+
+<div class="input-container">
+    <textarea id="user-input" placeholder="답변을 입력하세요..." maxlength="1000"></textarea>
+    <button id="send-button">전송</button>
 </div>
 
 <script th:inline="javascript">
@@ -287,7 +217,7 @@
     let questions = /*[[${questions}]]*/ [];
     /*]]>*/
     let audioFiles = /*[[${audioFiles}]]*/ [];
-    let currentAudio = null; // 현재 재생 중인 오디오를 추적하는 변수
+    let currentAudio = null;
 
     let answers = [];
 
@@ -297,6 +227,9 @@
     let elapsedTime = 0;
 
     function addMessage(content, isUser) {
+        // chat-container 선택
+        const chatContainer = document.getElementById('chat-container');
+
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
 
@@ -310,24 +243,21 @@
         const messageContent = document.createElement('div');
         messageContent.textContent = content;
         messageDiv.appendChild(messageContent);
-        document.getElementById('chat-container').appendChild(messageDiv);
+        chatContainer.appendChild(messageDiv);
 
-        // 클릭 시 오디오 재생
-        messageDiv.addEventListener('click', function () {
-            const audioFilePath = audioFiles[currentQuestionIndex - 1];
-
-            // 기존 재생 중인 오디오가 있다면 정지
-            if (currentAudio) {
-                currentAudio.pause(); // 오디오 정지
-                currentAudio.currentTime = 0; // 재생 위치 초기화
-            }
-
-            // 새 오디오 재생
-            currentAudio = new Audio(audioFilePath);
-            currentAudio.play(); // 새 오디오 재생
-        });
-
-        // 메시지를 추가한 후 자동으로 스크롤을 맨 아래로 이동
+        if (!isUser) {
+            messageDiv.addEventListener('click', function () {
+                const audioFilePath = audioFiles[currentQuestionIndex - 1];
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+                if (audioFilePath) {
+                    currentAudio = new Audio(audioFilePath);
+                    currentAudio.play();
+                }
+            });
+        }
         scrollToBottom();
     }
 
@@ -350,7 +280,6 @@
                 form.appendChild(hiddenField);
             }
         }
-
         document.body.appendChild(form);
         form.submit();
     }
@@ -358,14 +287,13 @@
     function sendQuestion() {
         if (currentQuestionIndex < questions.length) {
             if (currentAudio) {
-                currentAudio.pause(); // 오디오 정지
-                currentAudio.currentTime = 0; // 재생 위치 초기화
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
             }
             addMessage(questions[currentQuestionIndex], false);
             currentQuestionIndex++;
             resetTimer();
         } else {
-            // 모든 질문이 끝나면 다른 페이지로 이동
             let data = {
                 answers: answers,
                 questions: questions
@@ -375,18 +303,18 @@
     }
 
     function resetTimer() {
-        clearTimeout(timeout); // 기존 타임아웃 정리
-        clearInterval(timer);  // 기존 인터벌 정리
+        clearTimeout(timeout);
+        clearInterval(timer);
         elapsedTime = 0;
         updateTimerDisplay();
         timer = setInterval(() => {
             elapsedTime += 1;
             updateTimerDisplay();
-        }, 1000); // 1초마다 업데이트
+        }, 1000);
         timeout = setTimeout(() => {
             inputAnswer();
             sendQuestion();
-        }, 180000); // 3분 후에 질문 전송
+        }, 180000);
     }
 
     function updateTimerDisplay() {
@@ -397,10 +325,10 @@
 
     function inputAnswer() {
         const userInput = document.getElementById('user-input').value.trim();
-        if (userInput) { // 수정된 부분
+        if (userInput) {
             answers.push(userInput);
             addMessage(userInput, true);
-            document.getElementById('user-input').value = ''; // 사용자 입력 초기화
+            document.getElementById('user-input').value = '';
         } else {
             answers.push("답변을 입력하지 않음");
         }
@@ -409,21 +337,18 @@
     // 초기 질문 전송
     sendQuestion();
 
-    // 사용자 입력 전송
     document.getElementById('send-button').addEventListener('click', () => {
         inputAnswer();
         sendQuestion();
     });
 
-    // 엔터 키로 입력 가능
     document.getElementById('user-input').addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && !event.shiftKey) { // Shift+Enter는 줄바꿈
             event.preventDefault();
             document.getElementById('send-button').click();
         }
     });
 
-    // 뒤로가기 방지
     window.history.pushState(null, document.title, window.location.href);
     window.addEventListener('popstate', function(event) {
         window.history.pushState(null, document.title, window.location.href);
