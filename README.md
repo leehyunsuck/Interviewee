@@ -15,7 +15,7 @@
 <img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white">
 
 ### AI & API
-<img src="https://img.shields.io/badge/OpenAI API-412991?style=for-the-badge&logo=openai&logoColor=white"> <img src="https://img.shields.io/badge/SMTP-D14836?style=for-the-badge&logo=gmail&logoColor=white">
+<img src="https://img.shields.io/badge/OpenAI API-412991?style=for-the-badge&logo=openai&logoColor=white"> <img src="https://img.shields.io/badge/SMTP-D14836?style=for-the-badge&logo=gmail&logoColor=white"> <img src="https://img.shields.io/badge/Google%20TTS-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white">
 
 ### Infrastructure & Security
 <img src="https://img.shields.io/badge/GCP-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"> <img src="https://img.shields.io/badge/CertBot (SSL)-003A70?style=for-the-badge&logo=letsencrypt&logoColor=white"> <img src="https://img.shields.io/badge/SHA--256-4EAA25?style=for-the-badge&logo=security&logoColor=white">
